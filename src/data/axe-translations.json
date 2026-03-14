@@ -1,0 +1,106 @@
+{
+  "image-alt": {
+    "severity": "critical",
+    "title": "Image missing description",
+    "description": "This image has no alt text. Screen readers can't tell blind visitors what this image shows.",
+    "wcag": "1.1.1",
+    "fix": {
+      "generic": "Add a description to this image in your website editor. Describe what the image shows in 1-2 sentences.",
+      "wordpress": "In WordPress: click the image → fill in the 'Alt Text' field in the right sidebar.",
+      "squarespace": "In Squarespace: click the image → click the pencil icon → fill in 'Image Alt Text'.",
+      "google_sites": "In Google Sites: click the image → click the three dots → 'Alt text' → enter description.",
+      "civicplus": "In CivicPlus: edit the page → click the image → fill in the 'Alternate Text' field.",
+      "finalsite": "In Finalsite Composer: click the image → 'Image Properties' → fill in 'Alt Text'."
+    }
+  },
+  "color-contrast": {
+    "severity": "major",
+    "title": "Text hard to read (low contrast)",
+    "description": "The text color is too similar to the background color, making it hard to read for people with low vision.",
+    "wcag": "1.4.3",
+    "fix": {
+      "generic": "Change the text or background color so there is more contrast between them. Use a contrast checker tool to verify.",
+      "wordpress": "In WordPress: edit the block → change text or background color in the block settings sidebar.",
+      "squarespace": "In Squarespace: edit the section → adjust colors in the Design panel.",
+      "google_sites": "In Google Sites: select the text → change the text color from the formatting toolbar.",
+      "civicplus": "In CivicPlus: edit the page → select the text → adjust colors in the editor toolbar.",
+      "finalsite": "In Finalsite: edit the element → change colors in the style settings."
+    }
+  },
+  "link-name": {
+    "severity": "major",
+    "title": "Link has no descriptive text",
+    "description": "This link has no text that describes where it goes. Screen reader users won't know what this link does.",
+    "wcag": "2.4.4",
+    "fix": {
+      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination."
+    }
+  },
+  "html-has-lang": {
+    "severity": "major",
+    "title": "Page missing language",
+    "description": "The page doesn't specify what language it's written in. Screen readers need this to pronounce words correctly.",
+    "wcag": "3.1.1",
+    "fix": {
+      "generic": "Add lang=\"en\" to the <html> tag in your page template.",
+      "wordpress": "This is usually set by your theme. Check Settings → General → Site Language.",
+      "squarespace": "Squarespace sets this automatically. If missing, contact Squarespace support."
+    }
+  },
+  "label": {
+    "severity": "critical",
+    "title": "Form field missing label",
+    "description": "This form field (text box, dropdown, etc.) has no label. Screen reader users won't know what to enter.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add a visible label to every form field. The label should describe what information to enter."
+    }
+  },
+  "button-name": {
+    "severity": "critical",
+    "title": "Button has no label",
+    "description": "This button has no text or label. Screen reader users won't know what this button does.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add text inside the button, or add an aria-label attribute describing the button's action."
+    }
+  },
+  "document-title": {
+    "severity": "major",
+    "title": "Page has no title",
+    "description": "The page is missing a title. Screen readers announce the page title when users navigate to a new page.",
+    "wcag": "2.4.2",
+    "fix": {
+      "generic": "Add a <title> tag in the page's <head> section. It should describe the page content.",
+      "wordpress": "In WordPress: edit the page → set the title at the top. WordPress generates the <title> tag.",
+      "squarespace": "In Squarespace: edit the page → Settings → SEO → set the SEO Title."
+    }
+  },
+  "heading-order": {
+    "severity": "minor",
+    "title": "Heading levels skip",
+    "description": "Headings skip a level (e.g., H1 to H3). This makes it harder for screen reader users to understand the page structure.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Use headings in order: H1 → H2 → H3. Don't skip levels for visual styling — use CSS instead."
+    }
+  },
+  "list": {
+    "severity": "minor",
+    "title": "List not properly structured",
+    "description": "This list isn't using proper HTML list tags. Screen readers may not announce it as a list.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Use <ul> or <ol> tags for lists instead of formatting text with dashes or numbers."
+    }
+  },
+  "region": {
+    "severity": "minor",
+    "title": "Content not in a landmark",
+    "description": "Some page content isn't inside a landmark region (header, nav, main, footer). This makes it harder for screen reader users to navigate.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Wrap page content in semantic HTML elements: <header>, <nav>, <main>, <footer>."
+    }
+  }
+}
