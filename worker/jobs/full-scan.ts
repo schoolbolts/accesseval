@@ -1,0 +1,369 @@
+import { prisma } from '../../src/lib/db';
+import { crawlSite } from '../crawler';
+import { createBrowser, scanPage } from '../scanner';
+import { scoreScanResults } from '../scorer';
+import { computeIssueDiff } from '../differ';
+import { notifyScanComplete } from '../notifier';
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface ScanJobData {
+  scanId: string;
+  siteId: string;
+}
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const JOB_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 hours
+const PAGE_RETRY_DELAY_MS = 2_000;
+const RATE_LIMIT_DELAY_MS = 1_000;
+const SCREENSHOTS_TO_KEEP = 2;
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isDeadlineExceeded(startedAt: number): boolean {
+  return Date.now() - startedAt > JOB_TIMEOUT_MS;
+}
+
+// ─── processFullScan ──────────────────────────────────────────────────────────
+
+export async function processFullScan(data: ScanJobData): Promise<void> {
+  const { scanId, siteId } = data;
+  const startedAt = Date.now();
+
+  // Mark scan as started
+  await prisma.scan.update({
+    where: { id: scanId },
+    data: { status: 'crawling', startedAt: new Date() },
+  });
+
+  // Fetch site config
+  const site = await prisma.site.findUnique({
+    where: { id: siteId },
+    include: { organization: true },
+  });
+
+  if (!site) {
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        status: 'failed',
+        errorMessage: `Site ${siteId} not found`,
+        completedAt: new Date(),
+      },
+    });
+    return;
+  }
+
+  const cmsType = site.cmsType ?? 'unknown';
+
+  // ─── Phase 1: Crawl ───────────────────────────────────────────────────────
+
+  let crawlResult: { urls: string[]; pdfUrls: string[] };
+  try {
+    crawlResult = await crawlSite(site.url, site.maxPages, (scanned, total) => {
+      console.log(`[full-scan] ${scanId} crawl progress: ${scanned}/${total}`);
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        status: 'failed',
+        errorMessage: `Crawl failed: ${message}`,
+        completedAt: new Date(),
+      },
+    });
+    return;
+  }
+
+  if (crawlResult.urls.length === 0) {
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        status: 'failed',
+        errorMessage: 'Crawl returned no URLs',
+        completedAt: new Date(),
+      },
+    });
+    return;
+  }
+
+  await prisma.scan.update({
+    where: { id: scanId },
+    data: {
+      status: 'scanning',
+      pagesFound: crawlResult.urls.length,
+    },
+  });
+
+  // ─── Phase 2: Scan pages ──────────────────────────────────────────────────
+
+  const browser = await createBrowser();
+  const pageIdMap = new Map<string, string>(); // url → page db id
+
+  type PageScanData = {
+    url: string;
+    issues: Array<{ severity: string }>;
+    pageDbId: string | null;
+  };
+
+  const scannedPages: PageScanData[] = [];
+  let pagesScanned = 0;
+  let pagesFailed = 0;
+
+  for (const pageUrl of crawlResult.urls) {
+    if (isDeadlineExceeded(startedAt)) {
+      console.warn(`[full-scan] ${scanId} deadline exceeded — stopping early`);
+      break;
+    }
+
+    // Attempt scan with one retry
+    let scanResult = await scanPage(browser, pageUrl, cmsType, { takeScreenshot: true });
+
+    if (scanResult.error) {
+      await sleep(PAGE_RETRY_DELAY_MS);
+      scanResult = await scanPage(browser, pageUrl, cmsType, { takeScreenshot: true });
+    }
+
+    if (scanResult.error) {
+      // Record error page
+      const page = await prisma.page.create({
+        data: {
+          scanId,
+          url: pageUrl,
+          title: null,
+          status: 'error',
+          issueCount: 0,
+        },
+      });
+      pageIdMap.set(pageUrl, page.id);
+      pagesFailed++;
+
+      scannedPages.push({ url: pageUrl, issues: [], pageDbId: page.id });
+    } else {
+      // Count issues
+      const issuesBySeverity = { critical: 0, major: 0, minor: 0 };
+      for (const issue of scanResult.issues) {
+        if (issue.severity === 'critical') issuesBySeverity.critical++;
+        else if (issue.severity === 'major') issuesBySeverity.major++;
+        else if (issue.severity === 'minor') issuesBySeverity.minor++;
+      }
+
+      const pageScore =
+        100 -
+        Math.min(
+          issuesBySeverity.critical * 10 + issuesBySeverity.major * 3 + issuesBySeverity.minor,
+          100
+        );
+
+      const page = await prisma.page.create({
+        data: {
+          scanId,
+          url: pageUrl,
+          title: scanResult.title || null,
+          status: 'scanned',
+          issueCount: scanResult.issues.length,
+          pageScore,
+        },
+      });
+      pageIdMap.set(pageUrl, page.id);
+
+      // Persist issues
+      if (scanResult.issues.length > 0) {
+        await prisma.issue.createMany({
+          data: scanResult.issues.map((issue) => ({
+            scanId,
+            pageId: page.id,
+            axeRuleId: issue.axeRuleId,
+            severity: issue.severity,
+            impact: issue.impact,
+            description: issue.description,
+            fixInstructions: issue.fixInstructions,
+            fixInstructionsCms: issue.fixInstructionsCms,
+            elementSelector: issue.elementSelector,
+            elementHtml: issue.elementHtml,
+            wcagCriteria: issue.wcagCriteria,
+            fingerprint: issue.fingerprint,
+          })),
+        });
+      }
+
+      scannedPages.push({ url: pageUrl, issues: scanResult.issues, pageDbId: page.id });
+      pagesScanned++;
+
+      // Update progress
+      await prisma.scan.update({
+        where: { id: scanId },
+        data: { pagesScanned: pagesScanned },
+      });
+    }
+
+    // Rate limiting
+    await sleep(RATE_LIMIT_DELAY_MS);
+  }
+
+  await browser.close();
+
+  // ─── Check if all pages failed ────────────────────────────────────────────
+
+  if (pagesScanned === 0 && pagesFailed > 0) {
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        status: 'failed',
+        errorMessage: 'All pages failed to scan',
+        completedAt: new Date(),
+      },
+    });
+    return;
+  }
+
+  // ─── Phase 3: Score ───────────────────────────────────────────────────────
+
+  const scoreInput = scannedPages
+    .filter((p) => p.pageDbId !== null && p.issues !== null)
+    .map((p) => ({
+      url: p.url,
+      issues: p.issues.map((i) => ({ severity: i.severity as 'critical' | 'major' | 'minor' })),
+    }));
+
+  const scoreResult = scoreScanResults(scoreInput);
+
+  // ─── Phase 4: Diff against previous scan ─────────────────────────────────
+
+  const previousScan = await prisma.scan.findFirst({
+    where: {
+      siteId,
+      status: { in: ['completed', 'partial'] },
+      id: { not: scanId },
+    },
+    orderBy: { createdAt: 'desc' },
+    include: {
+      issues: { select: { fingerprint: true } },
+    },
+  });
+
+  const currentFingerprints = scannedPages.flatMap((p) =>
+    p.issues.map((i) => (i as { fingerprint?: string }).fingerprint ?? '')
+  ).filter(Boolean);
+
+  const previousFingerprints = previousScan
+    ? previousScan.issues.map((i) => i.fingerprint)
+    : [];
+
+  // Get ignored fingerprints for this site
+  const ignoredSiteIssues = await prisma.siteIssue.findMany({
+    where: { siteId, status: 'ignored' },
+    select: { fingerprint: true },
+  });
+  const ignoredFingerprints = ignoredSiteIssues.map((si) => si.fingerprint);
+
+  const diff = computeIssueDiff({
+    currentFingerprints,
+    previousFingerprints,
+    ignoredFingerprints,
+  });
+
+  // Update SiteIssue records
+  const now = new Date();
+
+  // New issues
+  for (const fp of diff.newFingerprints) {
+    await prisma.siteIssue.upsert({
+      where: { siteId_fingerprint: { siteId, fingerprint: fp } },
+      create: {
+        siteId,
+        fingerprint: fp,
+        firstSeenScanId: scanId,
+        lastSeenScanId: scanId,
+        status: 'open',
+        statusChangedAt: now,
+      },
+      update: {
+        lastSeenScanId: scanId,
+        status: 'open',
+      },
+    });
+  }
+
+  // Persisting issues
+  for (const fp of diff.persistingFingerprints) {
+    await prisma.siteIssue.updateMany({
+      where: { siteId, fingerprint: fp },
+      data: { lastSeenScanId: scanId },
+    });
+  }
+
+  // Fixed issues
+  for (const fp of diff.fixedFingerprints) {
+    await prisma.siteIssue.updateMany({
+      where: { siteId, fingerprint: fp, status: 'open' },
+      data: {
+        status: 'fixed',
+        resolvedScanId: scanId,
+        statusChangedAt: now,
+      },
+    });
+  }
+
+  // ─── Phase 5: Finalize scan ───────────────────────────────────────────────
+
+  const finalStatus =
+    pagesFailed > 0 && pagesScanned > 0 ? 'partial' : 'completed';
+
+  const completedScan = await prisma.scan.update({
+    where: { id: scanId },
+    data: {
+      status: finalStatus,
+      score: scoreResult.score,
+      grade: scoreResult.grade,
+      criticalCount: scoreResult.criticalCount,
+      majorCount: scoreResult.majorCount,
+      minorCount: scoreResult.minorCount,
+      pagesScanned,
+      completedAt: new Date(),
+    },
+    include: {
+      site: {
+        include: { organization: true },
+      },
+    },
+  });
+
+  // ─── Phase 6: Screenshot cleanup ─────────────────────────────────────────
+
+  try {
+    const oldScans = await prisma.scan.findMany({
+      where: {
+        siteId,
+        status: { in: ['completed', 'partial'] },
+      },
+      orderBy: { createdAt: 'desc' },
+      skip: SCREENSHOTS_TO_KEEP,
+      select: { id: true },
+    });
+
+    // In a real implementation, we'd delete S3/filesystem screenshots here.
+    // For now, just log the IDs we'd clean up.
+    if (oldScans.length > 0) {
+      console.log(
+        `[full-scan] ${scanId} would clean screenshots for scans: ${oldScans.map((s) => s.id).join(', ')}`
+      );
+    }
+  } catch (err) {
+    console.warn(`[full-scan] ${scanId} screenshot cleanup failed:`, err);
+  }
+
+  // ─── Phase 7: Notify ──────────────────────────────────────────────────────
+
+  await notifyScanComplete(completedScan);
+
+  console.log(
+    `[full-scan] ${scanId} complete: status=${finalStatus} score=${scoreResult.score} grade=${scoreResult.grade} pages=${pagesScanned}/${crawlResult.urls.length}`
+  );
+}
