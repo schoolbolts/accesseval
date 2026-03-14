@@ -73,7 +73,7 @@ export default function SettingsPage() {
       <div className="card p-6 animate-fade-up stagger-2">
         <h2 className="font-body font-semibold text-ink mb-1">Team Members</h2>
         <p className="text-sm font-body text-slate-500 mb-5">
-          Invite colleagues to access this organization's dashboard.
+          Invite colleagues to access this organization&apos;s dashboard.
         </p>
 
         <form onSubmit={handleInvite} className="flex gap-2 mb-5">

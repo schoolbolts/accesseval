@@ -2,26 +2,290 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   AccessEval Design System
+   ═══════════════════════════════════════════════════════════════════ */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --ae-ink: #0a0f1e;
+    --ae-navy: #0f1729;
+    --ae-navy-light: #1a2744;
+    --ae-slate: #475569;
+    --ae-muted: #94a3b8;
+    --ae-border: #e2e8f0;
+    --ae-surface: #f1f5f9;
+    --ae-page: #ffffff;
+    --ae-emerald: #059669;
+    --ae-emerald-hover: #047857;
+    --ae-amber: #d97706;
+    --ae-red: #dc2626;
+    --ae-orange: #ea580c;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+  }
+
+  *,
+  *::before,
+  *::after {
+    border-color: var(--ae-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-outfit), system-ui, sans-serif;
+    color: var(--ae-ink);
+    background: var(--ae-page);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-fraunces), Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgba(5, 150, 105, 0.15);
+    color: var(--ae-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ae-emerald);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* ── Buttons ──────────────────────────────────────────────── */
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+      px-5 py-2.5
+      bg-emerald-600 text-white font-semibold text-sm
+      rounded-xl
+      transition-all duration-200 ease-out
+      hover:bg-emerald-700 hover:shadow-lg hover:-translate-y-px
+      active:translate-y-0 active:shadow-md
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .btn-primary-lg {
+    @apply btn-primary px-7 py-3.5 text-base rounded-2xl;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+      px-5 py-2.5
+      bg-white text-ink font-semibold text-sm
+      border border-slate-200
+      rounded-xl
+      transition-all duration-200 ease-out
+      hover:bg-slate-50 hover:border-slate-300 hover:shadow-card hover:-translate-y-px
+      active:translate-y-0
+      disabled:opacity-50 disabled:cursor-not-allowed;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+      px-4 py-2
+      text-slate-600 font-medium text-sm
+      rounded-xl
+      transition-all duration-150
+      hover:bg-slate-100 hover:text-ink;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+      px-4 py-2
+      text-red-600 font-medium text-sm
+      rounded-xl border border-red-200
+      transition-all duration-150
+      hover:bg-red-50;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  /* ── Cards ───────────────────────────────────────────────── */
+
+  .card {
+    @apply bg-white rounded-2xl shadow-card
+      transition-shadow duration-200;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-card-hover;
+  }
+
+  .card-padded {
+    @apply card p-6;
+  }
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+
+  .input {
+    @apply w-full px-4 py-2.5
+      bg-white
+      border border-slate-200
+      rounded-xl
+      text-sm text-ink
+      placeholder:text-slate-400
+      transition-all duration-200
+      focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500
+      disabled:opacity-50 disabled:bg-slate-50;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .input-lg {
+    @apply input px-5 py-3.5 text-base rounded-2xl;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-slate-700 mb-1.5;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .select {
+    @apply input appearance-none
+      bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')]
+      bg-no-repeat bg-[right_12px_center] pr-10;
+  }
+
+  /* ── Severity badges ─────────────────────────────────────── */
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5
+      rounded-lg text-xs font-semibold uppercase tracking-wider;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .badge-critical {
+    @apply badge bg-red-50 text-red-700 ring-1 ring-inset ring-red-200;
+  }
+
+  .badge-major {
+    @apply badge bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-200;
+  }
+
+  .badge-minor {
+    @apply badge bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200;
+  }
+
+  .badge-info {
+    @apply badge bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200;
+  }
+
+  /* ── Stat cards ──────────────────────────────────────────── */
+
+  .stat-card {
+    @apply card-padded flex flex-col items-center justify-center text-center
+      min-h-[120px];
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold tracking-tight;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium text-slate-500 uppercase tracking-widest mt-2;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  /* ── Section headings ────────────────────────────────────── */
+
+  .section-title {
+    @apply text-xs font-semibold text-slate-500
+      uppercase tracking-widest;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .page-title {
+    @apply text-display-sm text-ink;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .page-subtitle {
+    @apply text-sm text-slate-500 mt-1;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  /* ── Staggered animation delays ──────────────────────────── */
+
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.3s; }
+
+  /* ── Grain overlay for depth ─────────────────────────────── */
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Prose for generated HTML ────────────────────────────── */
+
+  .prose-ae {
+    @apply text-slate-700 leading-relaxed;
+  }
+
+  .prose-ae h1 {
+    @apply text-display-md text-ink mt-0 mb-4;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .prose-ae h2 {
+    @apply text-display-sm text-ink mt-8 mb-3;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .prose-ae p {
+    @apply mb-4;
+  }
+
+  .prose-ae ul {
+    @apply list-disc pl-5 mb-4 space-y-1;
+  }
+
+  .prose-ae a {
+    @apply text-emerald-600 underline underline-offset-2 hover:text-emerald-700;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, rgba(15, 23, 41, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   if (!scan) return NextResponse.json({ error: 'Scan not found' }, { status: 404 });
 
   const token = uuid();
-  const shareLink = await prisma.shareLink.create({
+  const _shareLink = await prisma.shareLink.create({
     data: {
       organizationId: user.organizationId,
       scanId,

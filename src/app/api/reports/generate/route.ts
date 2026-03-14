@@ -6,7 +6,7 @@ import { canUseFeature } from '@/lib/plan-limits';
 import { renderToBuffer } from '@react-pdf/renderer';
 import { BoardReport } from '@/components/reports/board-report';
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
