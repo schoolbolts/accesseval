@@ -33,7 +33,11 @@
     "description": "This link has no text that describes where it goes. Screen reader users won't know what this link does.",
     "wcag": "2.4.4",
     "fix": {
-      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination."
+      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination.",
+      "wordpress": "In WordPress: edit the link text in the block editor, or add an aria-label via a custom HTML block.",
+      "squarespace": "In Squarespace: click the link → edit the link text to be descriptive.",
+      "civicplus": "In CivicPlus: edit the page → update the link text to describe where it goes.",
+      "finalsite": "In Finalsite: click the link → update the display text to be descriptive."
     }
   },
   "html-has-lang": {
@@ -44,7 +48,10 @@
     "fix": {
       "generic": "Add lang=\"en\" to the <html> tag in your page template.",
       "wordpress": "This is usually set by your theme. Check Settings → General → Site Language.",
-      "squarespace": "Squarespace sets this automatically. If missing, contact Squarespace support."
+      "squarespace": "Squarespace sets this automatically. If missing, contact Squarespace support.",
+      "wix": "In Wix: go to Settings → Multilingual and ensure a language is set.",
+      "civicplus": "Contact CivicPlus support to set the page language attribute in the template.",
+      "finalsite": "Contact Finalsite support to set the lang attribute in the site template."
     }
   },
   "label": {
@@ -53,7 +60,11 @@
     "description": "This form field (text box, dropdown, etc.) has no label. Screen reader users won't know what to enter.",
     "wcag": "1.3.1",
     "fix": {
-      "generic": "Add a visible label to every form field. The label should describe what information to enter."
+      "generic": "Add a visible label to every form field. The label should describe what information to enter.",
+      "wordpress": "In WordPress: use a form plugin (like Gravity Forms or WPForms) and ensure each field has a label configured.",
+      "squarespace": "In Squarespace: edit the form block → click each field → enter a label in the field settings.",
+      "civicplus": "In CivicPlus: edit the form → click each field → fill in the 'Label' property.",
+      "finalsite": "In Finalsite: edit the form → ensure each field has a visible label configured."
     }
   },
   "button-name": {
@@ -62,7 +73,12 @@
     "description": "This button has no text or label. Screen reader users won't know what this button does.",
     "wcag": "4.1.2",
     "fix": {
-      "generic": "Add text inside the button, or add an aria-label attribute describing the button's action."
+      "generic": "Add text inside the button, or add an aria-label attribute describing the button's action.",
+      "wordpress": "In WordPress: edit the button block → add button text. For icon-only buttons, add aria-label via custom HTML.",
+      "squarespace": "In Squarespace: click the button → add descriptive button text in the settings.",
+      "wix": "In Wix: click the button → edit the button text in the panel.",
+      "civicplus": "In CivicPlus: edit the page → click the button → update the button label.",
+      "finalsite": "In Finalsite: edit the button element → add descriptive text."
     }
   },
   "document-title": {
@@ -73,7 +89,10 @@
     "fix": {
       "generic": "Add a <title> tag in the page's <head> section. It should describe the page content.",
       "wordpress": "In WordPress: edit the page → set the title at the top. WordPress generates the <title> tag.",
-      "squarespace": "In Squarespace: edit the page → Settings → SEO → set the SEO Title."
+      "squarespace": "In Squarespace: edit the page → Settings → SEO → set the SEO Title.",
+      "wix": "In Wix: go to Page SEO settings → enter a page title.",
+      "civicplus": "In CivicPlus: edit the page → fill in the 'Page Title' or 'SEO Title' field.",
+      "finalsite": "In Finalsite: edit the page → fill in the 'Browser Title' field in page settings."
     }
   },
   "heading-order": {
@@ -82,7 +101,12 @@
     "description": "Headings skip a level (e.g., H1 to H3). This makes it harder for screen reader users to understand the page structure.",
     "wcag": "1.3.1",
     "fix": {
-      "generic": "Use headings in order: H1 → H2 → H3. Don't skip levels for visual styling — use CSS instead."
+      "generic": "Use headings in order: H1 → H2 → H3. Don't skip levels for visual styling — use CSS instead.",
+      "wordpress": "In WordPress: in the block editor, select the heading block → change the heading level in the toolbar.",
+      "squarespace": "In Squarespace: click the text block → use the text style dropdown to set the correct heading level.",
+      "wix": "In Wix: click the text → use the text theme dropdown to set H1, H2, or H3 in order.",
+      "civicplus": "In CivicPlus: edit the page → select text → use the heading style dropdown to correct the level.",
+      "finalsite": "In Finalsite: edit the text element → use the paragraph format selector to choose the correct heading level."
     }
   },
   "list": {
@@ -91,7 +115,11 @@
     "description": "This list isn't using proper HTML list tags. Screen readers may not announce it as a list.",
     "wcag": "1.3.1",
     "fix": {
-      "generic": "Use <ul> or <ol> tags for lists instead of formatting text with dashes or numbers."
+      "generic": "Use <ul> or <ol> tags for lists instead of formatting text with dashes or numbers.",
+      "wordpress": "In WordPress: select the text → click the list icon in the block toolbar to convert to a proper list.",
+      "squarespace": "In Squarespace: select the text → click the bullet list or numbered list button in the editor.",
+      "civicplus": "In CivicPlus: select the text → use the list buttons in the editor toolbar.",
+      "finalsite": "In Finalsite: select the text → use the list formatting buttons in the Composer toolbar."
     }
   },
   "region": {
@@ -100,7 +128,675 @@
     "description": "Some page content isn't inside a landmark region (header, nav, main, footer). This makes it harder for screen reader users to navigate.",
     "wcag": "1.3.1",
     "fix": {
-      "generic": "Wrap page content in semantic HTML elements: <header>, <nav>, <main>, <footer>."
+      "generic": "Wrap page content in semantic HTML elements: <header>, <nav>, <main>, <footer>.",
+      "wordpress": "Most modern WordPress themes handle this. If using a custom theme, add proper semantic elements.",
+      "squarespace": "Squarespace templates handle landmark regions. If missing, contact Squarespace support.",
+      "civicplus": "Contact CivicPlus support to update the page template with proper landmark regions.",
+      "finalsite": "Contact Finalsite support to ensure the template uses proper semantic landmark elements."
+    }
+  },
+  "aria-allowed-attr": {
+    "severity": "critical",
+    "title": "ARIA attribute not allowed on this element",
+    "description": "An ARIA attribute is being used on an element that doesn't support it. This can confuse screen readers.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Remove the invalid ARIA attribute or change the element's role to one that supports it. Consult the ARIA specification for allowed attributes per role."
+    }
+  },
+  "aria-hidden-body": {
+    "severity": "critical",
+    "title": "Page body is hidden from screen readers",
+    "description": "The page body has aria-hidden=\"true\", which hides the entire page from screen reader users.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Remove aria-hidden=\"true\" from the <body> element. This attribute should never be placed on the body."
+    }
+  },
+  "aria-hidden-focus": {
+    "severity": "critical",
+    "title": "Focusable element is hidden from screen readers",
+    "description": "An element that can receive keyboard focus has aria-hidden=\"true\". Screen reader users can navigate to it but won't hear it announced.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Remove aria-hidden=\"true\" from focusable elements (links, buttons, inputs). If you want to hide it from all users, also add tabindex=\"-1\" and visually hide it."
+    }
+  },
+  "aria-input-field-name": {
+    "severity": "critical",
+    "title": "ARIA input field has no accessible name",
+    "description": "A form input with an ARIA role has no label that screen readers can announce.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a label using aria-label, aria-labelledby, or a visible <label> element associated with the input."
+    }
+  },
+  "aria-required-attr": {
+    "severity": "critical",
+    "title": "Required ARIA attribute missing",
+    "description": "An element with an ARIA role is missing a required ARIA attribute that the role needs to work properly.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add the missing required ARIA attribute(s) to the element. Check the WAI-ARIA specification for which attributes are required for the element's role."
+    }
+  },
+  "aria-required-children": {
+    "severity": "critical",
+    "title": "ARIA parent element missing required child elements",
+    "description": "An element with an ARIA role is missing required child elements. Screen readers expect a specific structure.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add the required child elements inside this ARIA parent. For example, a role=\"list\" element needs children with role=\"listitem\"."
+    }
+  },
+  "aria-required-parent": {
+    "severity": "critical",
+    "title": "ARIA element missing required parent",
+    "description": "An ARIA element is not inside the required parent element. Screen readers expect a specific structure.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Move this element inside the required parent element. For example, role=\"listitem\" must be inside role=\"list\"."
+    }
+  },
+  "aria-roles": {
+    "severity": "critical",
+    "title": "Invalid ARIA role",
+    "description": "An element has an ARIA role that doesn't exist or isn't valid. Screen readers won't be able to interpret it.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Replace the invalid role with a valid ARIA role, or remove the role attribute entirely."
+    }
+  },
+  "aria-toggle-field-name": {
+    "severity": "critical",
+    "title": "Toggle field has no accessible name",
+    "description": "A checkbox or radio button has no label that screen readers can announce to users.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a label using a <label> element, aria-label, or aria-labelledby attribute.",
+      "wordpress": "In WordPress: use a form plugin and ensure each toggle/checkbox field has a label configured.",
+      "civicplus": "In CivicPlus: edit the form → add a label for each checkbox or radio button field."
+    }
+  },
+  "aria-valid-attr": {
+    "severity": "critical",
+    "title": "Invalid ARIA attribute",
+    "description": "An ARIA attribute being used doesn't exist in the ARIA specification. Screen readers may ignore or misinterpret it.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Remove or correct the invalid ARIA attribute. Check the WAI-ARIA specification for the correct attribute names."
+    }
+  },
+  "aria-valid-attr-value": {
+    "severity": "critical",
+    "title": "ARIA attribute has invalid value",
+    "description": "An ARIA attribute has a value that isn't allowed. This can cause screen readers to behave unexpectedly.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Correct the ARIA attribute value. For example, aria-expanded must be 'true' or 'false', and aria-labelledby must point to an existing element ID."
+    }
+  },
+  "bypass": {
+    "severity": "major",
+    "title": "No way to skip navigation",
+    "description": "There's no skip link or other mechanism to bypass repeated navigation. Keyboard users must tab through all navigation items on every page.",
+    "wcag": "2.4.1",
+    "fix": {
+      "generic": "Add a 'Skip to main content' link as the first focusable element on the page. It can be visually hidden until focused.",
+      "wordpress": "Many accessible WordPress themes include skip links. If yours doesn't, add one to your theme's header.php file.",
+      "civicplus": "Contact CivicPlus support to add a skip navigation link to the site template.",
+      "finalsite": "Contact Finalsite support to add a skip navigation link to the page template."
+    }
+  },
+  "definition-list": {
+    "severity": "minor",
+    "title": "Definition list not properly structured",
+    "description": "A definition list (<dl>) contains elements that aren't proper definition terms (<dt>) or descriptions (<dd>).",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure <dl> elements only contain <dt> and <dd> children. Wrap any other content in <div> elements inside the <dl>."
+    }
+  },
+  "dlitem": {
+    "severity": "minor",
+    "title": "Definition list item in wrong context",
+    "description": "A <dt> or <dd> element is not inside a <dl> element. Screen readers won't announce this correctly.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Wrap <dt> and <dd> elements inside a <dl> element."
+    }
+  },
+  "focus-order-semantics": {
+    "severity": "minor",
+    "title": "Element should not be focusable",
+    "description": "An element that shouldn't receive keyboard focus has been made focusable. This disrupts the keyboard navigation order.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Remove tabindex from elements that shouldn't receive focus, or use tabindex=\"-1\" if you need to programmatically focus them."
+    }
+  },
+  "frame-focusable-content": {
+    "severity": "major",
+    "title": "Frame with focusable content has no title",
+    "description": "An iframe that contains interactive content doesn't have a title, so screen reader users don't know what's inside.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a title attribute to the <iframe> element that describes its content (e.g., <iframe title=\"YouTube video: Annual Report 2024\">)."
+    }
+  },
+  "frame-title": {
+    "severity": "major",
+    "title": "Frame missing title",
+    "description": "An iframe or frame has no title attribute. Screen reader users can't tell what content the frame contains.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a descriptive title attribute to every <iframe> element.",
+      "wordpress": "When embedding content, add title attributes via a Custom HTML block or the embed block's advanced settings.",
+      "squarespace": "When adding a Code Block with an iframe, include a title attribute in the iframe HTML.",
+      "wix": "In Wix: when adding an HTML iFrame element, include title in the HTML code.",
+      "civicplus": "In CivicPlus: when embedding iframes, add a title attribute to the HTML in the page editor.",
+      "finalsite": "In Finalsite: when adding embedded content, include a descriptive title attribute in the iframe HTML."
+    }
+  },
+  "frame-title-unique": {
+    "severity": "major",
+    "title": "Multiple frames have the same title",
+    "description": "Two or more iframes on the page have identical title attributes. Screen reader users can't distinguish between them.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Give each iframe a unique, descriptive title that identifies the specific content it contains."
+    }
+  },
+  "html-lang-valid": {
+    "severity": "major",
+    "title": "Page language code is invalid",
+    "description": "The page has a lang attribute but the language code isn't valid. Screen readers need a valid code to select the right voice.",
+    "wcag": "3.1.1",
+    "fix": {
+      "generic": "Use a valid BCP 47 language code in the lang attribute (e.g., lang=\"en\" for English, lang=\"es\" for Spanish)."
+    }
+  },
+  "html-xml-lang-mismatch": {
+    "severity": "major",
+    "title": "HTML lang and xml:lang don't match",
+    "description": "The lang and xml:lang attributes on the <html> element specify different languages. This can confuse screen readers.",
+    "wcag": "3.1.1",
+    "fix": {
+      "generic": "Ensure the lang and xml:lang attributes have the same value (e.g., both should be lang=\"en\" xml:lang=\"en\")."
+    }
+  },
+  "input-button-name": {
+    "severity": "critical",
+    "title": "Input button has no accessible name",
+    "description": "A button created with an <input type=\"button\"> or <input type=\"submit\"> element has no label.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a value attribute to the input element that describes the button's action (e.g., value=\"Submit Form\")."
+    }
+  },
+  "input-image-alt": {
+    "severity": "critical",
+    "title": "Image button missing alt text",
+    "description": "A button that uses an image (<input type=\"image\">) has no alt text describing what the button does.",
+    "wcag": "1.1.1",
+    "fix": {
+      "generic": "Add an alt attribute to the <input type=\"image\"> element that describes the button's action, not just what the image looks like."
+    }
+  },
+  "label-title-only": {
+    "severity": "major",
+    "title": "Form field labeled only by title attribute",
+    "description": "A form field's only label is a title attribute (tooltip). This isn't reliable for all screen readers.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add a visible <label> element or aria-label attribute instead of relying solely on the title attribute."
+    }
+  },
+  "landmark-banner-is-top-level": {
+    "severity": "minor",
+    "title": "Banner landmark is not at the top level",
+    "description": "The site header (<header> or role=\"banner\") is nested inside another landmark. It should be a top-level landmark.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Move the <header> or banner role element to be a direct child of <body>, not nested inside other landmark elements."
+    }
+  },
+  "landmark-complementary-is-top-level": {
+    "severity": "minor",
+    "title": "Complementary landmark is not at the top level",
+    "description": "An aside element or complementary role is nested inside another landmark instead of being a top-level landmark.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Move <aside> elements to be top-level landmarks, or ensure they're nested appropriately for their context."
+    }
+  },
+  "landmark-contentinfo-is-top-level": {
+    "severity": "minor",
+    "title": "Footer landmark is not at the top level",
+    "description": "The site footer (<footer> or role=\"contentinfo\") is nested inside another landmark instead of being top-level.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Move the <footer> element to be a direct child of <body>, not nested inside other landmark elements."
+    }
+  },
+  "landmark-main-is-top-level": {
+    "severity": "minor",
+    "title": "Main landmark is not at the top level",
+    "description": "The main content area (<main>) is nested inside another landmark instead of being a top-level landmark.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Move the <main> element to be a direct child of <body>, not nested inside other landmark elements."
+    }
+  },
+  "landmark-no-duplicate-banner": {
+    "severity": "minor",
+    "title": "Page has more than one banner landmark",
+    "description": "Multiple <header> or banner role elements exist at the top level. There should only be one site-wide banner.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure only one <header> element or role=\"banner\" exists as a top-level landmark on the page."
+    }
+  },
+  "landmark-no-duplicate-contentinfo": {
+    "severity": "minor",
+    "title": "Page has more than one contentinfo landmark",
+    "description": "Multiple <footer> or contentinfo role elements exist at the top level. There should only be one site-wide footer.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure only one <footer> element or role=\"contentinfo\" exists as a top-level landmark on the page."
+    }
+  },
+  "landmark-no-duplicate-main": {
+    "severity": "minor",
+    "title": "Page has more than one main landmark",
+    "description": "Multiple <main> elements exist on the page. There should be only one main content area.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure only one <main> element exists on the page. Remove or replace duplicates with <section> or <div>."
+    }
+  },
+  "landmark-one-main": {
+    "severity": "minor",
+    "title": "Page has no main landmark",
+    "description": "The page has no <main> element or role=\"main\" landmark. Screen reader users can't quickly jump to the main content.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Wrap the primary page content in a <main> element.",
+      "wordpress": "Most WordPress themes include a <main> element. If yours doesn't, update the theme template.",
+      "civicplus": "Contact CivicPlus support to add a <main> landmark to the page template.",
+      "finalsite": "Contact Finalsite support to ensure the page template includes a <main> landmark element."
+    }
+  },
+  "landmark-unique": {
+    "severity": "minor",
+    "title": "Landmark regions must have unique labels",
+    "description": "Multiple landmark regions of the same type exist but have identical labels, making them indistinguishable for screen reader users.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add unique aria-label or aria-labelledby attributes to distinguish landmark regions of the same type (e.g., aria-label=\"Main Navigation\" and aria-label=\"Footer Navigation\" for two <nav> elements)."
+    }
+  },
+  "link-in-text-block": {
+    "severity": "major",
+    "title": "Link not distinguishable from surrounding text",
+    "description": "A link within a paragraph of text is only distinguished by color (no underline). Users with color blindness may not recognize it as a link.",
+    "wcag": "1.4.1",
+    "fix": {
+      "generic": "Add an underline to inline links, or use another visual indicator beyond color (e.g., bold, border, icon).",
+      "wordpress": "In WordPress: add CSS to your theme to underline links within content: a { text-decoration: underline; }",
+      "squarespace": "In Squarespace: go to Design → Custom CSS and add link underline styles."
+    }
+  },
+  "listitem": {
+    "severity": "minor",
+    "title": "List item in wrong context",
+    "description": "A <li> element is not inside a <ul> or <ol> element. Screen readers won't announce it as a list item.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Wrap <li> elements inside a <ul> (unordered) or <ol> (ordered) element."
+    }
+  },
+  "marquee": {
+    "severity": "major",
+    "title": "Scrolling marquee text",
+    "description": "A <marquee> element creates auto-scrolling text. This can cause problems for users with cognitive disabilities and those who need more time to read.",
+    "wcag": "2.2.2",
+    "fix": {
+      "generic": "Remove the <marquee> element and display the content as static text instead."
+    }
+  },
+  "meta-refresh": {
+    "severity": "major",
+    "title": "Page auto-refreshes or redirects",
+    "description": "A meta refresh tag automatically redirects or reloads the page. This can disorient screen reader users mid-session.",
+    "wcag": "2.2.1",
+    "fix": {
+      "generic": "Remove the <meta http-equiv=\"refresh\"> tag. Use server-side redirects instead for page redirects."
+    }
+  },
+  "meta-viewport": {
+    "severity": "critical",
+    "title": "Viewport zoom disabled",
+    "description": "The page prevents users from zooming in. This affects users with low vision who need to enlarge content to read it.",
+    "wcag": "1.4.4",
+    "fix": {
+      "generic": "Remove user-scalable=no and maximum-scale=1 from the viewport meta tag. Use: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+      "wordpress": "Check your theme's header.php or functions.php and remove user-scalable=no from the viewport meta tag.",
+      "squarespace": "Squarespace may inject this. Contact Squarespace support if you cannot control the viewport meta tag."
+    }
+  },
+  "meta-viewport-large": {
+    "severity": "minor",
+    "title": "Viewport doesn't scale to large sizes",
+    "description": "The viewport meta tag limits how much users can zoom in, which can affect users with low vision.",
+    "wcag": "1.4.4",
+    "fix": {
+      "generic": "Set maximum-scale to at least 5 in the viewport meta tag, or remove the maximum-scale restriction entirely."
+    }
+  },
+  "object-alt": {
+    "severity": "critical",
+    "title": "Embedded object missing alternative text",
+    "description": "An <object> element (used for embedded content like PDFs or Flash) has no alternative text for users whose assistive technology cannot access it.",
+    "wcag": "1.1.1",
+    "fix": {
+      "generic": "Add descriptive text inside the <object> element, or add an aria-label attribute describing the embedded content."
+    }
+  },
+  "p-as-heading": {
+    "severity": "major",
+    "title": "Paragraph styled to look like a heading",
+    "description": "A paragraph element is styled to visually look like a heading but isn't marked up as one. Screen reader users can't navigate to it as a heading.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Change the paragraph to a proper heading element (<h2>, <h3>, etc.) to match its visual appearance.",
+      "wordpress": "In WordPress: click the text block → change the block type from Paragraph to Heading using the block toolbar.",
+      "squarespace": "In Squarespace: click the text → use the text style dropdown to select the appropriate heading level.",
+      "wix": "In Wix: click the text element → use the theme selector to set it as a heading instead of body text.",
+      "civicplus": "In CivicPlus: select the text → use the heading style selector in the editor toolbar.",
+      "finalsite": "In Finalsite: select the text → use the paragraph format dropdown to select the appropriate heading level."
+    }
+  },
+  "page-has-heading-one": {
+    "severity": "minor",
+    "title": "Page missing a top-level heading",
+    "description": "The page has no H1 heading. Screen reader users rely on H1 to understand the main topic of the page.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add a single H1 heading to the page that describes its main content.",
+      "wordpress": "In WordPress: the page title is usually the H1. Ensure your template uses the_title() wrapped in an <h1>.",
+      "squarespace": "In Squarespace: the page title block typically serves as H1. Check that it's styled as Heading 1.",
+      "civicplus": "In CivicPlus: ensure the page title is marked as H1 in the template settings.",
+      "finalsite": "In Finalsite: ensure the page title is configured to output as an H1 element."
+    }
+  },
+  "role-img-alt": {
+    "severity": "critical",
+    "title": "Image role element missing label",
+    "description": "An element with role=\"img\" has no accessible label. Screen readers can't describe this content to blind users.",
+    "wcag": "1.1.1",
+    "fix": {
+      "generic": "Add an aria-label attribute to describe the image content, or add aria-labelledby pointing to a nearby text description."
+    }
+  },
+  "scope-attr-valid": {
+    "severity": "critical",
+    "title": "Table scope attribute is invalid",
+    "description": "A table header's scope attribute has an invalid value. Screen readers use scope to understand table structure.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Set the scope attribute to a valid value: 'row', 'col', 'rowgroup', or 'colgroup'."
+    }
+  },
+  "scrollable-region-focusable": {
+    "severity": "major",
+    "title": "Scrollable area not keyboard accessible",
+    "description": "A scrollable region on the page can't be reached or scrolled with a keyboard. Keyboard users can't access all the content.",
+    "wcag": "2.1.1",
+    "fix": {
+      "generic": "Add tabindex=\"0\" to scrollable container elements so keyboard users can focus and scroll them."
+    }
+  },
+  "select-name": {
+    "severity": "critical",
+    "title": "Dropdown missing label",
+    "description": "A dropdown (<select>) element has no label. Screen reader users won't know what to select.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Add a <label> element associated with the select, or add an aria-label attribute.",
+      "wordpress": "In WordPress: use a form plugin and ensure each dropdown field has a label.",
+      "civicplus": "In CivicPlus: edit the form → add a label to each dropdown field.",
+      "finalsite": "In Finalsite: edit the form element → ensure each dropdown has a visible label."
+    }
+  },
+  "server-side-image-map": {
+    "severity": "major",
+    "title": "Server-side image map used",
+    "description": "A server-side image map is used. These are not accessible to keyboard-only users or screen reader users.",
+    "wcag": "2.1.1",
+    "fix": {
+      "generic": "Replace server-side image maps with client-side image maps (using <map> and <area> elements with alt text) or use separate links."
+    }
+  },
+  "skip-link": {
+    "severity": "minor",
+    "title": "Skip link doesn't work",
+    "description": "A skip navigation link exists but it doesn't point to a valid target on the page, so it doesn't actually skip navigation.",
+    "wcag": "2.4.1",
+    "fix": {
+      "generic": "Ensure the skip link's href matches the id of the main content element (e.g., <a href=\"#main-content\"> paired with <main id=\"main-content\">)."
+    }
+  },
+  "tabindex": {
+    "severity": "minor",
+    "title": "Tabindex value greater than 0",
+    "description": "An element has a tabindex greater than 0, which creates a custom tab order that can be confusing for keyboard users.",
+    "wcag": "2.4.3",
+    "fix": {
+      "generic": "Remove positive tabindex values. Use tabindex=\"0\" to make an element focusable in natural DOM order, or reorganize the HTML so elements appear in the logical tab order."
+    }
+  },
+  "table-duplicate-name": {
+    "severity": "minor",
+    "title": "Table caption and summary are identical",
+    "description": "A data table has the same text for its caption and summary. This creates redundant announcements for screen reader users.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Make the caption and summary serve different purposes: use caption for a brief title and summary for a detailed description of the table's structure."
+    }
+  },
+  "table-fake-caption": {
+    "severity": "minor",
+    "title": "Data table uses fake caption",
+    "description": "A table uses a regular cell to serve as a caption instead of the proper <caption> element.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Replace the fake caption cell with a proper <caption> element as the first child of <table>."
+    }
+  },
+  "td-has-header": {
+    "severity": "critical",
+    "title": "Table cell has no associated header",
+    "description": "A data cell in a complex table has no associated header cell. Screen readers can't tell users what column or row the data belongs to.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add proper <th> elements with scope attributes, or use headers and id attributes to associate data cells with their headers."
+    }
+  },
+  "td-headers-attr": {
+    "severity": "critical",
+    "title": "Table cell headers attribute is invalid",
+    "description": "A table cell's headers attribute references IDs that don't exist or don't belong to <th> elements.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure the headers attribute on <td> elements contains valid IDs of <th> elements in the same table."
+    }
+  },
+  "th-has-data-cells": {
+    "severity": "critical",
+    "title": "Table header has no associated data cells",
+    "description": "A <th> element doesn't appear to have any data cells that it acts as a header for.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Ensure every <th> element corresponds to data cells. If the element is not truly a header, change it to a <td> element."
+    }
+  },
+  "valid-lang": {
+    "severity": "major",
+    "title": "Language attribute has invalid code",
+    "description": "An element has a lang attribute but the language code is not valid. Screen readers need valid codes to select the correct speech voice.",
+    "wcag": "3.1.2",
+    "fix": {
+      "generic": "Use a valid BCP 47 language code (e.g., lang=\"fr\" for French, lang=\"de\" for German) on any element with a lang attribute."
+    }
+  },
+  "video-caption": {
+    "severity": "critical",
+    "title": "Video missing captions",
+    "description": "A video on the page has no captions. Deaf users and those in noisy environments can't access the audio content.",
+    "wcag": "1.2.2",
+    "fix": {
+      "generic": "Add closed captions to the video using a <track kind=\"captions\"> element. Provide a WebVTT (.vtt) caption file.",
+      "wordpress": "In WordPress: use a video block → ensure your video file has captions, or add them via YouTube/Vimeo and embed the captioned video.",
+      "squarespace": "In Squarespace: embed YouTube or Vimeo videos with captions enabled, or add a Video Block with a captioned video.",
+      "civicplus": "In CivicPlus: embed videos from YouTube or Vimeo with captions enabled, or upload a video with a captions track.",
+      "finalsite": "In Finalsite: embed captioned videos from YouTube or Vimeo, or add a WebVTT caption file to self-hosted videos."
+    }
+  },
+  "autocomplete-valid": {
+    "severity": "major",
+    "title": "Autocomplete attribute is invalid",
+    "description": "A form field has an autocomplete attribute with an invalid value. This prevents browsers and password managers from helping users fill in forms.",
+    "wcag": "1.3.5",
+    "fix": {
+      "generic": "Use valid HTML autocomplete values such as 'name', 'email', 'tel', 'street-address', 'postal-code', etc."
+    }
+  },
+  "avoid-inline-spacing": {
+    "severity": "major",
+    "title": "Inline text spacing overrides",
+    "description": "Inline styles force text spacing in a way that can't be adjusted by users. Some people need to override text spacing for readability.",
+    "wcag": "1.4.12",
+    "fix": {
+      "generic": "Move text spacing CSS (line-height, letter-spacing, word-spacing, margin/padding between lines) out of inline styles and into stylesheets where users can override them."
+    }
+  },
+  "empty-heading": {
+    "severity": "minor",
+    "title": "Heading is empty",
+    "description": "A heading element exists but contains no text. Screen readers will announce it as a heading but with nothing to say.",
+    "wcag": "2.4.6",
+    "fix": {
+      "generic": "Add descriptive text to the heading, or remove the empty heading element if it was added unintentionally.",
+      "wordpress": "In WordPress: check your blocks for empty heading blocks and either fill them in or delete them.",
+      "squarespace": "In Squarespace: check for empty text blocks styled as headings and remove or populate them.",
+      "civicplus": "In CivicPlus: edit the page and remove any empty heading elements from the content editor.",
+      "finalsite": "In Finalsite: edit the page and remove or fill in any empty heading elements in Composer."
+    }
+  },
+  "empty-table-header": {
+    "severity": "minor",
+    "title": "Table header cell is empty",
+    "description": "A <th> element has no text. Screen readers will announce an empty header, which doesn't help users understand the table.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Add descriptive text to the table header cell. If the cell intentionally has no header (e.g., a corner cell), use role=\"presentation\" or add a hidden label."
+    }
+  },
+  "form-field-multiple-labels": {
+    "severity": "minor",
+    "title": "Form field has multiple labels",
+    "description": "A form field is associated with more than one label. Screen readers may announce both, which can be confusing.",
+    "wcag": "1.3.1",
+    "fix": {
+      "generic": "Remove duplicate label associations. Each form field should have exactly one label."
+    }
+  },
+  "identical-links-same-purpose": {
+    "severity": "minor",
+    "title": "Links with same text go to different places",
+    "description": "Multiple links on the page have identical text but go to different destinations, making navigation confusing for screen reader users.",
+    "wcag": "2.4.9",
+    "fix": {
+      "generic": "Make each link's text unique and descriptive of its destination. If links must look the same visually, add aria-label attributes to differentiate them."
+    }
+  },
+  "label-content-name-mismatch": {
+    "severity": "major",
+    "title": "Button or link label doesn't match visible text",
+    "description": "The accessible name of a button or link doesn't match its visible text. Voice control users who say the visible text won't activate the right element.",
+    "wcag": "2.5.3",
+    "fix": {
+      "generic": "Ensure the aria-label or accessible name begins with or matches the visible text of the element."
+    }
+  },
+  "nested-interactive": {
+    "severity": "critical",
+    "title": "Interactive element nested inside another interactive element",
+    "description": "A button, link, or other interactive element is nested inside another interactive element. This confuses screen readers and keyboard navigation.",
+    "wcag": "4.1.2",
+    "fix": {
+      "generic": "Move the nested interactive element outside of its parent, or restructure the HTML so interactive elements are not nested inside each other."
+    }
+  },
+  "no-autoplay-audio": {
+    "severity": "major",
+    "title": "Audio plays automatically",
+    "description": "Audio on the page starts playing automatically. This can interfere with screen readers and startle users.",
+    "wcag": "1.4.2",
+    "fix": {
+      "generic": "Remove the autoplay attribute from audio and video elements. Let users choose to play audio themselves.",
+      "wordpress": "In WordPress: check any media blocks or audio widgets and disable autoplay in their settings.",
+      "squarespace": "In Squarespace: check video or audio blocks and uncheck the 'Autoplay' option."
+    }
+  },
+  "svg-img-alt": {
+    "severity": "critical",
+    "title": "SVG image missing accessible label",
+    "description": "An SVG image that conveys information has no accessible label, so screen reader users won't know what it shows.",
+    "wcag": "1.1.1",
+    "fix": {
+      "generic": "Add a <title> element as the first child of the <svg>, or add aria-label and role=\"img\" to the <svg> element."
+    }
+  },
+  "target-size": {
+    "severity": "minor",
+    "title": "Click target is too small",
+    "description": "A clickable element is smaller than 24x24 pixels, making it difficult for users with motor disabilities or tremors to click accurately.",
+    "wcag": "2.5.8",
+    "fix": {
+      "generic": "Increase the size of the clickable area to at least 24x24 pixels using padding or min-width/min-height CSS properties.",
+      "wordpress": "In WordPress: add CSS to increase the size of small buttons or links in your theme customizer or stylesheet.",
+      "squarespace": "In Squarespace: use Custom CSS to increase padding on small interactive elements."
+    }
+  },
+  "duplicate-id": {
+    "severity": "minor",
+    "title": "Duplicate ID on page",
+    "description": "Two or more elements on the page share the same ID attribute. IDs must be unique — duplicate IDs can break ARIA relationships and form labels.",
+    "wcag": "4.1.1",
+    "fix": {
+      "generic": "Ensure every element's id attribute is unique on the page. Rename duplicate IDs to be distinct.",
+      "wordpress": "In WordPress: check for plugins that may output duplicate IDs. Update or replace conflicting plugins.",
+      "squarespace": "In Squarespace: check for duplicate ID attributes in Code Blocks and custom HTML sections."
+    }
+  },
+  "duplicate-id-active": {
+    "severity": "critical",
+    "title": "Duplicate ID on active element",
+    "description": "Two interactive elements (buttons, inputs, links) share the same ID. ARIA labelledby and form labels may target the wrong element.",
+    "wcag": "4.1.1",
+    "fix": {
+      "generic": "Ensure every interactive element has a unique ID. Rename or remove duplicate IDs on focusable elements."
+    }
+  },
+  "duplicate-id-aria": {
+    "severity": "critical",
+    "title": "Duplicate ID used in ARIA attribute",
+    "description": "An ARIA attribute (like aria-labelledby or aria-describedby) references an ID that belongs to multiple elements.",
+    "wcag": "4.1.1",
+    "fix": {
+      "generic": "Make all element IDs unique. When aria-labelledby or aria-describedby references an ID, only one element should have that ID."
     }
   }
 }
