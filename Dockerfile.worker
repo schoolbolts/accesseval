@@ -1,14 +1,15 @@
 FROM node:20-alpine
 
-# Build tools for native deps (sharp, bcrypt) + Playwright/Chromium deps
-RUN apk add --no-cache \
-    python3 make g++ \
-    chromium nss freetype harfbuzz ca-certificates ttf-freefont \
-    vips-dev
+# Chromium + runtime deps only (no build toolchain)
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts && npm rebuild sharp
+
+# Skip sharp (only used by batch scripts run locally, not the worker)
+RUN npm ci --omit=optional --ignore-scripts
+# Rebuild only bcryptjs if needed (pure JS, fast)
+RUN npm rebuild bcryptjs 2>/dev/null || true
 
 COPY . .
 RUN npx prisma generate
