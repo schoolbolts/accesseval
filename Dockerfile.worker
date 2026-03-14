@@ -6,10 +6,7 @@ RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefo
 WORKDIR /app
 COPY package.json package-lock.json ./
 
-# Skip sharp (only used by batch scripts run locally, not the worker)
-RUN npm ci --omit=optional --ignore-scripts
-# Rebuild only bcryptjs if needed (pure JS, fast)
-RUN npm rebuild bcryptjs 2>/dev/null || true
+RUN npm ci --ignore-scripts
 
 COPY . .
 RUN npx prisma generate
