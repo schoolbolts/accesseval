@@ -50,7 +50,7 @@ export function normalizeUrl(urlStr: string): string {
 
   // Strip tracking params
   const toDelete: string[] = [];
-  for (const key of url.searchParams.keys()) {
+  for (const key of Array.from(url.searchParams.keys())) {
     if (TRACKING_PARAMS.has(key) || key.startsWith('utm_')) {
       toDelete.push(key);
     }
