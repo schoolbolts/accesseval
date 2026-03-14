@@ -1,7 +1,9 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 
 function scoreColor(score: number | null) {
   if (score == null) return 'text-slate-400';
@@ -21,10 +23,7 @@ export default async function PagesPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect('/login');
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return (
@@ -96,19 +95,25 @@ export default async function PagesPage() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {pages.map((page) => (
-              <tr key={page.id} className="hover:bg-slate-50/50 transition-colors">
+              <tr key={page.id} className="hover:bg-slate-50/50 transition-colors group">
                 <td className="px-5 py-3.5">
-                  <div className="font-body font-medium text-ink truncate max-w-sm">
-                    {page.title || new URL(page.url).pathname || '/'}
-                  </div>
-                  <div className="text-xs font-body text-slate-400 truncate max-w-sm mt-0.5">{page.url}</div>
+                  <Link href={`/pages/${page.id}`} className="block">
+                    <div className="font-body font-medium text-ink truncate max-w-sm group-hover:text-emerald-600 transition-colors">
+                      {page.title || new URL(page.url).pathname || '/'}
+                    </div>
+                    <div className="text-xs font-body text-slate-400 truncate max-w-sm mt-0.5">{page.url}</div>
+                  </Link>
                 </td>
                 <td className="px-5 py-3.5 text-center">
-                  <span className={`font-display font-bold text-base ${scoreColor(page.pageScore)}`}>
-                    {page.pageScore != null ? page.pageScore : '--'}
-                  </span>
+                  <Link href={`/pages/${page.id}`}>
+                    <span className={`font-display font-bold text-base ${scoreColor(page.pageScore)}`}>
+                      {page.pageScore != null ? page.pageScore : '--'}
+                    </span>
+                  </Link>
                 </td>
-                <td className="px-5 py-3.5 text-center font-body text-slate-700">{page.issueCount}</td>
+                <td className="px-5 py-3.5 text-center font-body text-slate-700">
+                  <Link href={`/pages/${page.id}`}>{page.issueCount}</Link>
+                </td>
                 <td className="px-5 py-3.5 text-center">
                   <span className={statusBadgeClass(page.status)}>
                     {page.status}

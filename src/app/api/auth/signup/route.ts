@@ -52,21 +52,27 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Create Stripe customer
-  const customer = await getStripe().customers.create({ email, name: orgName });
-
   // Hash password
   const passwordHash = await bcrypt.hash(password, 12);
 
   const slug = buildSlug(orgName);
   const maxPages = PLAN_LIMITS[selectedPlan].maxPages;
 
+  // In dev mode (no Stripe keys), skip Stripe and go straight to dashboard
+  const isDev = !process.env.STRIPE_SECRET_KEY;
+
+  let stripeCustomerId = `dev_${Date.now()}`;
+  if (!isDev) {
+    const customer = await getStripe().customers.create({ email, name: orgName });
+    stripeCustomerId = customer.id;
+  }
+
   // Create Organization + User + Site in one nested Prisma create
   await prisma.organization.create({
     data: {
       name: orgName,
       slug,
-      stripeCustomerId: customer.id,
+      stripeCustomerId,
       plan: selectedPlan,
       planStatus: 'active',
       users: {
@@ -77,7 +83,7 @@ export async function POST(req: NextRequest) {
           role: 'owner',
         },
       },
-      site: {
+      sites: {
         create: {
           url: siteUrl,
           maxPages,
@@ -86,12 +92,17 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  if (isDev) {
+    // Skip Stripe checkout in dev — redirect straight to dashboard
+    return NextResponse.json({ checkoutUrl: '/login' }, { status: 201 });
+  }
+
   // Create Stripe checkout session
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const priceId = PRICE_IDS[selectedPlan];
 
   const session = await createCheckoutSession({
-    customerId: customer.id,
+    customerId: stripeCustomerId,
     priceId,
     successUrl: `${appUrl}/dashboard?checkout=success`,
     cancelUrl: `${appUrl}/signup?checkout=canceled`,

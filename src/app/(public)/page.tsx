@@ -1,14 +1,38 @@
+import type { Metadata } from 'next';
 import { FreeScanForm } from '@/components/scan/free-scan-form';
 
-export const metadata = {
-  title: 'AccessEval — Free ADA Website Accessibility Scanner',
-  description:
-    'Scan your school or government website for ADA Title II compliance issues. Get a free accessibility report in minutes.',
+export const metadata: Metadata = {
+  title: 'Free ADA Website Accessibility Scanner for Schools & Governments',
+  description: 'Check your school or government website for ADA Title II compliance issues in minutes. Free accessibility scan with plain-English fix instructions. No signup required.',
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function LandingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'AccessEval',
+            applicationCategory: 'WebApplication',
+            operatingSystem: 'Web',
+            description: 'ADA website accessibility scanner for schools and governments. Checks WCAG 2.1 AA compliance.',
+            offers: {
+              '@type': 'AggregateOffer',
+              priceCurrency: 'USD',
+              lowPrice: '0',
+              highPrice: '599',
+              offerCount: '4',
+            },
+          }),
+        }}
+      />
+
       {/* Hero */}
       <section className="relative bg-navy-800 bg-grid grain overflow-hidden py-24 px-4">
         {/* Decorative gradient orb */}
@@ -295,6 +319,7 @@ export default function LandingPage() {
                 {[
                   { href: '/#how-it-works', label: 'How it works' },
                   { href: '/#pricing', label: 'Pricing' },
+                  { href: '/schools', label: 'Reports' },
                   { href: '/signup', label: 'Get started' },
                 ].map(({ href, label }) => (
                   <a

@@ -15,6 +15,7 @@
     "worker": "npx tsx worker/index.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1009.0",
     "@aws-sdk/client-ses": "^3.1009.0",
     "@axe-core/playwright": "^4.11.1",
     "@prisma/adapter-pg": "^7.5.0",
@@ -25,6 +26,7 @@
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.71.0",
     "cheerio": "^1.2.0",
+    "csv-parse": "^6.1.0",
     "ioredis": "^5.10.0",
     "next": "14.2.35",
     "next-auth": "^4.24.13",
@@ -35,6 +37,7 @@
     "react-dom": "^18",
     "react-email": "^5.2.9",
     "recharts": "^3.8.0",
+    "sharp": "^0.34.5",
     "stripe": "^20.4.1",
     "uuid": "^13.0.0"
   },

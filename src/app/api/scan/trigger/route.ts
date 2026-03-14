@@ -1,12 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { getActiveSite } from '@/lib/active-site';
 import { prisma } from '@/lib/db';
 import { scanQueue } from '@/lib/queue';
 import { getOnDemandLimit } from '@/lib/plan-limits';
 import type { PlanName } from '@/lib/plan-limits';
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -15,15 +16,14 @@ export async function POST() {
   const plan = session.user.plan as PlanName;
   const onDemandLimit = getOnDemandLimit(plan);
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: {
-      id: true,
-      url: true,
-      onDemandScansUsed: true,
-      onDemandResetAt: true,
-    },
-  });
+  // Accept optional siteId in body, otherwise use active site
+  let siteId: string | undefined;
+  try {
+    const body = await req.json();
+    siteId = body.siteId;
+  } catch {}
+
+  const site = await getActiveSite(session.user.organizationId, siteId);
 
   if (!site) {
     return NextResponse.json({ error: 'No site configured' }, { status: 404 });

@@ -27,12 +27,7 @@ export default function TriggerScanButton() {
   }
 
   return (
-    <div className="flex items-center gap-3">
-      {error && (
-        <p className="text-sm font-body text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-1.5">
-          {error}
-        </p>
-      )}
+    <div className="flex flex-col items-end gap-2">
       <button
         onClick={handleTrigger}
         disabled={loading}
@@ -40,15 +35,26 @@ export default function TriggerScanButton() {
       >
         {loading ? (
           <>
-            <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+            <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
             Starting...
           </>
         ) : (
-          'Run scan now'
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+              <path d="M6.3 2.84A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.27l9.344-5.891a1.5 1.5 0 000-2.538L6.3 2.84z" />
+            </svg>
+            Run scan now
+          </>
         )}
       </button>
+      {error && (
+        <p className="text-xs font-body text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-1.5 max-w-xs text-right">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

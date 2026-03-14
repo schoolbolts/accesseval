@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import type { IssueSeverity } from '@prisma/client';
 
 const PAGE_SIZE = 50;
@@ -17,10 +18,7 @@ export async function GET(req: NextRequest) {
   const pageParam = parseInt(searchParams.get('page') ?? '1', 10);
   const page = isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return NextResponse.json({ issues: [], total: 0, page, pageSize: PAGE_SIZE });

@@ -6,6 +6,7 @@ import { createBrowser, scanPage } from '../scanner';
 import { scoreScanResults } from '../scorer';
 import { computeIssueDiff } from '../differ';
 import { notifyScanComplete } from '../notifier';
+import { generateScanSummary } from '../../src/lib/ai-summary';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -157,12 +158,8 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
         else if (issue.severity === 'minor') issuesBySeverity.minor++;
       }
 
-      const pageScore =
-        100 -
-        Math.min(
-          issuesBySeverity.critical * 10 + issuesBySeverity.major * 3 + issuesBySeverity.minor,
-          100
-        );
+      const { calculatePageScore } = await import('../../src/lib/scoring');
+      const pageScore = calculatePageScore(issuesBySeverity);
 
       const page = await prisma.page.create({
         data: {
@@ -337,6 +334,56 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
       },
     },
   });
+
+  // ─── Phase 5b: AI summary ────────────────────────────────────────────────
+
+  try {
+    // Build grouped issues for the prompt
+    const issueGroups = new Map<string, { severity: string; description: string; count: number; pages: Set<string> }>();
+    for (const page of scannedPages) {
+      for (const issue of page.issues) {
+        const iss = issue as { axeRuleId?: string; severity: string; description?: string };
+        const ruleId = iss.axeRuleId ?? 'unknown';
+        if (!issueGroups.has(ruleId)) {
+          issueGroups.set(ruleId, {
+            severity: iss.severity,
+            description: iss.description ?? ruleId,
+            count: 0,
+            pages: new Set(),
+          });
+        }
+        const g = issueGroups.get(ruleId)!;
+        g.count++;
+        g.pages.add(page.url);
+      }
+    }
+
+    const uniqueIssues = Array.from(issueGroups.entries()).map(([ruleId, g]) => ({
+      axeRuleId: ruleId,
+      severity: g.severity,
+      description: g.description,
+      count: g.count,
+      pagesAffected: g.pages.size,
+    }));
+
+    const summary = await generateScanSummary({
+      siteUrl: site.url,
+      score: scoreResult.score,
+      grade: scoreResult.grade,
+      pagesScanned,
+      uniqueIssues,
+    });
+
+    if (summary) {
+      await prisma.scan.update({
+        where: { id: scanId },
+        data: { summary },
+      });
+      console.log(`[full-scan] ${scanId} AI summary generated (${summary.length} chars)`);
+    }
+  } catch (err) {
+    console.warn(`[full-scan] ${scanId} AI summary failed:`, err);
+  }
 
   // ─── Phase 6: Screenshot cleanup ─────────────────────────────────────────
 

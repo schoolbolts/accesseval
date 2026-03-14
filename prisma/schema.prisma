@@ -101,7 +101,7 @@ model Organization {
 
   users       User[]
   invitations Invitation[]
-  site        Site?
+  sites       Site[]
   shareLinks  ShareLink[]
   statement   AccessibilityStatement?
 
@@ -141,7 +141,7 @@ model Invitation {
 
 model Site {
   id                String        @id @default(uuid())
-  organizationId    String        @unique @map("organization_id")
+  organizationId    String        @map("organization_id")
   url               String
   cmsType           CmsType       @default(unknown) @map("cms_type")
   scanFrequency     ScanFrequency @default(monthly) @map("scan_frequency")
@@ -170,6 +170,7 @@ model Scan {
   criticalCount Int         @default(0) @map("critical_count")
   majorCount    Int         @default(0) @map("major_count")
   minorCount    Int         @default(0) @map("minor_count")
+  summary       String?
   errorMessage  String?     @map("error_message")
   createdAt     DateTime    @default(now()) @map("created_at")
   startedAt     DateTime?   @map("started_at")
@@ -307,4 +308,33 @@ model AccessibilityStatement {
   organization Organization @relation(fields: [organizationId], references: [id])
 
   @@map("accessibility_statements")
+}
+
+model District {
+  id          String   @id @default(uuid())
+  ncesId      String   @unique @map("nces_id")
+  name        String
+  slug        String   @unique
+  website     String?
+  city        String?
+  state       String?
+  stateCode   String?  @map("state_code")
+  phone       String?
+  leaType     String?  @map("lea_type")
+  gradeRange  String?  @map("grade_range")
+  // Scan results (populated by batch scanner)
+  score       Int?
+  grade       String?
+  criticalCount Int    @default(0) @map("critical_count")
+  majorCount    Int    @default(0) @map("major_count")
+  minorCount    Int    @default(0) @map("minor_count")
+  lastScannedAt DateTime? @map("last_scanned_at")
+  scanResultsJson Json? @map("scan_results_json")
+  screenshotUrl String? @map("screenshot_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([stateCode])
+  @@index([score])
+  @@map("districts")
 }

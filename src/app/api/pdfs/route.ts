@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import { canUseFeature } from '@/lib/plan-limits';
 import type { PlanName } from '@/lib/plan-limits';
 
@@ -16,10 +17,7 @@ export async function GET() {
     return NextResponse.json({ error: 'PDF inventory requires a higher plan' }, { status: 403 });
   }
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return NextResponse.json({ pdfs: [] });

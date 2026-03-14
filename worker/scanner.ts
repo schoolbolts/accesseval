@@ -37,7 +37,7 @@ export interface ScanOptions {
 
 export const SEVERITY_MAP: Record<string, IssueSeverity> = {
   critical: 'critical',
-  serious: 'critical',
+  serious: 'major',
   moderate: 'major',
   minor: 'minor',
 };
@@ -88,7 +88,11 @@ export async function scanPage(
     const page = await context.newPage();
     page.setDefaultTimeout(timeout);
 
-    await page.goto(url, { waitUntil: 'networkidle', timeout });
+    // Use domcontentloaded — networkidle hangs on sites with persistent
+    // analytics/tracker connections (very common on school/gov sites).
+    // After DOM is ready, give an extra 2s for JS to settle.
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
+    await page.waitForTimeout(2000);
 
     const title = await page.title();
 

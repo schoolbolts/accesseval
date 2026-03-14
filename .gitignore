@@ -26,7 +26,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
+.env.*
 .env*.local
+
+# data files (large CSVs, etc.)
+/data/
 
 # vercel
 .vercel

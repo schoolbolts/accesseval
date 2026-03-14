@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import { canUseFeature } from '@/lib/plan-limits';
 import type { PlanName } from '@/lib/plan-limits';
 import IssuesList from '@/components/issues/issues-list';
@@ -13,10 +14,7 @@ export default async function IssuesPage() {
   const plan = session.user.plan as PlanName;
   const hasCmsFixInstructions = canUseFeature(plan, 'cmsFixInstructions');
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return (

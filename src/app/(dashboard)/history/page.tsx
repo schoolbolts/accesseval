@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import TriggerScanButton from '@/components/history/trigger-scan-button';
 
 function gradeColor(grade: string | null) {
@@ -24,10 +25,7 @@ export default async function HistoryPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect('/login');
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true, url: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return (

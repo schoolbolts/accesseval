@@ -20,7 +20,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
   let scanResult;
 
   try {
-    scanResult = await scanPage(browser, url, 'unknown', { takeScreenshot: false });
+    scanResult = await scanPage(browser, url, 'unknown', { takeScreenshot: false, timeout: 60_000 });
   } finally {
     await browser.close();
   }
@@ -45,7 +45,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
   const scoreResult = scoreScanResults([
     {
       url,
-      issues: scanResult.issues.map((i) => ({ severity: i.severity })),
+      issues: scanResult.issues.map((i) => ({ severity: i.severity, axeRuleId: i.axeRuleId })),
     },
   ]);
 

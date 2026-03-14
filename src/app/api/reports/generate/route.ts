@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import { canUseFeature } from '@/lib/plan-limits';
 import { renderToBuffer } from '@react-pdf/renderer';
 import { BoardReport } from '@/components/reports/board-report';
@@ -17,12 +18,15 @@ export async function POST(_request: NextRequest) {
 
   const org = await prisma.organization.findUnique({
     where: { id: user.organizationId },
-    include: { site: true, statement: true },
+    include: { statement: true },
   });
-  if (!org?.site) return NextResponse.json({ error: 'No site' }, { status: 404 });
+  if (!org) return NextResponse.json({ error: 'Organization not found' }, { status: 404 });
+
+  const site = await getActiveSite(user.organizationId);
+  if (!site) return NextResponse.json({ error: 'No site' }, { status: 404 });
 
   const latestScan = await prisma.scan.findFirst({
-    where: { siteId: org.site.id, status: { in: ['completed', 'partial'] } },
+    where: { siteId: site.id, status: { in: ['completed', 'partial'] } },
     orderBy: { completedAt: 'desc' },
   });
   if (!latestScan) return NextResponse.json({ error: 'No scans available' }, { status: 404 });
@@ -37,7 +41,7 @@ export async function POST(_request: NextRequest) {
   const monthAgo = new Date();
   monthAgo.setMonth(monthAgo.getMonth() - 1);
   const issuesFixed = await prisma.siteIssue.count({
-    where: { siteId: org.site.id, status: 'fixed', statusChangedAt: { gte: monthAgo } },
+    where: { siteId: site.id, status: 'fixed', statusChangedAt: { gte: monthAgo } },
   });
 
   const pdfCount = await prisma.pdfAsset.count({ where: { scanId: latestScan.id } });
@@ -45,7 +49,7 @@ export async function POST(_request: NextRequest) {
   const pdfBuffer = await renderToBuffer(
     BoardReport({
       orgName: org.name,
-      siteUrl: org.site.url,
+      siteUrl: site.url,
       reportDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       grade: latestScan.grade || 'N/A',
       score: latestScan.score || 0,

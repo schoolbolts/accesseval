@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { createWorker, scanQueue } from '../src/lib/queue';
 import { processFullScan, type ScanJobData } from './jobs/full-scan';
 import { processFreeScan, type FreeScanJobData } from './jobs/free-scan';

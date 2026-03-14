@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -9,10 +10,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const site = await prisma.site.findUnique({
-    where: { organizationId: session.user.organizationId },
-    select: { id: true },
-  });
+  const site = await getActiveSite(session.user.organizationId);
 
   if (!site) {
     return NextResponse.json({ scans: [] });

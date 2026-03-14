@@ -1,6 +1,7 @@
 export const PLAN_LIMITS = {
   scan: {
     maxPages: 100,
+    maxSites: 1,
     scanFrequency: 'monthly' as const,
     onDemandScansPerMonth: 2,
     teamMembers: 1,
@@ -18,6 +19,7 @@ export const PLAN_LIMITS = {
   },
   comply: {
     maxPages: 500,
+    maxSites: 5,
     scanFrequency: 'weekly' as const,
     onDemandScansPerMonth: 5,
     teamMembers: 3,
@@ -35,6 +37,7 @@ export const PLAN_LIMITS = {
   },
   fix: {
     maxPages: 2000,
+    maxSites: 10,
     scanFrequency: 'weekly' as const,
     onDemandScansPerMonth: Infinity,
     teamMembers: 10,
@@ -69,4 +72,8 @@ export function getOnDemandLimit(plan: PlanName): number {
 
 export function getTeamMemberLimit(plan: PlanName): number {
   return PLAN_LIMITS[plan].teamMembers;
+}
+
+export function getMaxSites(plan: PlanName): number {
+  return PLAN_LIMITS[plan].maxSites;
 }

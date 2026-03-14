@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { getActiveSite } from '@/lib/active-site';
 import { canUseFeature } from '@/lib/plan-limits';
 
 function generateStatementHtml(params: {
@@ -67,18 +68,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
-  const org = await prisma.organization.findUnique({
-    where: { id: user.organizationId },
-    include: { site: true },
-  });
-  if (!org?.site) return NextResponse.json({ error: 'No site' }, { status: 404 });
+  const [site, org] = await Promise.all([
+    getActiveSite(user.organizationId),
+    prisma.organization.findUnique({ where: { id: user.organizationId }, select: { slug: true } }),
+  ]);
+  if (!site) return NextResponse.json({ error: 'No site' }, { status: 404 });
 
   const openIssueCount = await prisma.siteIssue.count({
-    where: { siteId: org.site.id, status: 'open' },
+    where: { siteId: site.id, status: 'open' },
   });
 
   const latestScan = await prisma.scan.findFirst({
-    where: { siteId: org.site.id, status: { in: ['completed', 'partial'] } },
+    where: { siteId: site.id, status: { in: ['completed', 'partial'] } },
     orderBy: { completedAt: 'desc' },
   });
 
@@ -87,7 +88,7 @@ export async function POST(request: NextRequest) {
     entityType,
     contactEmail,
     contactPhone,
-    siteUrl: org.site.url,
+    siteUrl: site.url,
     openIssueCount,
     lastScanDate: latestScan?.completedAt?.toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric',
@@ -114,5 +115,5 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  return NextResponse.json({ statement, publicUrl: `/statement/${org.slug}` });
+  return NextResponse.json({ statement, publicUrl: `/statement/${org?.slug}` });
 }
