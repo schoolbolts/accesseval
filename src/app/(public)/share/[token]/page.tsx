@@ -19,52 +19,95 @@ export default async function SharedReportPage({ params }: { params: { token: st
   if (shareLink.expiresAt && shareLink.expiresAt < new Date()) notFound();
 
   const { scan } = shareLink;
-  const gradeColor = (scan.score || 0) >= 80 ? 'text-green-600'
-    : (scan.score || 0) >= 60 ? 'text-yellow-600' : 'text-red-600';
+
+  const score = scan.score || 0;
+  const { gradeColor, ringColor, label } =
+    score >= 80
+      ? { gradeColor: 'text-emerald-500', ringColor: 'ring-emerald-400', label: 'Good' }
+      : score >= 60
+        ? { gradeColor: 'text-amber-500', ringColor: 'ring-amber-400', label: 'Fair' }
+        : { gradeColor: 'text-red-500', ringColor: 'ring-red-400', label: 'Needs attention' };
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6">
-      <h1 className="text-2xl font-bold mb-1">{scan.site.organization.name}</h1>
-      <p className="text-gray-500 mb-8">{scan.site.url} — Scanned {scan.completedAt?.toLocaleDateString()}</p>
-
-      <div className="text-center mb-8 p-8 bg-gray-50 rounded-xl">
-        <div className={`text-7xl font-bold ${gradeColor}`}>{scan.grade}</div>
-        <div className="text-xl text-gray-600 mt-2">{scan.score}/100</div>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="font-display text-display-md text-ink mb-1">
+          {scan.site.organization.name}
+        </h1>
+        <p className="font-body text-slate-400 text-sm">
+          {scan.site.url} &mdash; Scanned{' '}
+          {scan.completedAt?.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </p>
       </div>
 
+      {/* Grade card */}
+      <div className="card p-10 mb-6 flex flex-col items-center">
+        <div
+          className={`w-32 h-32 rounded-full ring-4 ${ringColor} flex flex-col items-center justify-center`}
+        >
+          <span className={`font-display text-6xl font-extrabold leading-none ${gradeColor}`}>
+            {scan.grade}
+          </span>
+        </div>
+        <div className="mt-4 text-center">
+          <p className="font-display text-display-sm text-ink">{scan.score}/100</p>
+          <p className={`font-body text-sm font-medium mt-1 ${gradeColor}`}>{label}</p>
+        </div>
+      </div>
+
+      {/* Issue count stat cards */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="text-center p-4 bg-red-50 rounded-lg">
-          <div className="text-2xl font-bold text-red-600">{scan.criticalCount}</div>
-          <div className="text-sm">Critical</div>
+        <div className="stat-card border-l-4 border-l-red-400">
+          <div className="stat-value text-red-500">{scan.criticalCount}</div>
+          <div className="stat-label text-red-600">Critical</div>
         </div>
-        <div className="text-center p-4 bg-yellow-50 rounded-lg">
-          <div className="text-2xl font-bold text-yellow-600">{scan.majorCount}</div>
-          <div className="text-sm">Major</div>
+        <div className="stat-card border-l-4 border-l-orange-400">
+          <div className="stat-value text-orange-500">{scan.majorCount}</div>
+          <div className="stat-label text-orange-600">Major</div>
         </div>
-        <div className="text-center p-4 bg-blue-50 rounded-lg">
-          <div className="text-2xl font-bold text-blue-600">{scan.minorCount}</div>
-          <div className="text-sm">Minor</div>
+        <div className="stat-card border-l-4 border-l-amber-400">
+          <div className="stat-value text-amber-500">{scan.minorCount}</div>
+          <div className="stat-label text-amber-600">Minor</div>
         </div>
       </div>
 
-      <h2 className="font-semibold text-lg mb-4">Top Issues</h2>
-      <div className="space-y-3 mb-8">
+      {/* Top issues */}
+      <h2 className="font-display text-display-sm text-ink mb-4">Top Issues</h2>
+      <div className="space-y-3 mb-10">
         {scan.issues.map((issue) => (
-          <div key={issue.id} className="border rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className={`text-xs font-medium px-2 py-0.5 rounded ${
-                issue.severity === 'critical' ? 'bg-red-100 text-red-700'
-                : issue.severity === 'major' ? 'bg-yellow-100 text-yellow-700'
-                : 'bg-blue-100 text-blue-700'
-              }`}>{issue.severity}</span>
+          <div key={issue.id} className="card p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span
+                className={
+                  issue.severity === 'critical'
+                    ? 'badge-critical'
+                    : issue.severity === 'major'
+                      ? 'badge-major'
+                      : 'badge-minor'
+                }
+              >
+                {issue.severity}
+              </span>
             </div>
-            <p className="text-sm">{issue.description}</p>
+            <p className="font-body text-sm text-ink">{issue.description}</p>
           </div>
         ))}
       </div>
 
-      <p className="text-xs text-gray-400 text-center">
-        Report generated by <a href="https://accesseval.com" className="text-blue-600">AccessEval</a>
+      {/* Powered by footer */}
+      <p className="font-body text-xs text-slate-400 text-center">
+        Report generated by{' '}
+        <a
+          href="https://accesseval.com"
+          className="text-emerald-600 hover:text-emerald-700 font-medium"
+        >
+          AccessEval
+        </a>
       </p>
     </div>
   );

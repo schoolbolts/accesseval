@@ -10,99 +10,139 @@ export default function LandingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-6">
-            <span aria-hidden="true">⚠</span>
+      <section className="relative bg-navy-800 bg-grid grain overflow-hidden py-24 px-4">
+        {/* Decorative gradient orb */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full opacity-20"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, #059669 0%, transparent 70%)',
+          }}
+        />
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          {/* Deadline badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-sm font-body font-medium mb-8 animate-fade-in">
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-4 h-4 shrink-0"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                clipRule="evenodd"
+              />
+            </svg>
             ADA Title II deadline: April 24, 2026
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+
+          <h1 className="font-display text-display-xl text-white mb-6 animate-fade-up stagger-1 text-balance">
             Is your website ADA compliant?
           </h1>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Free accessibility scan for K-12 schools and local governments. Find out where you stand
-            before the deadline hits.
+
+          <p className="font-body text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up stagger-2">
+            Free accessibility scan for K-12 schools and local governments. Find out where you
+            stand before the deadline hits.
           </p>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center animate-fade-up stagger-3">
             <FreeScanForm />
           </div>
-          <p className="mt-4 text-sm text-gray-500">
+
+          <p className="mt-5 font-body text-sm text-slate-400 animate-fade-up stagger-4">
             No account required. Results in under 2 minutes.
           </p>
         </div>
       </section>
 
       {/* How it works */}
-      <section className="py-20 px-4 bg-white" aria-labelledby="how-it-works-heading">
+      <section className="py-24 px-4 bg-white" aria-labelledby="how-it-works-heading">
         <div className="max-w-5xl mx-auto">
-          <h2
-            id="how-it-works-heading"
-            className="text-3xl font-bold text-center text-gray-900 mb-12"
-          >
-            How it works
-          </h2>
+          <div className="text-center mb-14">
+            <p className="section-title mb-3">Simple process</p>
+            <h2
+              id="how-it-works-heading"
+              className="font-display text-display-md text-ink"
+            >
+              How it works
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600" aria-hidden="true">
-                  1
-                </span>
+            {[
+              {
+                step: '01',
+                title: 'Scan',
+                description:
+                  'Enter your URL and we crawl your site using Playwright and axe-core, the industry standard for accessibility testing.',
+              },
+              {
+                step: '02',
+                title: 'Grade',
+                description:
+                  'Get a letter grade (A–F) and plain-English descriptions of every issue — no technical jargon.',
+              },
+              {
+                step: '03',
+                title: 'Fix',
+                description:
+                  'Follow step-by-step fix instructions tailored to your CMS. Track progress and maintain compliance documentation.',
+              },
+            ].map(({ step, title, description }, i) => (
+              <div
+                key={step}
+                className={`card-padded text-center animate-fade-up stagger-${i + 1}`}
+              >
+                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                  <span
+                    className="font-display text-lg font-bold text-emerald-600"
+                    aria-hidden="true"
+                  >
+                    {step}
+                  </span>
+                </div>
+                <h3 className="font-display text-display-sm text-ink mb-2">{title}</h3>
+                <p className="font-body text-slate-500 text-sm leading-relaxed">{description}</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Scan</h3>
-              <p className="text-gray-600">
-                Enter your URL and we crawl your site using Playwright and axe-core, the industry
-                standard for accessibility testing.
-              </p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600" aria-hidden="true">
-                  2
-                </span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Grade</h3>
-              <p className="text-gray-600">
-                Get a letter grade (A–F) and plain-English descriptions of every issue — no
-                technical jargon.
-              </p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600" aria-hidden="true">
-                  3
-                </span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Fix</h3>
-              <p className="text-gray-600">
-                Follow step-by-step fix instructions tailored to your CMS. Track progress and
-                maintain compliance documentation.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section className="py-20 px-4 bg-gray-50" aria-labelledby="pricing-heading">
+      <section
+        className="py-24 px-4 bg-surface bg-dot-pattern"
+        aria-labelledby="pricing-heading"
+      >
         <div className="max-w-5xl mx-auto">
-          <h2 id="pricing-heading" className="text-3xl font-bold text-center text-gray-900 mb-4">
-            Simple, annual pricing
-          </h2>
-          <p className="text-center text-gray-600 mb-12">
-            Everything you need to achieve and maintain ADA compliance.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="text-center mb-14">
+            <p className="section-title mb-3">Transparent pricing</p>
+            <h2
+              id="pricing-heading"
+              className="font-display text-display-md text-ink mb-3"
+            >
+              Simple, annual pricing
+            </h2>
+            <p className="font-body text-slate-500 max-w-md mx-auto">
+              Everything you need to achieve and maintain ADA compliance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 items-start">
             {/* Scan tier */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Scan</h3>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-4xl font-extrabold text-gray-900">$99</span>
-                <span className="text-gray-500">/yr</span>
+            <div className="card p-8 flex flex-col">
+              <h3 className="font-display text-display-sm text-ink mb-1">Scan</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="font-display text-display-lg text-ink">$99</span>
+                <span className="font-body text-slate-400 text-sm">/yr</span>
               </div>
-              <p className="text-gray-600 text-sm mb-6">
+              <p className="font-body text-slate-500 text-sm mb-6">
                 Automated monthly scans and baseline compliance reporting.
               </p>
-              <ul className="space-y-3 mb-8 flex-1 text-sm">
+              <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
                   'Up to 100 pages',
                   'Monthly automated scans',
@@ -111,36 +151,48 @@ export default function LandingPage() {
                   'WCAG 2.1 AA coverage',
                   'PDF reports',
                 ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2 text-gray-700">
-                    <span className="text-green-500 mt-0.5" aria-hidden="true">
-                      ✓
-                    </span>
+                  <li key={feat} className="flex items-start gap-2.5 text-slate-600">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                     {feat}
                   </li>
                 ))}
               </ul>
               <a
                 href="/signup?plan=scan"
-                className="block text-center px-4 py-2.5 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-sm text-emerald-700 border border-emerald-300 rounded-xl hover:bg-emerald-50 transition-colors"
               >
                 Get started
               </a>
             </div>
 
-            {/* Comply tier */}
-            <div className="bg-blue-600 rounded-2xl p-8 flex flex-col relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full">
-                Popular
+            {/* Comply tier — highlighted */}
+            <div className="card p-8 flex flex-col ring-2 ring-emerald-500 shadow-glow relative">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                <span className="badge-success px-3 py-1 text-xs font-semibold">
+                  Most popular
+                </span>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-1">Comply</h3>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-4xl font-extrabold text-white">$299</span>
-                <span className="text-blue-200">/yr</span>
+              <h3 className="font-display text-display-sm text-ink mb-1">Comply</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="font-display text-display-lg text-ink">$299</span>
+                <span className="font-body text-slate-400 text-sm">/yr</span>
               </div>
-              <p className="text-blue-100 text-sm mb-6">
+              <p className="font-body text-slate-500 text-sm mb-6">
                 Weekly scans, fix tracking, and official compliance documentation.
               </p>
-              <ul className="space-y-3 mb-8 flex-1 text-sm">
+              <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
                   'Up to 500 pages',
                   'Weekly automated scans',
@@ -150,33 +202,40 @@ export default function LandingPage() {
                   'Team member access',
                   'Email digest reports',
                 ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2 text-blue-50">
-                    <span className="text-white mt-0.5" aria-hidden="true">
-                      ✓
-                    </span>
+                  <li key={feat} className="flex items-start gap-2.5 text-slate-600">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                     {feat}
                   </li>
                 ))}
               </ul>
-              <a
-                href="/signup?plan=comply"
-                className="block text-center px-4 py-2.5 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors"
-              >
+              <a href="/signup?plan=comply" className="btn-primary justify-center">
                 Get started
               </a>
             </div>
 
             {/* Fix tier */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Fix</h3>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-4xl font-extrabold text-gray-900">$599</span>
-                <span className="text-gray-500">/yr</span>
+            <div className="card p-8 flex flex-col">
+              <h3 className="font-display text-display-sm text-ink mb-1">Fix</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="font-display text-display-lg text-ink">$599</span>
+                <span className="font-body text-slate-400 text-sm">/yr</span>
               </div>
-              <p className="text-gray-600 text-sm mb-6">
+              <p className="font-body text-slate-500 text-sm mb-6">
                 Unlimited scanning with CMS-specific fix instructions.
               </p>
-              <ul className="space-y-3 mb-8 flex-1 text-sm">
+              <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
                   'Up to 2,000 pages',
                   'Weekly automated scans',
@@ -186,17 +245,27 @@ export default function LandingPage() {
                   'Priority email support',
                   'All Comply features',
                 ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2 text-gray-700">
-                    <span className="text-green-500 mt-0.5" aria-hidden="true">
-                      ✓
-                    </span>
+                  <li key={feat} className="flex items-start gap-2.5 text-slate-600">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                     {feat}
                   </li>
                 ))}
               </ul>
               <a
                 href="/signup?plan=fix"
-                className="block text-center px-4 py-2.5 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-sm text-emerald-700 border border-emerald-300 rounded-xl hover:bg-emerald-50 transition-colors"
               >
                 Get started
               </a>
@@ -206,23 +275,87 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-10 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm font-semibold text-white">AccessEval</p>
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} AccessEval. Built for schools and governments.
-          </p>
-          <nav aria-label="Footer navigation" className="flex gap-4 text-sm">
-            <a href="/privacy" className="hover:text-white transition-colors">
-              Privacy
-            </a>
-            <a href="/terms" className="hover:text-white transition-colors">
-              Terms
-            </a>
-            <a href="/contact" className="hover:text-white transition-colors">
-              Contact
-            </a>
-          </nav>
+      <footer className="bg-navy-900 text-navy-300 py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-10 mb-12">
+            {/* Brand */}
+            <div className="sm:col-span-1">
+              <p className="font-display font-bold text-xl text-white mb-3">AccessEval</p>
+              <p className="font-body text-sm text-navy-400 leading-relaxed">
+                ADA compliance for K-12 schools and local governments.
+              </p>
+            </div>
+
+            {/* Product */}
+            <div>
+              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
+                Product
+              </p>
+              <nav aria-label="Product links" className="flex flex-col gap-2.5">
+                {[
+                  { href: '/#how-it-works', label: 'How it works' },
+                  { href: '/#pricing', label: 'Pricing' },
+                  { href: '/signup', label: 'Get started' },
+                ].map(({ href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Company */}
+            <div>
+              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
+                Company
+              </p>
+              <nav aria-label="Company links" className="flex flex-col gap-2.5">
+                {[
+                  { href: '/about', label: 'About' },
+                  { href: '/contact', label: 'Contact' },
+                ].map(({ href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
+                Legal
+              </p>
+              <nav aria-label="Legal links" className="flex flex-col gap-2.5">
+                {[
+                  { href: '/privacy', label: 'Privacy Policy' },
+                  { href: '/terms', label: 'Terms of Service' },
+                ].map(({ href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          <div className="border-t border-navy-700 pt-8">
+            <p className="font-body text-sm text-navy-500 text-center">
+              &copy; {new Date().getFullYear()} AccessEval. Built for schools and governments.
+            </p>
+          </div>
         </div>
       </footer>
     </>

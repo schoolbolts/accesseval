@@ -22,38 +22,43 @@ interface ScanResult {
 }
 
 function SeverityBadge({ severity }: { severity: string }) {
-  const classes: Record<string, string> = {
-    critical: 'bg-red-100 text-red-800',
-    major: 'bg-orange-100 text-orange-800',
-    minor: 'bg-yellow-100 text-yellow-800',
+  const cls: Record<string, string> = {
+    critical: 'badge-critical',
+    major: 'badge-major',
+    minor: 'badge-minor',
   };
   return (
-    <span
-      className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold capitalize ${
-        classes[severity] ?? 'bg-gray-100 text-gray-800'
-      }`}
-    >
+    <span className={cls[severity] ?? 'badge bg-slate-100 text-slate-700'}>
       {severity}
     </span>
   );
 }
 
 function GradeCircle({ grade, score }: { grade: string; score: number }) {
-  const color =
+  const { ringColor, textColor, label } =
     score >= 90
-      ? 'text-green-600'
+      ? { ringColor: 'ring-emerald-400', textColor: 'text-emerald-500', label: 'Excellent' }
       : score >= 80
-        ? 'text-lime-600'
+        ? { ringColor: 'ring-lime-400', textColor: 'text-lime-500', label: 'Good' }
         : score >= 70
-          ? 'text-yellow-600'
+          ? { ringColor: 'ring-amber-400', textColor: 'text-amber-500', label: 'Fair' }
           : score >= 60
-            ? 'text-orange-600'
-            : 'text-red-600';
+            ? { ringColor: 'ring-orange-400', textColor: 'text-orange-500', label: 'Poor' }
+            : { ringColor: 'ring-red-400', textColor: 'text-red-500', label: 'Critical' };
 
   return (
-    <div className={`text-center ${color}`}>
-      <div className="text-8xl font-extrabold leading-none">{grade}</div>
-      <div className="text-2xl font-semibold mt-1">{score}/100</div>
+    <div className="flex flex-col items-center">
+      <div
+        className={`w-32 h-32 rounded-full ring-4 ${ringColor} flex flex-col items-center justify-center`}
+      >
+        <span className={`font-display text-6xl font-extrabold leading-none ${textColor}`}>
+          {grade}
+        </span>
+      </div>
+      <div className="mt-4 text-center">
+        <p className="font-display text-display-sm text-ink">{score}/100</p>
+        <p className={`font-body text-sm font-medium mt-1 ${textColor}`}>{label}</p>
+      </div>
     </div>
   );
 }
@@ -135,10 +140,12 @@ export function ScanProgress({ token }: { token: string }) {
   if (error) {
     return (
       <div className="max-w-2xl mx-auto py-20 px-4 text-center">
-        <p className="text-red-600 text-lg font-medium">{error}</p>
-        <a href="/" className="mt-4 inline-block text-blue-600 hover:underline">
-          Start a new scan
-        </a>
+        <div className="card-padded">
+          <p className="font-body text-red-600 text-lg font-medium mb-4">{error}</p>
+          <a href="/" className="btn-primary inline-flex">
+            Start a new scan
+          </a>
+        </div>
       </div>
     );
   }
@@ -149,12 +156,30 @@ export function ScanProgress({ token }: { token: string }) {
         <div
           role="status"
           aria-label="Scanning your website"
-          className="flex flex-col items-center gap-6"
+          className="flex flex-col items-center gap-8"
         >
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          {/* Animated spinner */}
+          <div className="relative w-20 h-20">
+            <div className="absolute inset-0 rounded-full border-4 border-emerald-100" />
+            <div className="absolute inset-0 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin" />
+          </div>
+
+          {/* Pulsing dots */}
+          <div className="flex items-center gap-2" aria-hidden="true">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Scanning your website...</h1>
-            <p className="text-gray-600">
+            <h1 className="font-display text-display-md text-ink mb-2">
+              Scanning your website...
+            </h1>
+            <p className="font-body text-slate-500">
               We&apos;re running accessibility checks on your site. This usually takes 30–90
               seconds.
             </p>
@@ -171,55 +196,61 @@ export function ScanProgress({ token }: { token: string }) {
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-2 text-center">
-        Accessibility Scan Results
-      </h1>
-      <p className="text-center text-gray-500 mb-10">Free single-page scan</p>
+      <div className="text-center mb-10 animate-fade-in">
+        <h1 className="font-display text-display-md text-ink mb-1">
+          Accessibility Scan Results
+        </h1>
+        <p className="font-body text-slate-400 text-sm">Free single-page scan</p>
+      </div>
 
       {/* Grade + score */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-6 text-center">
+      <div className="card p-10 mb-6 flex flex-col items-center animate-scale-in">
         {grade !== undefined && score !== undefined ? (
           <GradeCircle grade={grade} score={score} />
         ) : (
-          <p className="text-gray-500">No score available</p>
+          <p className="font-body text-slate-500">No score available</p>
         )}
       </div>
 
-      {/* Issue count cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-          <div className="text-3xl font-bold text-red-600">{criticalCount ?? 0}</div>
-          <div className="text-sm font-medium text-red-800 mt-1">Critical</div>
+      {/* Issue count stat cards */}
+      <div className="grid grid-cols-3 gap-4 mb-6 animate-fade-up stagger-1">
+        <div className="stat-card border-l-4 border-l-red-400">
+          <div className="stat-value text-red-500">{criticalCount ?? 0}</div>
+          <div className="stat-label text-red-600">Critical</div>
         </div>
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-          <div className="text-3xl font-bold text-orange-600">{majorCount ?? 0}</div>
-          <div className="text-sm font-medium text-orange-800 mt-1">Major</div>
+        <div className="stat-card border-l-4 border-l-orange-400">
+          <div className="stat-value text-orange-500">{majorCount ?? 0}</div>
+          <div className="stat-label text-orange-600">Major</div>
         </div>
-        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
-          <div className="text-3xl font-bold text-yellow-600">{minorCount ?? 0}</div>
-          <div className="text-sm font-medium text-yellow-800 mt-1">Minor</div>
+        <div className="stat-card border-l-4 border-l-amber-400">
+          <div className="stat-value text-amber-500">{minorCount ?? 0}</div>
+          <div className="stat-label text-amber-600">Minor</div>
         </div>
       </div>
 
       {/* Top issues */}
       {issues && issues.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">
-            Top issues{' '}
-            <span className="text-sm font-normal text-gray-500">
-              (showing {issues.length} of {totalIssues})
-            </span>
+        <div className="mb-6 animate-fade-up stagger-2">
+          <h2 className="font-display text-display-sm text-ink mb-1">
+            Top issues
           </h2>
+          <p className="font-body text-sm text-slate-400 mb-4">
+            Showing {issues.length} of {totalIssues}
+          </p>
           <ul className="space-y-3">
             {issues.map((issue, i) => (
-              <li key={i} className="bg-white border border-gray-200 rounded-xl p-4">
+              <li key={i} className="card p-5">
                 <div className="flex items-start justify-between gap-4 mb-2">
-                  <p className="font-medium text-gray-900 text-sm">{issue.description}</p>
+                  <p className="font-body font-medium text-ink text-sm leading-snug">
+                    {issue.description}
+                  </p>
                   <SeverityBadge severity={issue.severity} />
                 </div>
-                <p className="text-sm text-gray-600">{issue.fixInstructions}</p>
+                <p className="font-body text-sm text-slate-500">{issue.fixInstructions}</p>
                 {issue.wcagCriteria && (
-                  <p className="text-xs text-gray-400 mt-2">WCAG: {issue.wcagCriteria}</p>
+                  <p className="font-mono text-xs text-slate-400 mt-2">
+                    WCAG: {issue.wcagCriteria}
+                  </p>
                 )}
               </li>
             ))}
@@ -229,14 +260,29 @@ export function ScanProgress({ token }: { token: string }) {
 
       {/* Email gate */}
       {showEmailGate && (
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-6 text-center">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+        <div className="card p-8 mb-6 text-center border border-emerald-100 animate-fade-up stagger-3">
+          <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-5 h-5 text-emerald-600"
+            >
+              <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
+              <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+            </svg>
+          </div>
+          <h2 className="font-display text-display-sm text-ink mb-1">
             See {(totalIssues ?? 0) - 3} more issue{(totalIssues ?? 0) - 3 !== 1 ? 's' : ''}
           </h2>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="font-body text-slate-500 text-sm mb-6">
             Enter your email to unlock all issues from this scan.
           </p>
-          <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <form
+            onSubmit={handleEmailSubmit}
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          >
             <div className="flex-1">
               <label htmlFor="gate-email" className="sr-only">
                 Email address
@@ -249,10 +295,10 @@ export function ScanProgress({ token }: { token: string }) {
                 placeholder="you@yourschool.edu"
                 required
                 disabled={emailLoading}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+                className="input"
               />
               {emailError && (
-                <p role="alert" className="mt-1 text-xs text-red-600">
+                <p role="alert" className="mt-1 font-body text-xs text-red-600">
                   {emailError}
                 </p>
               )}
@@ -260,27 +306,76 @@ export function ScanProgress({ token }: { token: string }) {
             <button
               type="submit"
               disabled={emailLoading}
-              className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+              className="btn-primary whitespace-nowrap"
             >
-              {emailLoading ? 'Unlocking...' : 'Unlock issues'}
+              {emailLoading ? (
+                <>
+                  <svg
+                    aria-hidden="true"
+                    className="w-4 h-4 animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  Unlocking...
+                </>
+              ) : (
+                'Unlock issues'
+              )}
             </button>
           </form>
         </div>
       )}
 
       {/* CTA */}
-      <div className="bg-gray-900 rounded-2xl p-8 text-center text-white">
-        <h2 className="text-xl font-bold mb-2">Get your full site report</h2>
-        <p className="text-gray-400 text-sm mb-6">
-          This was a single-page scan. A full report covers every page of your site with fix
-          instructions, compliance documentation, and ongoing monitoring.
-        </p>
-        <a
-          href="/signup"
-          className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors"
-        >
-          Start your free trial
-        </a>
+      <div className="relative bg-navy-800 bg-grid rounded-2xl p-8 text-center overflow-hidden animate-fade-up stagger-4">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 rounded-2xl"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 120%, rgba(5,150,105,0.15) 0%, transparent 70%)',
+          }}
+        />
+        <div className="relative z-10">
+          <h2 className="font-display text-display-sm text-white mb-2">
+            Get your full site report
+          </h2>
+          <p className="font-body text-slate-400 text-sm mb-6 max-w-md mx-auto">
+            This was a single-page scan. A full report covers every page of your site with fix
+            instructions, compliance documentation, and ongoing monitoring.
+          </p>
+          <a href="/signup" className="btn-primary-lg inline-flex">
+            Start your free trial
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   );

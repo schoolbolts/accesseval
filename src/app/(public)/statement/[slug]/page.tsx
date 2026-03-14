@@ -10,11 +10,23 @@ export default async function PublicStatementPage({ params }: { params: { slug: 
   if (!org?.statement) notFound();
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-6">
-      <div className="prose" dangerouslySetInnerHTML={{ __html: org.statement.statementHtml }} />
-      <p className="text-xs text-gray-400 mt-8">
-        Last updated: {org.statement.lastGeneratedAt.toLocaleDateString()}
-      </p>
+    <div className="min-h-[calc(100vh-4rem)] bg-surface bg-dot-pattern py-16 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="card p-10">
+          <div
+            className="prose-ae"
+            dangerouslySetInnerHTML={{ __html: org.statement.statementHtml }}
+          />
+          <p className="font-body text-xs text-slate-400 mt-8 pt-6 border-t border-slate-100">
+            Last updated:{' '}
+            {org.statement.lastGeneratedAt.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

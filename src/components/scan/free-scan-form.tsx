@@ -55,10 +55,10 @@ export function FreeScanForm() {
           placeholder="yourschool.edu"
           required
           disabled={loading}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+          className="input-lg w-full bg-white/95 text-ink placeholder:text-slate-400 border-white/20 focus:border-white focus:ring-white/20"
         />
         {error && (
-          <p role="alert" className="mt-2 text-sm text-red-600">
+          <p role="alert" className="mt-2 text-sm text-red-300 font-body">
             {error}
           </p>
         )}
@@ -66,9 +66,51 @@ export function FreeScanForm() {
       <button
         type="submit"
         disabled={loading}
-        className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+        className="btn-primary-lg whitespace-nowrap"
       >
-        {loading ? 'Starting scan...' : 'Scan for free'}
+        {loading ? (
+          <>
+            <svg
+              aria-hidden="true"
+              className="w-4 h-4 animate-spin"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+            Starting scan...
+          </>
+        ) : (
+          <>
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Scan for free
+          </>
+        )}
       </button>
     </form>
   );

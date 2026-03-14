@@ -4,22 +4,19 @@ import type { ReactNode } from 'react';
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b border-gray-200 bg-white">
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-blue-600 hover:text-blue-700">
-            AccessEval
+          <Link href="/" className="flex items-center gap-2">
+            {/* TODO: Replace with logo image */}
+            <span className="font-display font-bold text-xl text-ink tracking-tight">
+              AccessEval
+            </span>
           </Link>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-            >
+          <div className="flex items-center gap-2">
+            <Link href="/login" className="btn-ghost text-slate-600">
               Log in
             </Link>
-            <Link
-              href="/signup"
-              className="text-sm px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-            >
+            <Link href="/signup" className="btn-primary">
               Get started
             </Link>
           </div>

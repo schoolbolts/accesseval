@@ -33,17 +33,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h1>
-          <p className="text-gray-500 mb-8 text-sm">
-            Sign in to your AccessEval account.
-          </p>
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 bg-surface bg-dot-pattern">
+      <div className="w-full max-w-md animate-fade-up">
+        <div className="text-center mb-8">
+          <h1 className="font-display text-display-md text-ink">Welcome back</h1>
+          <p className="font-body text-slate-500 mt-2">Sign in to your AccessEval account.</p>
+        </div>
 
+        <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="label">
                 Email
               </label>
               <input
@@ -53,13 +53,13 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="input"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="label">
                 Password
               </label>
               <input
@@ -69,29 +69,72 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="input"
                 placeholder="••••••••"
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+              <div
+                role="alert"
+                className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-body"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-4 h-4 shrink-0"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
                 {error}
-              </p>
+              </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-sm"
+              className="btn-primary w-full justify-center py-3"
             >
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? (
+                <>
+                  <svg
+                    aria-hidden="true"
+                    className="w-4 h-4 animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  Signing in…
+                </>
+              ) : (
+                'Sign in'
+              )}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center font-body text-sm text-slate-500">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
+            <Link href="/signup" className="text-emerald-600 hover:text-emerald-700 font-semibold">
               Get started
             </Link>
           </p>
