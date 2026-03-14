@@ -20,7 +20,7 @@ export interface ExtractLinksResultWithPdfs {
 export type ExtractLinksResult = ExtractLinksResultWithPdfs | string[];
 
 export interface CrawlResult {
-  urls: string[];
+  pageUrls: string[];
   pdfUrls: string[];
 }
 
@@ -291,5 +291,5 @@ export async function crawlSite(
   const urlArray = Array.from(allUrls).slice(0, maxPages);
   const pdfArray = Array.from(allPdfUrls);
 
-  return { urls: urlArray, pdfUrls: pdfArray };
+  return { pageUrls: urlArray, pdfUrls: pdfArray };
 }

@@ -103,8 +103,7 @@ export async function scanPage(
     for (const violation of axeResults.violations) {
       const translation = getTranslation(violation.id);
       const fixInstructionsGeneric =
-        translation?.description ??
-        violation.description ??
+        translation?.fix.generic ??
         violation.help ??
         'No fix instructions available.';
       const fixInstructionsCms = getFixInstruction(violation.id, cmsType) ?? null;

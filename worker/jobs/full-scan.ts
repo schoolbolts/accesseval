@@ -1,3 +1,5 @@
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { prisma } from '../../src/lib/db';
 import { crawlSite } from '../crawler';
 import { createBrowser, scanPage } from '../scanner';
@@ -18,6 +20,7 @@ const JOB_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 hours
 const PAGE_RETRY_DELAY_MS = 2_000;
 const RATE_LIMIT_DELAY_MS = 1_000;
 const SCREENSHOTS_TO_KEEP = 2;
+const SCREENSHOT_DIR = process.env.SCREENSHOT_DIR || '/data/screenshots';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -63,7 +66,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
 
   // ─── Phase 1: Crawl ───────────────────────────────────────────────────────
 
-  let crawlResult: { urls: string[]; pdfUrls: string[] };
+  let crawlResult: { pageUrls: string[]; pdfUrls: string[] };
   try {
     crawlResult = await crawlSite(site.url, site.maxPages, (scanned, total) => {
       console.log(`[full-scan] ${scanId} crawl progress: ${scanned}/${total}`);
@@ -81,7 +84,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
     return;
   }
 
-  if (crawlResult.urls.length === 0) {
+  if (crawlResult.pageUrls.length === 0) {
     await prisma.scan.update({
       where: { id: scanId },
       data: {
@@ -97,7 +100,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
     where: { id: scanId },
     data: {
       status: 'scanning',
-      pagesFound: crawlResult.urls.length,
+      pagesFound: crawlResult.pageUrls.length,
     },
   });
 
@@ -116,7 +119,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
   let pagesScanned = 0;
   let pagesFailed = 0;
 
-  for (const pageUrl of crawlResult.urls) {
+  for (const pageUrl of crawlResult.pageUrls) {
     if (isDeadlineExceeded(startedAt)) {
       console.warn(`[full-scan] ${scanId} deadline exceeded — stopping early`);
       break;
@@ -348,12 +351,8 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
       select: { id: true },
     });
 
-    // In a real implementation, we'd delete S3/filesystem screenshots here.
-    // For now, just log the IDs we'd clean up.
-    if (oldScans.length > 0) {
-      console.log(
-        `[full-scan] ${scanId} would clean screenshots for scans: ${oldScans.map((s) => s.id).join(', ')}`
-      );
+    for (const oldScan of oldScans) {
+      await fs.rm(path.join(SCREENSHOT_DIR, oldScan.id), { recursive: true, force: true }).catch(() => {});
     }
   } catch (err) {
     console.warn(`[full-scan] ${scanId} screenshot cleanup failed:`, err);
@@ -364,6 +363,6 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
   await notifyScanComplete(completedScan);
 
   console.log(
-    `[full-scan] ${scanId} complete: status=${finalStatus} score=${scoreResult.score} grade=${scoreResult.grade} pages=${pagesScanned}/${crawlResult.urls.length}`
+    `[full-scan] ${scanId} complete: status=${finalStatus} score=${scoreResult.score} grade=${scoreResult.grade} pages=${pagesScanned}/${crawlResult.pageUrls.length}`
   );
 }
