@@ -1,0 +1,310 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- Enums ---
+
+enum Plan {
+  scan
+  comply
+  fix
+}
+
+enum PlanStatus {
+  active
+  trialing
+  past_due
+  canceled
+}
+
+enum Role {
+  owner
+  member
+}
+
+enum InvitationStatus {
+  pending
+  accepted
+  expired
+}
+
+enum CmsType {
+  wordpress
+  squarespace
+  wix
+  civicplus
+  finalsite
+  google_sites
+  other
+  unknown
+}
+
+enum ScanFrequency {
+  monthly
+  weekly
+}
+
+enum ScanStatus {
+  queued
+  crawling
+  scanning
+  completed
+  partial
+  failed
+}
+
+enum ScanTrigger {
+  scheduled
+  manual
+}
+
+enum PageStatus {
+  scanned
+  error
+  skipped
+}
+
+enum IssueSeverity {
+  critical
+  major
+  minor
+}
+
+enum SiteIssueStatus {
+  open
+  fixed
+  ignored
+}
+
+enum EntityType {
+  school_district
+  municipality
+  library
+  special_district
+}
+
+// --- Models ---
+
+model Organization {
+  id               String     @id @default(uuid())
+  name             String
+  slug             String     @unique
+  stripeCustomerId String?    @map("stripe_customer_id")
+  plan             Plan       @default(scan)
+  planStatus       PlanStatus @default(active) @map("plan_status")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+
+  users       User[]
+  invitations Invitation[]
+  site        Site?
+  shareLinks  ShareLink[]
+  statement   AccessibilityStatement?
+
+  @@map("organizations")
+}
+
+model User {
+  id             String       @id @default(uuid())
+  organizationId String       @map("organization_id")
+  email          String       @unique
+  name           String?
+  role           Role         @default(member)
+  passwordHash   String       @map("password_hash")
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  invitationsSent Invitation[]
+
+  @@map("users")
+}
+
+model Invitation {
+  id             String           @id @default(uuid())
+  organizationId String           @map("organization_id")
+  email          String
+  invitedBy      String           @map("invited_by")
+  token          String           @unique
+  status         InvitationStatus @default(pending)
+  createdAt      DateTime         @default(now()) @map("created_at")
+  expiresAt      DateTime         @map("expires_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  inviter      User         @relation(fields: [invitedBy], references: [id])
+
+  @@map("invitations")
+}
+
+model Site {
+  id                String        @id @default(uuid())
+  organizationId    String        @unique @map("organization_id")
+  url               String
+  cmsType           CmsType       @default(unknown) @map("cms_type")
+  scanFrequency     ScanFrequency @default(monthly) @map("scan_frequency")
+  maxPages          Int           @default(100) @map("max_pages")
+  onDemandScansUsed Int           @default(0) @map("on_demand_scans_used")
+  onDemandResetAt   DateTime      @default(now()) @map("on_demand_reset_at")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  scans        Scan[]
+  siteIssues   SiteIssue[]
+
+  @@map("sites")
+}
+
+model Scan {
+  id            String      @id @default(uuid())
+  siteId        String      @map("site_id")
+  status        ScanStatus  @default(queued)
+  triggeredBy   ScanTrigger @map("triggered_by")
+  pagesFound    Int         @default(0) @map("pages_found")
+  pagesScanned  Int         @default(0) @map("pages_scanned")
+  score         Int?
+  grade         String?
+  criticalCount Int         @default(0) @map("critical_count")
+  majorCount    Int         @default(0) @map("major_count")
+  minorCount    Int         @default(0) @map("minor_count")
+  errorMessage  String?     @map("error_message")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  startedAt     DateTime?   @map("started_at")
+  completedAt   DateTime?   @map("completed_at")
+
+  site            Site        @relation(fields: [siteId], references: [id])
+  pages           Page[]
+  issues          Issue[]
+  pdfAssets       PdfAsset[]
+  firstSeenIssues SiteIssue[] @relation("FirstSeenScan")
+  lastSeenIssues  SiteIssue[] @relation("LastSeenScan")
+  resolvedIssues  SiteIssue[] @relation("ResolvedScan")
+  shareLinks      ShareLink[]
+
+  @@map("scans")
+}
+
+model Page {
+  id         String     @id @default(uuid())
+  scanId     String     @map("scan_id")
+  url        String
+  title      String?
+  status     PageStatus @default(scanned)
+  issueCount Int        @default(0) @map("issue_count")
+  pageScore  Int?       @map("page_score")
+  scannedAt  DateTime   @default(now()) @map("scanned_at")
+
+  scan      Scan       @relation(fields: [scanId], references: [id])
+  issues    Issue[]
+  pdfAssets PdfAsset[]
+
+  @@map("pages")
+}
+
+model Issue {
+  id                 String        @id @default(uuid())
+  scanId             String        @map("scan_id")
+  pageId             String        @map("page_id")
+  axeRuleId          String        @map("axe_rule_id")
+  severity           IssueSeverity
+  impact             String?
+  description        String
+  fixInstructions    String        @map("fix_instructions")
+  fixInstructionsCms String?       @map("fix_instructions_cms")
+  elementSelector    String        @map("element_selector")
+  elementHtml        String        @map("element_html")
+  screenshotPath     String?       @map("screenshot_path")
+  wcagCriteria       String?       @map("wcag_criteria")
+  fingerprint        String
+  createdAt          DateTime      @default(now()) @map("created_at")
+
+  scan Scan @relation(fields: [scanId], references: [id])
+  page Page @relation(fields: [pageId], references: [id])
+
+  @@map("issues")
+}
+
+model SiteIssue {
+  id              String          @id @default(uuid())
+  siteId          String          @map("site_id")
+  fingerprint     String
+  firstSeenScanId String          @map("first_seen_scan_id")
+  lastSeenScanId  String          @map("last_seen_scan_id")
+  resolvedScanId  String?         @map("resolved_scan_id")
+  status          SiteIssueStatus @default(open)
+  statusChangedAt DateTime        @default(now()) @map("status_changed_at")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  site          Site  @relation(fields: [siteId], references: [id])
+  firstSeenScan Scan  @relation("FirstSeenScan", fields: [firstSeenScanId], references: [id])
+  lastSeenScan  Scan  @relation("LastSeenScan", fields: [lastSeenScanId], references: [id])
+  resolvedScan  Scan? @relation("ResolvedScan", fields: [resolvedScanId], references: [id])
+
+  @@unique([siteId, fingerprint])
+  @@map("site_issues")
+}
+
+model FreeScan {
+  id            String   @id @default(uuid())
+  url           String
+  email         String?
+  token         String   @unique
+  score         Int?
+  grade         String?
+  criticalCount Int      @default(0) @map("critical_count")
+  majorCount    Int      @default(0) @map("major_count")
+  minorCount    Int      @default(0) @map("minor_count")
+  resultsJson   Json?    @map("results_json")
+  ipAddress     String   @map("ip_address")
+  createdAt     DateTime @default(now()) @map("created_at")
+  expiresAt     DateTime @map("expires_at")
+
+  @@map("free_scans")
+}
+
+model PdfAsset {
+  id        String @id @default(uuid())
+  scanId    String @map("scan_id")
+  pageId    String @map("page_id")
+  url       String
+  filename  String
+  sizeBytes BigInt @map("size_bytes")
+
+  scan Scan @relation(fields: [scanId], references: [id])
+  page Page @relation(fields: [pageId], references: [id])
+
+  @@map("pdf_assets")
+}
+
+model ShareLink {
+  id             String    @id @default(uuid())
+  organizationId String    @map("organization_id")
+  scanId         String    @map("scan_id")
+  token          String    @unique
+  expiresAt      DateTime? @map("expires_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  scan         Scan         @relation(fields: [scanId], references: [id])
+
+  @@map("share_links")
+}
+
+model AccessibilityStatement {
+  id              String     @id @default(uuid())
+  organizationId  String     @unique @map("organization_id")
+  entityName      String     @map("entity_name")
+  entityType      EntityType @map("entity_type")
+  contactEmail    String     @map("contact_email")
+  contactPhone    String?    @map("contact_phone")
+  statementHtml   String     @map("statement_html")
+  lastGeneratedAt DateTime   @default(now()) @map("last_generated_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("accessibility_statements")
+}
