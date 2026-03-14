@@ -22,10 +22,16 @@ export default async function PdfsPage() {
   if (!hasPdfInventory) {
     return (
       <div className="p-8 max-w-2xl">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">PDF Inventory</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-600 font-medium mb-2">PDF Inventory requires the Comply or Fix plan.</p>
-          <p className="text-gray-400 text-sm">
+        <h1 className="page-title mb-8">PDF Inventory</h1>
+        <div className="card p-8 text-center animate-fade-up">
+          <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+          </div>
+          <p className="font-body font-semibold text-ink mb-2">PDF Inventory requires the Comply or Fix plan.</p>
+          <p className="text-sm font-body text-slate-500">
             Upgrade your plan to see all PDFs found during scans and track which ones need review.
           </p>
         </div>
@@ -40,10 +46,10 @@ export default async function PdfsPage() {
 
   if (!site) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">PDF Inventory</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 text-sm">No site configured yet.</p>
+      <div className="p-8 max-w-5xl">
+        <h1 className="page-title mb-1">PDF Inventory</h1>
+        <div className="card p-8 text-center mt-6">
+          <p className="text-slate-500 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -57,10 +63,10 @@ export default async function PdfsPage() {
 
   if (!latestScan) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">PDF Inventory</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 text-sm">No completed scans yet.</p>
+      <div className="p-8 max-w-5xl">
+        <h1 className="page-title mb-1">PDF Inventory</h1>
+        <div className="card p-8 text-center mt-6">
+          <p className="text-slate-500 text-sm">No completed scans yet.</p>
         </div>
       </div>
     );
@@ -80,9 +86,9 @@ export default async function PdfsPage() {
 
   return (
     <div className="p-8 max-w-5xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">PDF Inventory</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
+      <div className="mb-8 animate-fade-up">
+        <h1 className="page-title">PDF Inventory</h1>
+        <p className="page-subtitle">
           {pdfs.length} PDFs found in latest scan &mdash;{' '}
           {latestScan.completedAt
             ? new Date(latestScan.completedAt).toLocaleDateString('en-US', {
@@ -94,54 +100,44 @@ export default async function PdfsPage() {
         </p>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="card overflow-hidden animate-fade-up stagger-1">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50 text-left">
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide">
-                Filename
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide">
-                Found on page
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-right">
-                Size
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Status
-              </th>
+            <tr className="border-b border-slate-100 bg-slate-50/60">
+              <th className="px-5 py-3.5 text-left section-title">Filename</th>
+              <th className="px-5 py-3.5 text-left section-title">Found on page</th>
+              <th className="px-5 py-3.5 text-right section-title">Size</th>
+              <th className="px-5 py-3.5 text-center section-title">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100">
             {pdfs.map((pdf) => (
-              <tr key={pdf.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-3">
+              <tr key={pdf.id} className="hover:bg-slate-50/50 transition-colors">
+                <td className="px-5 py-3.5">
                   <a
                     href={pdf.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline font-medium truncate block max-w-xs"
+                    className="font-body font-medium text-emerald-600 hover:text-emerald-700 hover:underline truncate block max-w-xs"
                   >
                     {pdf.filename}
                   </a>
                 </td>
-                <td className="px-4 py-3 text-gray-500 truncate max-w-xs">
+                <td className="px-5 py-3.5 font-body text-slate-500 truncate max-w-xs">
                   {pdf.page.title || pdf.page.url}
                 </td>
-                <td className="px-4 py-3 text-right text-gray-600">
+                <td className="px-5 py-3.5 text-right font-body text-slate-600 font-mono text-xs">
                   {formatBytes(pdf.sizeBytes)}
                 </td>
-                <td className="px-4 py-3 text-center">
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">
-                    Needs review
-                  </span>
+                <td className="px-5 py-3.5 text-center">
+                  <span className="badge-minor">Needs review</span>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         {pdfs.length === 0 && (
-          <div className="p-8 text-center text-gray-400 text-sm">No PDFs found in this scan.</div>
+          <div className="p-8 text-center text-slate-400 text-sm font-body">No PDFs found in this scan.</div>
         )}
       </div>
     </div>

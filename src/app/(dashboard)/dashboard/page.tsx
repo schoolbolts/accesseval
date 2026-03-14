@@ -9,10 +9,10 @@ import type { PlanName } from '@/lib/plan-limits';
 const ScoreTrend = dynamic(() => import('@/components/charts/score-trend'), { ssr: false });
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-gray-400';
-  if (grade === 'A') return 'text-green-600';
+  if (!grade) return 'text-slate-400';
+  if (grade === 'A') return 'text-emerald-600';
   if (grade === 'B') return 'text-blue-600';
-  if (grade === 'C') return 'text-yellow-600';
+  if (grade === 'C') return 'text-amber-600';
   if (grade === 'D') return 'text-orange-600';
   return 'text-red-600';
 }
@@ -32,11 +32,11 @@ export default async function DashboardPage() {
 
   if (!site) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Dashboard</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 mb-4">No site configured yet.</p>
-          <p className="text-sm text-gray-400">Set up your site in Settings to start scanning.</p>
+      <div className="p-8 max-w-6xl">
+        <h1 className="page-title mb-1">Dashboard</h1>
+        <div className="card p-10 text-center mt-6">
+          <p className="text-slate-500 mb-2">No site configured yet.</p>
+          <p className="text-sm text-slate-400">Set up your site in Settings to start scanning.</p>
         </div>
       </div>
     );
@@ -83,98 +83,96 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-8 max-w-6xl">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">Dashboard</h1>
-      <p className="text-sm text-gray-500 mb-8">{site.url}</p>
+      <div className="mb-8 animate-fade-up">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-subtitle">{site.url}</p>
+      </div>
 
       {noScans ? (
-        <div className="bg-white border border-gray-200 rounded-xl p-10 text-center">
-          <div className="text-4xl mb-4">--</div>
-          <p className="text-gray-500 text-sm">No scans completed yet.</p>
-          <p className="text-gray-400 text-xs mt-1">
+        <div className="card p-10 text-center animate-fade-up stagger-1">
+          <div className="text-5xl font-display font-bold text-slate-300 mb-4">--</div>
+          <p className="text-slate-500 text-sm">No scans completed yet.</p>
+          <p className="text-slate-400 text-xs mt-1">
             Your first scan will run automatically or you can trigger one manually.
           </p>
         </div>
       ) : (
         <>
-          {/* Summary cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Summary stat cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {/* Grade */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center">
-              <span className={`text-5xl font-extrabold ${gradeColor(latestScan.grade)}`}>
+            <div className="stat-card animate-fade-up stagger-1">
+              <span className={`stat-value text-5xl ${gradeColor(latestScan.grade)}`}>
                 {latestScan.grade ?? '--'}
               </span>
-              <span className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Grade</span>
+              <span className="stat-label">Grade</span>
               {latestScan.score != null && (
-                <span className="text-sm text-gray-400 mt-0.5">{latestScan.score}/100</span>
+                <span className="text-xs text-slate-400 mt-1 font-body">{latestScan.score}/100</span>
               )}
             </div>
 
             {/* Critical */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-red-600">{latestScan.criticalCount}</span>
-              <span className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Critical</span>
+            <div className="stat-card animate-fade-up stagger-2">
+              <span className="stat-value text-red-600">{latestScan.criticalCount}</span>
+              <span className="stat-label">Critical</span>
             </div>
 
             {/* Major */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-orange-500">{latestScan.majorCount}</span>
-              <span className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Major</span>
+            <div className="stat-card animate-fade-up stagger-3">
+              <span className="stat-value text-orange-600">{latestScan.majorCount}</span>
+              <span className="stat-label">Major</span>
             </div>
 
             {/* Minor */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-yellow-500">{latestScan.minorCount}</span>
-              <span className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Minor</span>
+            <div className="stat-card animate-fade-up stagger-4">
+              <span className="stat-value text-amber-600">{latestScan.minorCount}</span>
+              <span className="stat-label">Minor</span>
             </div>
           </div>
 
           {/* Issue tracking row */}
           {hasIssueTracking && (
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="bg-white border border-gray-200 rounded-xl p-5">
-                <div className="text-2xl font-bold text-gray-900">{openIssues}</div>
-                <div className="text-sm text-gray-500 mt-1">Open issues</div>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="card-padded animate-fade-up stagger-5">
+                <div className="text-2xl font-display font-bold text-ink">{openIssues}</div>
+                <div className="text-sm font-body text-slate-500 mt-1">Open issues</div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-xl p-5">
-                <div className="text-2xl font-bold text-green-600">{fixedThisMonth}</div>
-                <div className="text-sm text-gray-500 mt-1">Fixed this month</div>
+              <div className="card-padded animate-fade-up stagger-6">
+                <div className="text-2xl font-display font-bold text-emerald-600">{fixedThisMonth}</div>
+                <div className="text-sm font-body text-slate-500 mt-1">Fixed this month</div>
               </div>
             </div>
           )}
 
           {/* Score trend chart */}
           {hasProgressChart && (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 mb-8">
-              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
-                Score Trend
-              </h2>
+            <div className="card p-6 mb-6 animate-fade-up stagger-5">
+              <h2 className="section-title mb-4">Score Trend</h2>
               <ScoreTrend data={trendData} />
             </div>
           )}
 
           {/* Last scan info */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
-              Last Scan
-            </h2>
-            <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+          <div className="card p-6 animate-fade-up stagger-6">
+            <h2 className="section-title mb-4">Last Scan</h2>
+            <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
-                <dt className="text-gray-400">Status</dt>
-                <dd className="font-medium text-gray-800 capitalize">{latestScan.status}</dd>
+                <dt className="text-xs font-body text-slate-400 mb-1">Status</dt>
+                <dd className="text-sm font-body font-medium text-ink capitalize">{latestScan.status}</dd>
               </div>
               <div>
-                <dt className="text-gray-400">Pages scanned</dt>
-                <dd className="font-medium text-gray-800">
+                <dt className="text-xs font-body text-slate-400 mb-1">Pages scanned</dt>
+                <dd className="text-sm font-body font-medium text-ink">
                   {latestScan.pagesScanned} / {latestScan.pagesFound}
                 </dd>
               </div>
               <div>
-                <dt className="text-gray-400">Trigger</dt>
-                <dd className="font-medium text-gray-800 capitalize">{latestScan.triggeredBy}</dd>
+                <dt className="text-xs font-body text-slate-400 mb-1">Trigger</dt>
+                <dd className="text-sm font-body font-medium text-ink capitalize">{latestScan.triggeredBy}</dd>
               </div>
               <div>
-                <dt className="text-gray-400">Completed</dt>
-                <dd className="font-medium text-gray-800">
+                <dt className="text-xs font-body text-slate-400 mb-1">Completed</dt>
+                <dd className="text-sm font-body font-medium text-ink">
                   {latestScan.completedAt
                     ? new Date(latestScan.completedAt).toLocaleDateString('en-US', {
                         month: 'short',

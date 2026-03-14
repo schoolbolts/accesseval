@@ -5,22 +5,20 @@ import { prisma } from '@/lib/db';
 import TriggerScanButton from '@/components/history/trigger-scan-button';
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-gray-400';
-  if (grade === 'A') return 'text-green-600';
+  if (!grade) return 'text-slate-400';
+  if (grade === 'A') return 'text-emerald-600';
   if (grade === 'B') return 'text-blue-600';
-  if (grade === 'C') return 'text-yellow-600';
+  if (grade === 'C') return 'text-amber-600';
   if (grade === 'D') return 'text-orange-600';
   return 'text-red-600';
 }
 
-const statusBadge: Record<string, string> = {
-  completed: 'bg-green-100 text-green-700',
-  partial: 'bg-yellow-100 text-yellow-700',
-  failed: 'bg-red-100 text-red-700',
-  queued: 'bg-gray-100 text-gray-500',
-  crawling: 'bg-blue-100 text-blue-700',
-  scanning: 'bg-blue-100 text-blue-700',
-};
+function statusBadgeClass(status: string) {
+  if (status === 'completed') return 'badge-success';
+  if (status === 'partial') return 'badge-minor';
+  if (status === 'failed') return 'badge-critical';
+  return 'badge-info';
+}
 
 export default async function HistoryPage() {
   const session = await getServerSession(authOptions);
@@ -33,10 +31,10 @@ export default async function HistoryPage() {
 
   if (!site) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Scan History</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 text-sm">No site configured yet.</p>
+      <div className="p-8 max-w-6xl">
+        <h1 className="page-title mb-1">Scan History</h1>
+        <div className="card p-8 text-center mt-6">
+          <p className="text-slate-500 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -63,52 +61,33 @@ export default async function HistoryPage() {
 
   return (
     <div className="p-8 max-w-6xl">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-start justify-between mb-8 animate-fade-up">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Scan History</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{site.url}</p>
+          <h1 className="page-title">Scan History</h1>
+          <p className="page-subtitle">{site.url}</p>
         </div>
         <TriggerScanButton />
       </div>
 
-
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="card overflow-hidden animate-fade-up stagger-1">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50 text-left">
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide">
-                Date
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Grade
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Score
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Pages
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Critical
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Major
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Minor
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Trigger
-              </th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide text-center">
-                Status
-              </th>
+            <tr className="border-b border-slate-100 bg-slate-50/60">
+              <th className="px-5 py-3.5 text-left section-title">Date</th>
+              <th className="px-5 py-3.5 text-center section-title">Grade</th>
+              <th className="px-5 py-3.5 text-center section-title">Score</th>
+              <th className="px-5 py-3.5 text-center section-title">Pages</th>
+              <th className="px-5 py-3.5 text-center section-title">Critical</th>
+              <th className="px-5 py-3.5 text-center section-title">Major</th>
+              <th className="px-5 py-3.5 text-center section-title">Minor</th>
+              <th className="px-5 py-3.5 text-center section-title">Trigger</th>
+              <th className="px-5 py-3.5 text-center section-title">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100">
             {scans.map((scan) => (
-              <tr key={scan.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
+              <tr key={scan.id} className="hover:bg-slate-50/50 transition-colors">
+                <td className="px-5 py-3.5 font-body text-slate-700 whitespace-nowrap">
                   {scan.completedAt
                     ? new Date(scan.completedAt).toLocaleDateString('en-US', {
                         month: 'short',
@@ -121,33 +100,29 @@ export default async function HistoryPage() {
                         year: 'numeric',
                       })}
                 </td>
-                <td className={`px-4 py-3 text-center font-bold ${gradeColor(scan.grade)}`}>
+                <td className={`px-5 py-3.5 text-center font-display font-bold text-base ${gradeColor(scan.grade)}`}>
                   {scan.grade ?? '--'}
                 </td>
-                <td className="px-4 py-3 text-center text-gray-700">
+                <td className="px-5 py-3.5 text-center font-body text-slate-700">
                   {scan.score != null ? scan.score : '--'}
                 </td>
-                <td className="px-4 py-3 text-center text-gray-700">
+                <td className="px-5 py-3.5 text-center font-body text-slate-700">
                   {scan.pagesScanned}/{scan.pagesFound}
                 </td>
-                <td className="px-4 py-3 text-center text-red-600 font-medium">
+                <td className="px-5 py-3.5 text-center font-body text-red-600 font-medium">
                   {scan.criticalCount}
                 </td>
-                <td className="px-4 py-3 text-center text-orange-500 font-medium">
+                <td className="px-5 py-3.5 text-center font-body text-orange-600 font-medium">
                   {scan.majorCount}
                 </td>
-                <td className="px-4 py-3 text-center text-yellow-500 font-medium">
+                <td className="px-5 py-3.5 text-center font-body text-amber-600 font-medium">
                   {scan.minorCount}
                 </td>
-                <td className="px-4 py-3 text-center text-gray-500 capitalize">
+                <td className="px-5 py-3.5 text-center font-body text-slate-500 capitalize">
                   {scan.triggeredBy}
                 </td>
-                <td className="px-4 py-3 text-center">
-                  <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                      statusBadge[scan.status] ?? 'bg-gray-100 text-gray-500'
-                    }`}
-                  >
+                <td className="px-5 py-3.5 text-center">
+                  <span className={statusBadgeClass(scan.status)}>
                     {scan.status}
                   </span>
                 </td>
@@ -156,10 +131,9 @@ export default async function HistoryPage() {
           </tbody>
         </table>
         {scans.length === 0 && (
-          <div className="p-8 text-center text-gray-400 text-sm">No scans yet.</div>
+          <div className="p-8 text-center text-slate-400 text-sm font-body">No scans yet.</div>
         )}
       </div>
     </div>
   );
 }
-

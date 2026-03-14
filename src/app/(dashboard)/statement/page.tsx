@@ -53,58 +53,103 @@ export default function StatementPage() {
   ];
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Accessibility Statement</h1>
+    <div className="p-8 max-w-6xl">
+      <div className="mb-8 animate-fade-up">
+        <h1 className="page-title">Accessibility Statement</h1>
+        <p className="page-subtitle">Generate a public-facing accessibility statement for your website.</p>
+      </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Form */}
-        <form onSubmit={handleSave} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Entity name</label>
-            <input type="text" value={form.entityName}
-              onChange={(e) => setForm((f) => ({ ...f, entityName: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg" required />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Entity type</label>
-            <select value={form.entityType}
-              onChange={(e) => setForm((f) => ({ ...f, entityType: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg">
-              {entityTypes.map((t) => (
-                <option key={t.id} value={t.id}>{t.label}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Contact email</label>
-            <input type="email" value={form.contactEmail}
-              onChange={(e) => setForm((f) => ({ ...f, contactEmail: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg" required />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Contact phone (optional)</label>
-            <input type="tel" value={form.contactPhone}
-              onChange={(e) => setForm((f) => ({ ...f, contactPhone: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg" />
-          </div>
-          <button type="submit" disabled={saving}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">
-            {saving ? 'Saving...' : 'Generate Statement'}
-          </button>
-          {publicUrl && (
-            <p className="text-sm text-gray-500">
-              Public URL: <a href={publicUrl} target="_blank" className="text-blue-600">{publicUrl}</a>
-            </p>
-          )}
-        </form>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Form card */}
+        <div className="card p-6 animate-fade-up stagger-1">
+          <h2 className="section-title mb-5">Statement details</h2>
+          <form onSubmit={handleSave} className="space-y-4">
+            <div>
+              <label className="label">Entity name</label>
+              <input
+                type="text"
+                value={form.entityName}
+                onChange={(e) => setForm((f) => ({ ...f, entityName: e.target.value }))}
+                className="input"
+                placeholder="Riverside Unified School District"
+                required
+              />
+            </div>
+            <div>
+              <label className="label">Entity type</label>
+              <select
+                value={form.entityType}
+                onChange={(e) => setForm((f) => ({ ...f, entityType: e.target.value }))}
+                className="select"
+              >
+                {entityTypes.map((t) => (
+                  <option key={t.id} value={t.id}>{t.label}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="label">Contact email</label>
+              <input
+                type="email"
+                value={form.contactEmail}
+                onChange={(e) => setForm((f) => ({ ...f, contactEmail: e.target.value }))}
+                className="input"
+                placeholder="webmaster@district.org"
+                required
+              />
+            </div>
+            <div>
+              <label className="label">
+                Contact phone <span className="text-slate-400 font-normal">(optional)</span>
+              </label>
+              <input
+                type="tel"
+                value={form.contactPhone}
+                onChange={(e) => setForm((f) => ({ ...f, contactPhone: e.target.value }))}
+                className="input"
+                placeholder="(555) 000-0000"
+              />
+            </div>
+            <button type="submit" disabled={saving} className="btn-primary w-full justify-center mt-2">
+              {saving ? (
+                <>
+                  <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                  </svg>
+                  Saving...
+                </>
+              ) : (
+                'Generate Statement'
+              )}
+            </button>
+            {publicUrl && (
+              <p className="text-sm font-body text-slate-500 pt-1">
+                Public URL:{' '}
+                <a href={publicUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 hover:underline">
+                  {publicUrl}
+                </a>
+              </p>
+            )}
+          </form>
+        </div>
 
-        {/* Preview */}
-        <div className="border rounded-lg p-6">
-          <h2 className="font-semibold mb-4">Preview</h2>
+        {/* Preview card */}
+        <div className="card p-6 animate-fade-up stagger-2">
+          <h2 className="section-title mb-5">Preview</h2>
           {html ? (
-            <div className="prose prose-sm" dangerouslySetInnerHTML={{ __html: html }} />
+            <div className="prose-ae" dangerouslySetInnerHTML={{ __html: html }} />
           ) : (
-            <p className="text-gray-400 text-sm">Fill in the form and click Generate to preview.</p>
+            <div className="flex flex-col items-center justify-center h-48 text-center">
+              <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 2h7l4 4v12a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z" />
+                  <polyline points="12 2 12 6 16 6" />
+                  <line x1="7" y1="10" x2="13" y2="10" />
+                  <line x1="7" y1="13" x2="11" y2="13" />
+                </svg>
+              </div>
+              <p className="text-sm font-body text-slate-400">Fill in the form and click Generate to preview.</p>
+            </div>
           )}
         </div>
       </div>

@@ -20,10 +20,10 @@ export default async function IssuesPage() {
 
   if (!site) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Issues</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 text-sm">No site configured yet.</p>
+      <div className="p-8 max-w-5xl">
+        <h1 className="page-title mb-1">Issues</h1>
+        <div className="card p-8 text-center mt-6">
+          <p className="text-slate-500 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -37,10 +37,10 @@ export default async function IssuesPage() {
 
   if (!latestScan) {
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Issues</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-500 text-sm">No completed scans yet.</p>
+      <div className="p-8 max-w-5xl">
+        <h1 className="page-title mb-1">Issues</h1>
+        <div className="card p-8 text-center mt-6">
+          <p className="text-slate-500 text-sm">No completed scans yet.</p>
         </div>
       </div>
     );
@@ -67,10 +67,10 @@ export default async function IssuesPage() {
 
   return (
     <div className="p-8 max-w-5xl">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-start justify-between mb-8 animate-fade-up">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Issues</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="page-title">Issues</h1>
+          <p className="page-subtitle">
             {issues.length} issues from latest scan &mdash;{' '}
             {latestScan.completedAt
               ? new Date(latestScan.completedAt).toLocaleDateString('en-US', {

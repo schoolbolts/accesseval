@@ -29,16 +29,25 @@ export default function TriggerScanButton() {
   return (
     <div className="flex items-center gap-3">
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-1.5">
+        <p className="text-sm font-body text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-1.5">
           {error}
         </p>
       )}
       <button
         onClick={handleTrigger}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-primary"
       >
-        {loading ? 'Starting...' : 'Run scan now'}
+        {loading ? (
+          <>
+            <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+            </svg>
+            Starting...
+          </>
+        ) : (
+          'Run scan now'
+        )}
       </button>
     </div>
   );

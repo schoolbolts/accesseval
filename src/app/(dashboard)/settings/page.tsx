@@ -44,49 +44,71 @@ export default function SettingsPage() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
-
-      {/* Billing */}
-      <div className="border rounded-xl p-6 mb-6">
-        <h2 className="font-semibold text-lg mb-4">Billing</h2>
-        <button
-          onClick={openBillingPortal}
-          disabled={billingLoading}
-          className="px-4 py-2 border rounded-lg hover:bg-gray-50 disabled:opacity-50"
-        >
-          {billingLoading ? 'Loading...' : 'Manage Billing'}
-        </button>
+    <div className="p-8 max-w-3xl">
+      <div className="mb-8 animate-fade-up">
+        <h1 className="page-title">Settings</h1>
+        <p className="page-subtitle">Manage your account, billing, and team.</p>
       </div>
 
-      {/* Team */}
-      <div className="border rounded-xl p-6 mb-6">
-        <h2 className="font-semibold text-lg mb-4">Team Members</h2>
+      {/* Billing card */}
+      <div className="card p-6 mb-5 animate-fade-up stagger-1">
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="font-body font-semibold text-ink mb-1">Billing</h2>
+            <p className="text-sm font-body text-slate-500">
+              Manage your subscription, invoices, and payment method.
+            </p>
+          </div>
+          <button
+            onClick={openBillingPortal}
+            disabled={billingLoading}
+            className="btn-secondary shrink-0 ml-4"
+          >
+            {billingLoading ? 'Loading...' : 'Manage Billing'}
+          </button>
+        </div>
+      </div>
 
-        <form onSubmit={handleInvite} className="flex gap-2 mb-4">
+      {/* Team card */}
+      <div className="card p-6 animate-fade-up stagger-2">
+        <h2 className="font-body font-semibold text-ink mb-1">Team Members</h2>
+        <p className="text-sm font-body text-slate-500 mb-5">
+          Invite colleagues to access this organization's dashboard.
+        </p>
+
+        <form onSubmit={handleInvite} className="flex gap-2 mb-5">
           <input
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
             placeholder="colleague@school.org"
-            className="flex-1 px-3 py-2 border rounded-lg text-sm"
+            className="input"
             required
           />
-          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
+          <button type="submit" className="btn-primary shrink-0">
             Invite
           </button>
         </form>
 
         {invitations.length > 0 && (
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-gray-500">Pending Invitations</h3>
-            {invitations.map((inv) => (
-              <div key={inv.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm">{inv.email}</span>
-                <button onClick={() => revokeInvite(inv.id)}
-                  className="text-xs text-red-600 hover:underline">Revoke</button>
-              </div>
-            ))}
+          <div>
+            <h3 className="section-title mb-3">Pending Invitations</h3>
+            <div className="space-y-2">
+              {invitations.map((inv) => (
+                <div
+                  key={inv.id}
+                  className="flex justify-between items-center px-4 py-2.5 bg-surface rounded-xl border border-slate-100"
+                >
+                  <span className="text-sm font-body text-ink">{inv.email}</span>
+                  <button
+                    onClick={() => revokeInvite(inv.id)}
+                    className="btn-danger py-1 px-3 text-xs"
+                  >
+                    Revoke
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

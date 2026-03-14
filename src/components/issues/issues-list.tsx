@@ -23,10 +23,10 @@ interface IssuesListProps {
   showCmsInstructions: boolean;
 }
 
-const severityStyles: Record<IssueSeverity, { badge: string; label: string }> = {
-  critical: { badge: 'bg-red-100 text-red-700 border-red-200', label: 'Critical' },
-  major: { badge: 'bg-orange-100 text-orange-700 border-orange-200', label: 'Major' },
-  minor: { badge: 'bg-yellow-100 text-yellow-700 border-yellow-200', label: 'Minor' },
+const severityBadge: Record<IssueSeverity, string> = {
+  critical: 'badge-critical',
+  major: 'badge-major',
+  minor: 'badge-minor',
 };
 
 const filters: { label: string; value: IssueSeverity | 'all' }[] = [
@@ -59,55 +59,52 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
 
   return (
     <div>
-      {/* Filter tabs */}
-      <div className="flex gap-2 mb-5">
+      {/* Filter pill tabs */}
+      <div className="flex gap-2 mb-5 flex-wrap">
         {filters.map((f) => (
           <button
             key={f.value}
             onClick={() => setFilter(f.value)}
             className={[
-              'px-3 py-1.5 text-sm rounded-lg font-medium transition-colors',
+              'px-4 py-1.5 text-sm font-body font-medium rounded-full transition-all duration-150',
               filter === f.value
-                ? 'bg-blue-600 text-white'
-                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50',
+                ? 'bg-emerald-600 text-white shadow-sm'
+                : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-ink',
             ].join(' ')}
           >
             {f.label}
           </button>
         ))}
-        <span className="ml-auto text-sm text-gray-400 self-center">{visible.length} shown</span>
+        <span className="ml-auto text-sm font-body text-slate-400 self-center">{visible.length} shown</span>
       </div>
 
       {visible.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-gray-400 text-sm">No issues to display.</p>
+        <div className="card p-8 text-center">
+          <p className="text-slate-400 text-sm font-body">No issues to display.</p>
         </div>
       ) : (
         <div className="space-y-2">
           {visible.map((issue) => {
-            const styles = severityStyles[issue.severity];
             const isExpanded = expanded === issue.id;
             return (
               <div
                 key={issue.id}
-                className="bg-white border border-gray-200 rounded-xl overflow-hidden"
+                className="card overflow-hidden"
               >
                 {/* Header row */}
                 <div className="flex items-start gap-3 p-4">
-                  <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border ${styles.badge} shrink-0 mt-0.5`}
-                  >
-                    {styles.label}
+                  <span className={`${severityBadge[issue.severity]} shrink-0 mt-0.5`}>
+                    {issue.severity}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 leading-snug">
+                    <p className="text-sm font-body font-medium text-ink leading-snug">
                       {issue.description}
                     </p>
-                    <p className="text-xs text-gray-400 mt-0.5 truncate">
+                    <p className="text-xs font-body text-slate-400 mt-0.5 truncate">
                       {issue.page.title || issue.page.url}
                     </p>
                     {issue.wcagCriteria && (
-                      <span className="inline-block mt-1 text-xs text-gray-500 bg-gray-100 rounded px-1.5 py-0.5">
+                      <span className="inline-block mt-1.5 text-xs font-body text-slate-500 bg-slate-100 rounded-lg px-2 py-0.5">
                         WCAG {issue.wcagCriteria}
                       </span>
                     )}
@@ -115,13 +112,13 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => handleIgnore(issue.id)}
-                      className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                      className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
                     >
                       Ignore
                     </button>
                     <button
                       onClick={() => setExpanded(isExpanded ? null : issue.id)}
-                      className="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                      className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
                     >
                       {isExpanded ? 'Collapse' : 'Details'}
                     </button>
@@ -130,59 +127,49 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
 
                 {/* Expanded details */}
                 {isExpanded && (
-                  <div className="border-t border-gray-100 px-4 py-4 bg-gray-50 space-y-4">
+                  <div className="border-t border-slate-100 px-4 py-4 bg-surface space-y-4">
                     <div>
-                      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                        How to fix
-                      </h4>
-                      <p className="text-sm text-gray-700 leading-relaxed">{issue.fixInstructions}</p>
+                      <h4 className="section-title mb-2">How to fix</h4>
+                      <p className="text-sm font-body text-slate-700 leading-relaxed">{issue.fixInstructions}</p>
                     </div>
 
                     {showCmsInstructions && issue.fixInstructionsCms && (
                       <div>
-                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                          CMS fix instructions
-                        </h4>
-                        <p className="text-sm text-gray-700 leading-relaxed">
+                        <h4 className="section-title mb-2">CMS fix instructions</h4>
+                        <p className="text-sm font-body text-slate-700 leading-relaxed">
                           {issue.fixInstructionsCms}
                         </p>
                       </div>
                     )}
 
                     <div>
-                      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                        Element selector
-                      </h4>
-                      <code className="block text-xs bg-white border border-gray-200 rounded px-3 py-2 text-gray-700 font-mono overflow-x-auto">
+                      <h4 className="section-title mb-2">Element selector</h4>
+                      <code className="block text-xs font-mono bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-slate-700 overflow-x-auto">
                         {issue.elementSelector}
                       </code>
                     </div>
 
                     <div>
-                      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                        Element HTML
-                      </h4>
-                      <code className="block text-xs bg-white border border-gray-200 rounded px-3 py-2 text-gray-700 font-mono overflow-x-auto whitespace-pre-wrap break-all">
+                      <h4 className="section-title mb-2">Element HTML</h4>
+                      <code className="block text-xs font-mono bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-slate-700 overflow-x-auto whitespace-pre-wrap break-all">
                         {issue.elementHtml}
                       </code>
                     </div>
 
                     <div>
-                      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                        Page URL
-                      </h4>
+                      <h4 className="section-title mb-2">Page URL</h4>
                       <a
                         href={issue.page.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-blue-600 hover:underline break-all"
+                        className="text-xs font-mono text-emerald-600 hover:text-emerald-700 hover:underline break-all"
                       >
                         {issue.page.url}
                       </a>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs text-gray-400">
-                      <span>Rule: {issue.axeRuleId}</span>
+                    <div className="flex items-center gap-4 text-xs font-body text-slate-400">
+                      <span>Rule: <span className="font-mono">{issue.axeRuleId}</span></span>
                     </div>
                   </div>
                 )}
