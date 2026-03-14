@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe as getStripe } from '@/lib/stripe';
 import { prisma } from '@/lib/db';
 import { PLAN_LIMITS, PlanName } from '@/lib/plan-limits';
-import { notifyPaymentFailed } from '../../../../worker/notifier';
+import { notifyPaymentFailed } from '../../../../../worker/notifier';
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();

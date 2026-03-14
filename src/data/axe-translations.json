@@ -33,11 +33,7 @@
     "description": "This link has no text that describes where it goes. Screen reader users won't know what this link does.",
     "wcag": "2.4.4",
     "fix": {
-      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination.",
-      "wordpress": "In WordPress: edit the link text in the block editor, or add an aria-label via a custom HTML block.",
-      "squarespace": "In Squarespace: click the link → edit the link text to be descriptive.",
-      "civicplus": "In CivicPlus: edit the page → update the link text to describe where it goes.",
-      "finalsite": "In Finalsite: click the link → update the display text to be descriptive."
+      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination."
     }
   },
   "html-has-lang": {
