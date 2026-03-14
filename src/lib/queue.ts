@@ -20,7 +20,14 @@ export const scanQueue = new Queue('scans', {
     removeOnFail: 50,
   },
 });
-export const freeScanQueue = new Queue('free-scans', { connection: connectionOptions });
+export const freeScanQueue = new Queue('free-scans', {
+  connection: connectionOptions,
+  defaultJobOptions: {
+    attempts: 1,
+    removeOnComplete: 50,
+    removeOnFail: 20,
+  },
+});
 
 export function createWorker<T>(
   queueName: string,
