@@ -198,6 +198,52 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Product Preview */}
+      <section className="py-24 px-4 bg-white" aria-labelledby="preview-heading">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="section-title mb-3">See what you get</p>
+            <h2
+              id="preview-heading"
+              className="font-display text-display-md text-ink mb-4"
+            >
+              Plain-English reports, not consultant jargon
+            </h2>
+            <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
+              Every scan produces a letter grade and a prioritized list of issues with
+              step-by-step fix instructions anyone on your team can follow.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <p className="font-body text-sm font-semibold text-slate-500 uppercase tracking-widest mb-3">
+                Compliance Dashboard
+              </p>
+              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+                <img
+                  src="/screenshots/dashboard.png"
+                  alt="AccessEval dashboard showing site grade, score history chart, and top accessibility issues"
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="font-body text-sm font-semibold text-slate-500 uppercase tracking-widest mb-3">
+                Site Report Card
+              </p>
+              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+                <img
+                  src="/screenshots/report.png"
+                  alt="AccessEval report card showing letter grade D, 38/100 score, and plain-English issue descriptions"
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section
         className="py-24 px-4 bg-surface bg-dot-pattern"
