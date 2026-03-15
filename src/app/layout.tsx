@@ -66,14 +66,16 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased font-body text-ink bg-white">
         {children}
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <Script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-            src="https://plausible.io/js/script.js"
-            strategy="afterInteractive"
-          />
-        )}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-H3XYWWW6P7"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-H3XYWWW6P7');`}
+        </Script>
       </body>
     </html>
   );
