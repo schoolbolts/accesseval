@@ -272,8 +272,9 @@ export default async function SchoolReportPage({
           <p>
             Under <strong>ADA Title II</strong>, public school districts like {district.name} in{' '}
             {district.state || location} are required to ensure their websites are accessible to
-            people with disabilities. The U.S. Department of Justice has set an April 2026 compliance
-            deadline. Automated scanning catches approximately 30–40% of potential issues; a complete
+            people with disabilities. The U.S. Department of Justice has set compliance deadlines of
+            April 24, 2026 for entities serving 50,000+ people and April 26, 2027 for smaller
+            entities. Automated scanning catches approximately 30–40% of potential issues; a complete
             assessment may include manual testing.
           </p>
         </div>

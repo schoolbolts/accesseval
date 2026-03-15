@@ -8,14 +8,478 @@ import { posts, getPost } from '../posts';
 /* ------------------------------------------------------------------ */
 
 const content: Record<string, React.ReactNode> = {
+  'accesseval-vs-audioeye-school-districts': (
+    <>
+      <p>
+        If you are a K-12 school district trying to meet the ADA Title II website accessibility
+        deadline, you have probably come across both AccessEval and AudioEye. They solve the same
+        core problem — helping you find and fix WCAG 2.1 AA issues on your website — but they
+        take very different approaches, at very different price points.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        <strong>AccessEval</strong> is built specifically for schools and small government entities.
+        It scans your site with the same industry-standard engine (axe-core) used by enterprise tools,
+        produces plain-English reports, and costs $99 to $599 per year depending on the number of
+        pages you need to monitor. There are no per-page fees, no contracts, and no upsells.
+      </p>
+      <p>
+        <strong>AudioEye</strong> is an enterprise accessibility platform that combines automated
+        scanning with AI-powered remediation overlays and manual auditing. Pricing typically starts
+        at several thousand dollars per year and scales based on traffic and pages.
+      </p>
+
+      <h2>Scanning and detection</h2>
+      <p>
+        Both tools use automated scanning to identify WCAG violations. AccessEval uses Playwright
+        (a real browser) combined with axe-core, which is the same engine that powers most
+        accessibility testing tools including Deque&rsquo;s own products. AudioEye uses proprietary
+        scanning technology and adds a JavaScript overlay that attempts to fix certain issues
+        in real time.
+      </p>
+      <p>
+        The overlay approach is controversial in the accessibility community. Organizations like
+        the National Federation of the Blind have raised concerns about overlay tools, and some
+        users with disabilities report that overlays can actually interfere with their assistive
+        technology. AccessEval takes a different approach: it tells you exactly what is wrong and
+        gives you step-by-step instructions to fix the underlying code, rather than papering over
+        issues with client-side JavaScript.
+      </p>
+
+      <h2>Reporting</h2>
+      <p>
+        AccessEval produces a letter grade (A through F) and translates every axe-core rule violation
+        into plain English that a non-technical administrator can understand. Reports include the
+        exact location of each issue on the page and, on higher-tier plans, CMS-specific fix
+        instructions for platforms like WordPress, Finalsite, and Squarespace.
+      </p>
+      <p>
+        AudioEye provides more detailed enterprise reporting with dashboards, compliance scoring,
+        and VPAT documentation. If your district needs to respond to a formal audit or produce
+        detailed compliance documentation for a vendor, AudioEye&rsquo;s reporting may be more
+        comprehensive — but for most small to mid-size districts, AccessEval&rsquo;s reports provide
+        everything needed to identify, prioritize, and resolve issues.
+      </p>
+
+      <h2>Pricing</h2>
+      <p>
+        This is where the tools diverge most. AccessEval&rsquo;s pricing is public and simple:
+      </p>
+      <ul>
+        <li><strong>Scan</strong> — $99/year (100 pages, monthly scans)</li>
+        <li><strong>Comply</strong> — $299/year (500 pages, weekly scans, compliance docs)</li>
+        <li><strong>Fix</strong> — $599/year (2,000 pages, CMS-specific instructions, vendor reports)</li>
+      </ul>
+      <p>
+        AudioEye&rsquo;s pricing is not publicly listed and typically requires a sales call. Based on
+        public procurement records and published case studies, contracts generally start between
+        $3,000 and $10,000 per year for a single site, with enterprise pricing going significantly
+        higher.
+      </p>
+      <p>
+        For a district with a limited technology budget, the difference is significant. AccessEval&rsquo;s
+        most comprehensive plan costs less than AudioEye&rsquo;s entry-level offering in most cases.
+      </p>
+
+      <h2>Who should use what?</h2>
+      <p>
+        <strong>Choose AccessEval if:</strong> You are a small to mid-size school district that needs
+        straightforward scanning, clear reports, and affordable ongoing monitoring. You want to
+        understand and fix your actual code rather than rely on an overlay. Your budget is under
+        $1,000 per year.
+      </p>
+      <p>
+        <strong>Choose AudioEye if:</strong> You are a large district or state-level organization that
+        needs enterprise-grade compliance documentation, managed remediation services, and has budget
+        for a multi-thousand-dollar annual contract. You want a vendor to actively manage fixes
+        rather than doing it in-house.
+      </p>
+
+      <h2>Try it yourself</h2>
+      <p>
+        The best way to evaluate is to see the results. <a href="/">Run a free scan of your district
+        website with AccessEval</a> — no signup required, results in under two minutes. Compare what
+        you get against any other tool you are evaluating.
+      </p>
+    </>
+  ),
+
+  'ada-compliance-small-towns-municipalities': (
+    <>
+      <p>
+        If you work for a city, town, or county with a population under 50,000, the federal
+        government has given you until <strong>April 26, 2027</strong> to make your website
+        accessible under ADA Title II. (Entities serving 50,000 or more people face an earlier
+        deadline of April 24, 2026.) This is not optional — it is a federal civil rights
+        requirement, and non-compliance creates real legal exposure.
+      </p>
+      <p>
+        The good news: for most small municipalities, achieving compliance is more affordable and
+        straightforward than you might think.
+      </p>
+
+      <h2>What the law actually requires</h2>
+      <p>
+        The DOJ&rsquo;s 2024 Title II rule requires all state and local government web content to
+        meet <strong>WCAG 2.1 Level AA</strong>. This is a specific, testable technical standard
+        with about 50 success criteria covering things like:
+      </p>
+      <ul>
+        <li>Text alternatives for images (alt text)</li>
+        <li>Sufficient color contrast (4.5:1 ratio for normal text)</li>
+        <li>Keyboard navigability for all interactive elements</li>
+        <li>Form labels and error messages</li>
+        <li>Proper heading structure</li>
+        <li>Accessible PDF documents</li>
+      </ul>
+      <p>
+        The deadline is tiered by population. Entities serving 50,000 or more people must comply
+        by <strong>April 24, 2026</strong>. Entities under 50,000 — which includes most towns, small cities,
+        county governments, and special districts — have until <strong>April 26, 2027</strong>.
+      </p>
+
+      <h2>What is actually on your website?</h2>
+      <p>
+        Most small municipality websites include a core set of content that residents depend on:
+      </p>
+      <ul>
+        <li>Meeting agendas and minutes (often posted as PDFs)</li>
+        <li>Utility billing and payment portals</li>
+        <li>Permit and license applications</li>
+        <li>Parks and recreation registration</li>
+        <li>Contact information and department directories</li>
+        <li>Public notices and emergency alerts</li>
+      </ul>
+      <p>
+        Every one of these must be accessible. If a resident who uses a screen reader cannot pay
+        their water bill online, or cannot read a public meeting agenda, that is a Title II
+        violation.
+      </p>
+
+      <h2>Common issues we see on municipal websites</h2>
+      <p>
+        After scanning government websites, the most frequent problems are:
+      </p>
+      <ul>
+        <li><strong>Scanned PDF documents</strong> — Meeting minutes and ordinances scanned as images
+        are completely invisible to screen readers. These need to be recreated as tagged PDFs or
+        HTML pages.</li>
+        <li><strong>Missing form labels</strong> — Online forms for permits, complaints, and payments
+        often lack proper labels, making them unusable with assistive technology.</li>
+        <li><strong>Poor color contrast</strong> — Municipal branding often includes colors that
+        do not meet the 4.5:1 contrast ratio, especially in headers and navigation.</li>
+        <li><strong>Inaccessible embedded content</strong> — Third-party widgets for payments, GIS
+        maps, and calendars are often not accessible, and the municipality is still responsible.</li>
+      </ul>
+
+      <h2>How to get compliant on a small budget</h2>
+      <p>
+        Enterprise accessibility vendors typically charge $5,000 to $25,000 or more per year.
+        That is out of reach for most towns with small IT budgets. Here is a more practical path:
+      </p>
+      <ul>
+        <li>
+          <strong>Start with a scan</strong> — <a href="/">Run a free scan with AccessEval</a> to
+          get a baseline. You will see exactly which issues exist and how severe they are.
+        </li>
+        <li>
+          <strong>Fix the critical issues first</strong> — Missing alt text, unlabeled forms, and
+          keyboard traps are the highest-priority items. Most can be fixed by your web vendor or
+          CMS administrator in a few hours.
+        </li>
+        <li>
+          <strong>Address PDFs</strong> — Identify your most-accessed PDF documents and either
+          recreate them as HTML pages or re-export them with proper tagging from the source
+          document.
+        </li>
+        <li>
+          <strong>Set up monitoring</strong> — New content can reintroduce issues. An{' '}
+          <a href="/signup?plan=scan">AccessEval Scan plan at $99/year</a> gives you monthly
+          automated checks so you do not backslide.
+        </li>
+        <li>
+          <strong>Publish an accessibility statement</strong> — This demonstrates good faith and
+          gives residents a way to report barriers before they file a formal complaint.
+        </li>
+      </ul>
+
+      <h2>The risk of doing nothing</h2>
+      <p>
+        ADA complaints against municipalities are increasing. The DOJ has entered into resolution
+        agreements with cities and counties across the country, requiring costly remediation on
+        compressed timelines. Private lawsuits under the ADA can also result in attorney fee awards.
+        The cost of a complaint — $50,000 to $300,000 including legal fees and remediation — dwarfs
+        the cost of proactive compliance.
+      </p>
+
+      <h2>Take the first step</h2>
+      <p>
+        You can find out where your municipality stands in under two minutes.{' '}
+        <a href="/">Run a free accessibility scan</a> and get a plain-English report of every
+        issue on your website. No account required.
+      </p>
+    </>
+  ),
+
+  'best-ada-website-scanners-2026': (
+    <>
+      <p>
+        With ADA Title II compliance deadlines approaching — April 2026 for larger entities, April 2027 for smaller ones — school districts,
+        cities, and counties need to choose a website accessibility scanner. There are dozens of
+        options ranging from free browser extensions to enterprise platforms costing tens of
+        thousands of dollars. Here is how the most common tools compare for public entities.
+      </p>
+
+      <h2>What to look for in a scanner</h2>
+      <p>
+        Before comparing specific tools, here is what matters most for schools and governments:
+      </p>
+      <ul>
+        <li><strong>WCAG 2.1 AA coverage</strong> — The DOJ requires conformance with this specific
+        standard. Your scanner needs to test against it.</li>
+        <li><strong>Plain-English reporting</strong> — Technical axe-core output is useful for
+        developers but not for the administrator or superintendent who needs to understand the
+        results.</li>
+        <li><strong>Ongoing monitoring</strong> — A one-time scan is not enough. Websites change
+        constantly, and new content introduces new issues.</li>
+        <li><strong>Affordable pricing</strong> — Public entities have limited budgets. A tool that
+        costs more than the remediation itself is not practical.</li>
+      </ul>
+
+      <h2>AccessEval</h2>
+      <p>
+        <strong>Best for:</strong> K-12 districts, small cities, counties, and special districts
+        with limited budgets.
+      </p>
+      <p>
+        AccessEval is purpose-built for schools and local governments. It scans with Playwright and
+        axe-core, translates every issue into plain English, and provides CMS-specific fix
+        instructions for platforms like WordPress, Finalsite, and Squarespace. Pricing is simple
+        and public: $99/year for monthly scans of up to 100 pages, $299/year for weekly scans of
+        500 pages with compliance documentation, and $599/year for 2,000 pages with CMS-specific
+        guidance and vendor-shareable reports.
+      </p>
+      <p>
+        <strong>Strengths:</strong> Purpose-built for public entities, plain-English reports,
+        affordable pricing, accessibility statement generator, free scan with no signup.
+      </p>
+      <p>
+        <strong>Limitations:</strong> No JavaScript overlay remediation, no managed services.
+      </p>
+      <p>
+        <a href="/">Try it free</a> — no account required.
+      </p>
+
+      <h2>WAVE (WebAIM)</h2>
+      <p>
+        <strong>Best for:</strong> Quick, one-off manual checks of individual pages.
+      </p>
+      <p>
+        WAVE is a free browser extension from WebAIM that overlays accessibility errors directly on
+        the page. It is excellent for developers who want to visually inspect a single page. However,
+        it does not crawl your site, does not provide ongoing monitoring, and does not generate
+        reports suitable for stakeholders. For a district with hundreds of pages, manually checking
+        each one with WAVE is impractical.
+      </p>
+      <p>
+        <strong>Strengths:</strong> Free, visual feedback, well-established, great for developers.
+      </p>
+      <p>
+        <strong>Limitations:</strong> Manual one-page-at-a-time use, no site-wide scanning, no
+        monitoring, no exportable reports.
+      </p>
+
+      <h2>axe DevTools (Deque)</h2>
+      <p>
+        <strong>Best for:</strong> Development teams building accessible websites from scratch.
+      </p>
+      <p>
+        Deque&rsquo;s axe is the industry-standard accessibility testing engine — it powers many
+        other tools, including AccessEval. The free axe DevTools browser extension is excellent for
+        developers who can interpret technical output. Deque also offers axe Monitor for site-wide
+        scanning, but enterprise pricing typically starts at several thousand dollars per year.
+      </p>
+      <p>
+        <strong>Strengths:</strong> Industry-standard engine, highly accurate, developer-friendly.
+      </p>
+      <p>
+        <strong>Limitations:</strong> Technical output not suitable for non-developers, enterprise
+        pricing for monitoring features.
+      </p>
+
+      <h2>Siteimprove</h2>
+      <p>
+        <strong>Best for:</strong> Large organizations with comprehensive digital governance needs.
+      </p>
+      <p>
+        Siteimprove is a full digital governance platform that includes accessibility, SEO, content
+        quality, and analytics. It is widely used by universities and state governments. However,
+        it is priced for enterprise use — annual contracts typically start at $10,000 or more.
+        For a small district or municipality, the platform offers far more than needed at a price
+        point that is difficult to justify.
+      </p>
+      <p>
+        <strong>Strengths:</strong> Comprehensive platform, strong enterprise reporting, well-known
+        in higher education.
+      </p>
+      <p>
+        <strong>Limitations:</strong> Enterprise pricing, complex setup, overkill for small entities.
+      </p>
+
+      <h2>AudioEye</h2>
+      <p>
+        <strong>Best for:</strong> Organizations that want a vendor to manage remediation.
+      </p>
+      <p>
+        AudioEye combines automated scanning with a JavaScript overlay that attempts to fix certain
+        issues client-side. This approach is convenient but controversial — accessibility advocates
+        have raised concerns about overlay tools interfering with assistive technology. Pricing is
+        not public but typically starts at several thousand dollars per year.
+      </p>
+      <p>
+        <strong>Strengths:</strong> Managed remediation, overlay fixes some issues immediately.
+      </p>
+      <p>
+        <strong>Limitations:</strong> Overlay approach is controversial, pricing not transparent,
+        does not fix underlying code.
+      </p>
+
+      <h2>Summary comparison</h2>
+      <p>
+        For K-12 school districts and small municipalities with limited budgets, the practical
+        choice comes down to: use free tools like WAVE for spot checks, and pair them with an
+        affordable monitoring tool like AccessEval for site-wide, ongoing compliance. Enterprise
+        tools like Siteimprove and AudioEye make sense for large organizations with dedicated
+        accessibility teams and corresponding budgets.
+      </p>
+      <p>
+        The most important step is to start. <a href="/">Run a free scan with AccessEval</a> to
+        see exactly where your website stands — it takes under two minutes, and no signup is
+        required.
+      </p>
+    </>
+  ),
+
+  'website-accessibility-county-government': (
+    <>
+      <p>
+        County governments provide essential services to residents — property tax payments, court
+        records, public health information, election details, and emergency notifications. When a
+        county website is not accessible, residents with disabilities are cut off from services
+        they need and have a legal right to access.
+      </p>
+      <p>
+        Under ADA Title II, every county government in the United States must ensure its website
+        meets WCAG 2.1 Level AA standards. Counties serving 50,000+ people must comply by
+        April 24, 2026; those under 50,000 have until April 26, 2027. This guide explains what
+        that means in practice and how to get there without breaking the budget.
+      </p>
+
+      <h2>Why county websites are especially at risk</h2>
+      <p>
+        County websites tend to accumulate content over many years. Meeting minutes from 2015,
+        budget documents from various departments, GIS mapping tools, permit applications —
+        all of this content falls under the ADA requirement. Unlike a private business that might
+        have a small marketing website, county sites often have thousands of pages and hundreds
+        of PDF documents, many created by different departments with no consistent accessibility
+        standards.
+      </p>
+      <p>
+        Common risk areas include:
+      </p>
+      <ul>
+        <li><strong>Scanned PDFs</strong> — Board minutes, ordinances, and financial documents
+        scanned as images are completely inaccessible to screen readers.</li>
+        <li><strong>Third-party portals</strong> — Tax payment systems, permit applications, and
+        court record searches are often provided by third-party vendors. The county is still
+        responsible for their accessibility.</li>
+        <li><strong>Legacy CMS templates</strong> — Older website templates built before
+        accessibility was a priority often have fundamental navigation and structure issues.</li>
+        <li><strong>Maps and GIS tools</strong> — Interactive maps are notoriously difficult to
+        make accessible. At minimum, the information conveyed by the map must be available in
+        an alternative format.</li>
+      </ul>
+
+      <h2>A practical compliance roadmap</h2>
+
+      <h2>Phase 1: Assessment (Week 1-2)</h2>
+      <p>
+        Start by understanding the scope of the problem. <a href="/">Run a free accessibility
+        scan</a> on your county homepage to get an immediate baseline. Then identify your most
+        critical pages — the ones residents use most frequently:
+      </p>
+      <ul>
+        <li>Homepage and main navigation</li>
+        <li>Property tax lookup and payment</li>
+        <li>Meeting agendas and minutes</li>
+        <li>Job applications</li>
+        <li>Contact and department directories</li>
+        <li>Emergency and public safety information</li>
+      </ul>
+
+      <h2>Phase 2: Critical fixes (Week 3-6)</h2>
+      <p>
+        Focus on the issues that affect the most users and carry the highest legal risk:
+      </p>
+      <ul>
+        <li>Add alt text to all informational images</li>
+        <li>Fix color contrast violations in headers, navigation, and body text</li>
+        <li>Add labels to all form inputs</li>
+        <li>Ensure keyboard navigation works for menus and interactive elements</li>
+        <li>Add a &ldquo;Skip to main content&rdquo; link</li>
+      </ul>
+
+      <h2>Phase 3: Documents and content (Week 7-12)</h2>
+      <p>
+        Address your most-accessed PDF documents. For documents that get regular traffic —
+        current year budgets, active ordinances, recent meeting minutes — either recreate them
+        as tagged PDFs or convert them to HTML pages. For archived documents with little traffic,
+        add a notice offering to provide accessible versions on request.
+      </p>
+
+      <h2>Phase 4: Ongoing monitoring</h2>
+      <p>
+        Accessibility is not a one-time project. New content, staff changes, and CMS updates can
+        reintroduce issues. Set up automated monitoring to catch problems as they appear. An{' '}
+        <a href="/signup?plan=comply">AccessEval Comply plan</a> provides weekly scans, a fix
+        tracking dashboard, and an accessibility statement generator for $299/year — a fraction
+        of what enterprise tools charge.
+      </p>
+
+      <h2>Communicating with your board</h2>
+      <p>
+        County boards and commissions need to understand this is a federal requirement, not an
+        optional improvement. Key points for your presentation:
+      </p>
+      <ul>
+        <li>ADA Title II compliance is a legal obligation, not a recommendation</li>
+        <li>Non-compliance creates real liability — settlements and resolution agreements typically
+        cost $50,000 to $300,000</li>
+        <li>Proactive compliance can be achieved for under $600/year with the right tools</li>
+        <li>Documenting your compliance efforts provides significant legal protection</li>
+      </ul>
+
+      <h2>Start today</h2>
+      <p>
+        The first step takes less than two minutes. <a href="/">Scan your county website for
+        free</a> and get a clear picture of where you stand. From there, you can prioritize fixes,
+        present a plan to your board, and begin working toward compliance well before your
+        deadline hits (April 2026 for 50,000+ populations, April 2027 for smaller entities).
+      </p>
+    </>
+  ),
+
   'ada-title-ii-school-website-deadline-2026': (
     <>
       <p>
         The Department of Justice has made it clear: public entities, including school districts,
         must ensure their websites are accessible to people with disabilities. Under the updated
         ADA Title II rule published in April 2024, state and local governments — and the school
-        districts they oversee — face a concrete deadline of <strong>April 24, 2026</strong> to
-        bring their websites and mobile apps into compliance with WCAG 2.1 Level AA.
+        districts they oversee — face concrete deadlines to bring their websites and mobile apps
+        into compliance with WCAG 2.1 Level AA. Districts serving 50,000 or more people must
+        comply by <strong>April 24, 2026</strong>; smaller districts have
+        until <strong>April 26, 2027</strong>.
       </p>
 
       <h2>What is ADA Title II?</h2>
@@ -67,7 +531,8 @@ const content: Record<string, React.ReactNode> = {
 
       <h2>The bottom line</h2>
       <p>
-        April 2026 is approaching fast. Districts that start now will have ample time to identify
+        The deadlines are approaching fast — April 2026 for larger districts and April 2027 for
+        smaller ones. Districts that start now will have ample time to identify
         issues, make fixes, and document their compliance efforts. Those that wait risk not only
         legal exposure but also the very real consequence of excluding students, parents, and
         community members from critical public information.
@@ -280,7 +745,8 @@ const content: Record<string, React.ReactNode> = {
         The Americans with Disabilities Act has applied to public entities since 1990, but its
         application to websites has been clarified over the past several years through Department
         of Justice guidance and court rulings. The 2024 Title II rule update removed any remaining
-        ambiguity: public entity websites must conform to WCAG 2.1 Level AA by April 2026.
+        ambiguity: public entity websites must conform to WCAG 2.1 Level AA — by April 24, 2026
+        for entities serving 50,000+ people, and by April 26, 2027 for smaller entities.
       </p>
       <p>
         Even before this rule, the DOJ had entered into settlement agreements with school districts

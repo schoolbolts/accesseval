@@ -10,6 +10,46 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'accesseval-vs-audioeye-school-districts',
+    title: 'AccessEval vs AudioEye: Which ADA Compliance Tool Is Right for School Districts?',
+    description:
+      'A side-by-side comparison of AccessEval and AudioEye for K-12 school districts. Pricing, features, and which one makes sense for small to mid-size districts.',
+    date: '2026-03-14',
+    author: 'AccessEval Team',
+    readTime: '6 min',
+    tags: ['Comparison', 'Schools', 'Tools'],
+  },
+  {
+    slug: 'ada-compliance-small-towns-municipalities',
+    title: 'ADA Website Compliance for Small Towns and Municipalities Under 50,000',
+    description:
+      'Cities, counties, and special districts under 50,000 people must make their websites ADA compliant by April 2027. Here is what you need to know and how to do it affordably.',
+    date: '2026-03-13',
+    author: 'AccessEval Team',
+    readTime: '7 min',
+    tags: ['Municipalities', 'ADA Title II', 'Compliance'],
+  },
+  {
+    slug: 'best-ada-website-scanners-2026',
+    title: 'Best ADA Website Accessibility Scanners in 2026: A Comparison for Public Entities',
+    description:
+      'Comparing the top WCAG/ADA website scanners — AccessEval, WAVE, axe, Siteimprove, and AudioEye. Which one is best for schools and governments?',
+    date: '2026-03-12',
+    author: 'AccessEval Team',
+    readTime: '8 min',
+    tags: ['Comparison', 'Tools', 'WCAG'],
+  },
+  {
+    slug: 'website-accessibility-county-government',
+    title: 'Website Accessibility for County Governments: A Practical Guide',
+    description:
+      'County websites serve thousands of residents who depend on online services. This guide covers ADA Title II requirements, common issues, and how to fix them without a big budget.',
+    date: '2026-03-11',
+    author: 'AccessEval Team',
+    readTime: '7 min',
+    tags: ['Municipalities', 'Guide', 'ADA Title II'],
+  },
+  {
     slug: 'ada-title-ii-school-website-deadline-2026',
     title: 'ADA Title II Website Compliance: What Schools Need to Know Before 2026',
     description:

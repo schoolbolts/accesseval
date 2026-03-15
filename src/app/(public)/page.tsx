@@ -60,7 +60,7 @@ export default function LandingPage() {
                 clipRule="evenodd"
               />
             </svg>
-            ADA Title II deadline: April 24, 2026
+            ADA Title II deadlines: April 2026 &amp; April 2027
           </div>
 
           <h1 className="font-display text-display-xl text-white mb-6 animate-fade-up stagger-1 text-balance">
@@ -95,9 +95,9 @@ export default function LandingPage() {
             </h2>
             <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
               In April 2024, the DOJ finalized new rules requiring all state and local government
-              websites to meet WCAG 2.1 AA standards. Schools, cities, counties, and special
-              districts must comply by <strong className="text-ink">April 24, 2026</strong> or
-              face legal action.
+              websites to meet WCAG 2.1 AA standards. Entities serving 50,000+ people must comply
+              by <strong className="text-ink">April 24, 2026</strong>. Smaller entities and special
+              districts have until <strong className="text-ink">April 26, 2027</strong>.
             </p>
           </div>
 
@@ -123,8 +123,8 @@ export default function LandingPage() {
               </div>
               <h3 className="font-display text-display-sm text-ink mb-2">Hard deadline</h3>
               <p className="font-body text-slate-500 text-sm leading-relaxed">
-                The DOJ gave organizations with populations under 50,000 until April 2026.
-                After that, non-compliance is a federal civil rights violation.
+                Populations of 50,000+ must comply by April 24, 2026. Under 50,000 and special
+                districts have until April 26, 2027. After that, non-compliance is a federal civil rights violation.
               </p>
             </div>
 
