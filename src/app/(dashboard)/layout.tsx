@@ -16,9 +16,14 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   const activeSite = await getActiveSite(session.user.organizationId);
   const activeSiteId = activeSite?.id ?? sites[0]?.id ?? '';
 
+  const adminEmails = (process.env.ADMIN_EMAILS || 'rob@schoolbolts.com')
+    .split(',')
+    .map((e) => e.trim().toLowerCase());
+  const isAdmin = adminEmails.includes(session.user.email?.toLowerCase());
+
   return (
     <div className="flex min-h-screen bg-surface">
-      <Sidebar sites={sites} activeSiteId={activeSiteId} />
+      <Sidebar sites={sites} activeSiteId={activeSiteId} isAdmin={isAdmin} />
       <main className="flex-1 overflow-y-auto scroll-smooth">
         {children}
       </main>

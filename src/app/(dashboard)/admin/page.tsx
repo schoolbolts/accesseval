@@ -69,11 +69,7 @@ export default function AdminPage() {
   if (!stats) return null;
 
   return (
-    <div className="p-8 max-w-6xl">
-      <div className="mb-8">
-        <h1 className="page-title">Admin Dashboard</h1>
-        <p className="page-subtitle">Business metrics and funnel analytics.</p>
-      </div>
+    <div>
 
       {/* Overview */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
@@ -201,3 +197,6 @@ export default function AdminPage() {
     </div>
   );
 }
+
+// Keep the file marker so layout.tsx doesn't affect other pages
+

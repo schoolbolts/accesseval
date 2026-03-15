@@ -7,6 +7,7 @@ import SiteSwitcher from './site-switcher';
 interface SidebarProps {
   sites: Array<{ id: string; url: string }>;
   activeSiteId: string;
+  isAdmin?: boolean;
 }
 
 const navItems = [
@@ -100,7 +101,7 @@ const navItems = [
   },
 ];
 
-export default function Sidebar({ sites, activeSiteId }: SidebarProps) {
+export default function Sidebar({ sites, activeSiteId, isAdmin }: SidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -143,6 +144,29 @@ export default function Sidebar({ sites, activeSiteId }: SidebarProps) {
           );
         })}
       </nav>
+
+      {/* Admin link */}
+      {isAdmin && (
+        <div className="px-3 mt-2">
+          <Link
+            href="/admin"
+            className={[
+              'relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+              pathname.startsWith('/admin')
+                ? 'bg-white/8 text-white before:absolute before:left-0 before:top-2 before:bottom-2 before:w-0.5 before:bg-amber-500 before:rounded-full'
+                : 'text-slate-400 hover:text-white hover:bg-navy-800',
+            ].join(' ')}
+          >
+            <span className={pathname.startsWith('/admin') ? 'text-amber-400' : ''}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" transform="scale(0.8) translate(2,2)" />
+                <path d="M2 12l10 5 10-5" transform="scale(0.8) translate(2,2)" />
+              </svg>
+            </span>
+            Admin
+          </Link>
+        </div>
+      )}
 
       {/* Divider */}
       <div className="border-t border-navy-800 mx-3" />
