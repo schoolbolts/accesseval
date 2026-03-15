@@ -43,13 +43,11 @@ export const metadata: Metadata = {
     siteName: 'AccessEval',
     title: 'AccessEval — ADA Website Accessibility Scanner',
     description: 'Scan your school or government website for ADA Title II compliance. Get a free accessibility report with plain-English fix instructions.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'AccessEval — Website Accessibility Scanner' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'AccessEval — ADA Website Accessibility Scanner',
     description: 'Free ADA compliance scanner for schools and governments.',
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,
