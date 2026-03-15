@@ -184,7 +184,7 @@ export default function LandingPage() {
               >
                 <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
                   <span
-                    className="font-display text-lg font-bold text-emerald-600"
+                    className="font-display text-lg font-bold text-emerald-800"
                     aria-hidden="true"
                   >
                     {step}

@@ -69,10 +69,10 @@
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
       px-5 py-2.5
-      bg-emerald-600 text-white font-semibold text-sm
+      bg-emerald-700 text-white font-semibold text-sm
       rounded-xl
       transition-all duration-200 ease-out
-      hover:bg-emerald-700 hover:shadow-lg hover:-translate-y-px
+      hover:bg-emerald-800 hover:shadow-lg hover:-translate-y-px
       active:translate-y-0 active:shadow-md
       disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none;
     font-family: var(--font-outfit), system-ui, sans-serif;
