@@ -68,7 +68,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="font-body text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up stagger-2">
-            Free accessibility scan for K-12 schools and local governments. Find out where you
+            Free accessibility scan for school districts, cities, and counties. Find out where you
             stand before the deadline hits.
           </p>
 
@@ -145,7 +145,7 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-24 px-4 bg-white" aria-labelledby="how-it-works-heading">
+      <section className="py-24 px-4 bg-surface bg-dot-pattern" aria-labelledby="how-it-works-heading">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="section-title mb-3">Simple process</p>
@@ -363,12 +363,12 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-navy-900 text-navy-300 py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-10 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
             {/* Brand */}
-            <div className="sm:col-span-1">
+            <div>
               <p className="font-display font-bold text-xl text-white mb-3">AccessEval</p>
               <p className="font-body text-sm text-navy-400 leading-relaxed">
-                ADA compliance for K-12 schools and local governments.
+                ADA compliance for school districts, cities, and counties.
               </p>
             </div>
 
@@ -395,36 +395,15 @@ export default function LandingPage() {
               </nav>
             </div>
 
-            {/* Company */}
+            {/* Resources */}
             <div>
               <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
-                Company
+                Resources
               </p>
-              <nav aria-label="Company links" className="flex flex-col gap-2.5">
+              <nav aria-label="Resource links" className="flex flex-col gap-2.5">
                 {[
-                  { href: '/about', label: 'About' },
-                  { href: '/contact', label: 'Contact' },
-                ].map(({ href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
-                Legal
-              </p>
-              <nav aria-label="Legal links" className="flex flex-col gap-2.5">
-                {[
-                  { href: '/privacy', label: 'Privacy Policy' },
-                  { href: '/terms', label: 'Terms of Service' },
+                  { href: '/blog', label: 'Blog' },
+                  { href: '/scan', label: 'Free scan' },
                 ].map(({ href, label }) => (
                   <a
                     key={label}
@@ -440,7 +419,7 @@ export default function LandingPage() {
 
           <div className="border-t border-navy-700 pt-8">
             <p className="font-body text-sm text-navy-500 text-center">
-              &copy; {new Date().getFullYear()} AccessEval. Built for schools and governments.
+              &copy; {new Date().getFullYear()} AccessEval
             </p>
           </div>
         </div>
