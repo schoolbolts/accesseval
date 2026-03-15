@@ -35,6 +35,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
       fixInstructions: string;
       wcagCriteria?: string;
     }>;
+    screenshotUrl?: string | null;
   } | null;
 
   const allIssues = resultsJson?.issues ?? [];
@@ -42,6 +43,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
 
   return NextResponse.json({
     status: 'complete',
+    url: freeScan.url,
     score: freeScan.score,
     grade: freeScan.grade,
     criticalCount: freeScan.criticalCount,
@@ -50,6 +52,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
     issues,
     totalIssues: allIssues.length,
     hasEmail,
+    screenshotUrl: resultsJson?.screenshotUrl ?? null,
   });
 }
 

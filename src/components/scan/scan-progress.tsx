@@ -11,6 +11,7 @@ interface ScanIssue {
 
 interface ScanResult {
   status: 'processing' | 'complete';
+  url?: string;
   score?: number;
   grade?: string;
   criticalCount?: number;
@@ -19,6 +20,7 @@ interface ScanResult {
   issues?: ScanIssue[];
   totalIssues?: number;
   hasEmail?: boolean;
+  screenshotUrl?: string | null;
 }
 
 function SeverityBadge({ severity }: { severity: string }) {
@@ -189,10 +191,11 @@ export function ScanProgress({ token }: { token: string }) {
     );
   }
 
-  const { score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail } =
+  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl } =
     result;
 
   const showEmailGate = !hasEmail && !emailSubmitted && (totalIssues ?? 0) > 3;
+  const displayUrl = scannedUrl?.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-4">
@@ -200,16 +203,45 @@ export function ScanProgress({ token }: { token: string }) {
         <h1 className="font-display text-display-md text-ink mb-1">
           Accessibility Scan Results
         </h1>
-        <p className="font-body text-slate-400 text-sm">Free single-page scan</p>
+        {displayUrl ? (
+          <a
+            href={scannedUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+          >
+            {displayUrl}
+          </a>
+        ) : (
+          <p className="font-body text-slate-400 text-sm">Free single-page scan</p>
+        )}
       </div>
 
-      {/* Grade + score */}
-      <div className="card p-10 mb-6 flex flex-col items-center animate-scale-in">
-        {grade !== undefined && score !== undefined ? (
-          <GradeCircle grade={grade} score={score} />
-        ) : (
-          <p className="font-body text-slate-500">No score available</p>
-        )}
+      {/* Grade + screenshot */}
+      <div className="card p-8 mb-6 animate-scale-in">
+        <div className={`flex ${screenshotUrl ? 'flex-col md:flex-row gap-8 items-center' : 'flex-col items-center'}`}>
+          {/* Grade circle */}
+          <div className="flex-shrink-0">
+            {grade !== undefined && score !== undefined ? (
+              <GradeCircle grade={grade} score={score} />
+            ) : (
+              <p className="font-body text-slate-500">No score available</p>
+            )}
+          </div>
+
+          {/* Screenshot */}
+          {screenshotUrl && (
+            <div className="flex-1 min-w-0">
+              <div className="rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                <img
+                  src={screenshotUrl}
+                  alt={`Screenshot of ${displayUrl || 'scanned website'}`}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Issue count stat cards */}

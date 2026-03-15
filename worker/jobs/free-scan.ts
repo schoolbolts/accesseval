@@ -1,6 +1,7 @@
 import { prisma } from '../../src/lib/db';
 import { createBrowser, scanPage } from '../scanner';
 import { scoreScanResults } from '../scorer';
+import { uploadScreenshot } from '../../src/lib/r2';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -20,7 +21,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
   let scanResult;
 
   try {
-    scanResult = await scanPage(browser, url, 'unknown', { takeScreenshot: false, timeout: 60_000 });
+    scanResult = await scanPage(browser, url, 'unknown', { takeScreenshot: true, timeout: 60_000 });
   } finally {
     await browser.close();
   }
@@ -63,6 +64,19 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
     wcagCriteria: issue.wcagCriteria,
   }));
 
+  // Upload screenshot to R2 if available
+  let screenshotUrl: string | null = null;
+  if (scanResult.screenshotBuffer) {
+    try {
+      screenshotUrl = await uploadScreenshot(
+        `free-scans/${freeScanId}.webp`,
+        scanResult.screenshotBuffer,
+      );
+    } catch (err) {
+      console.warn(`[free-scan] ${freeScanId} screenshot upload failed:`, err);
+    }
+  }
+
   await prisma.freeScan.update({
     where: { id: freeScanId },
     data: {
@@ -75,6 +89,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
         title: scanResult.title,
         totalIssues: scanResult.issues.length,
         issues: topIssues,
+        screenshotUrl,
       },
     },
   });
