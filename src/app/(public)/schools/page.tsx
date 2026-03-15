@@ -5,11 +5,11 @@ import { prisma } from '@/lib/db';
 export const metadata: Metadata = {
   title: 'School District Website Accessibility Reports',
   description:
-    'Browse accessibility compliance reports for 17,000+ school districts across the US. Free ADA Title II compliance scores and WCAG 2.1 AA audit results.',
+    'Browse accessibility compliance reports for 17,000+ school districts across the US. Free ADA Title II compliance scores and WCAG 2.2 AA audit results.',
 };
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-slate-300';
+  if (!grade) return 'text-slate-500';
   if (grade.startsWith('A')) return 'text-emerald-600';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
@@ -123,13 +123,13 @@ export default async function SchoolsIndexPage({
               <p className="font-body text-sm font-semibold text-ink truncate group-hover:text-emerald-600 transition-colors">
                 {d.name}
               </p>
-              <p className="font-body text-xs text-slate-400">
+              <p className="font-body text-xs text-slate-500">
                 {[d.city, d.stateCode].filter(Boolean).join(', ')}
               </p>
               {d.score !== null ? (
                 <p className="font-body text-xs text-slate-500 mt-0.5">Score: {d.score}/100</p>
               ) : (
-                <p className="font-body text-xs text-slate-400 mt-0.5">Not yet scanned</p>
+                <p className="font-body text-xs text-slate-500 mt-0.5">Not yet scanned</p>
               )}
             </div>
           </Link>
@@ -147,7 +147,7 @@ export default async function SchoolsIndexPage({
               Previous
             </Link>
           )}
-          <span className="text-sm font-body text-slate-400 px-3">
+          <span className="text-sm font-body text-slate-500 px-3">
             Page {page} of {totalPages}
           </span>
           {page < totalPages && (
@@ -168,7 +168,7 @@ export default async function SchoolsIndexPage({
         </h2>
         <p className="font-body text-sm text-slate-600 leading-relaxed">
           Under ADA Title II, all public school districts must ensure their websites are accessible
-          to people with disabilities. AccessEval scans school websites against WCAG 2.1 Level AA
+          to people with disabilities. AccessEval scans school websites against WCAG 2.2 Level AA
           standards and provides plain-English fix instructions. Browse reports by state or search
           for your district above.
         </p>

@@ -185,7 +185,7 @@ function LoginContent() {
                 {loading ? 'Sending…' : 'Send sign-in link'}
               </button>
 
-              <p className="text-center font-body text-xs text-slate-400">
+              <p className="text-center font-body text-xs text-slate-500">
                 We&apos;ll email you a link that signs you in instantly — no password needed.
               </p>
             </form>

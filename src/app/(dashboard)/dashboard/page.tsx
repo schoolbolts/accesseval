@@ -127,7 +127,7 @@ export default async function DashboardPage() {
             </div>
             <h2 className="font-display text-display-sm text-ink mb-2">Run your first scan</h2>
             <p className="font-body text-sm text-slate-500 max-w-sm mx-auto mb-6">
-              We&apos;ll crawl your site and check every page for accessibility issues against WCAG 2.1 AA standards.
+              We&apos;ll crawl your site and check every page for accessibility issues against WCAG 2.2 AA standards.
             </p>
             <div className="flex justify-center">
               <TriggerScanButton />

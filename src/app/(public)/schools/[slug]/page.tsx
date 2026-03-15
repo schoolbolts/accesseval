@@ -6,7 +6,7 @@ import { prisma } from '@/lib/db';
 /* ── Grade color helpers ──────────────────────────────────────────── */
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-slate-400';
+  if (!grade) return 'text-slate-500';
   if (grade.startsWith('A')) return 'text-emerald-600';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
@@ -55,7 +55,7 @@ export async function generateMetadata({
     description: `${district.name} in ${location} scored ${district.score}/100 (${district.grade}) on our ADA website accessibility scan. ${district.criticalCount} critical, ${district.majorCount} major, ${district.minorCount} minor issues found.`,
     openGraph: {
       title: `${district.name} — Website Accessibility Score: ${district.grade}`,
-      description: `Scored ${district.score}/100 on WCAG 2.1 AA compliance scan.`,
+      description: `Scored ${district.score}/100 on WCAG 2.2 AA compliance scan.`,
     },
   };
 }
@@ -105,13 +105,13 @@ export default async function SchoolReportPage({
         </div>
 
         <h1 className="font-display text-display-md text-ink mb-2">{district.name}</h1>
-        <p className="font-body text-slate-400 mb-1">{location}</p>
+        <p className="font-body text-slate-500 mb-1">{location}</p>
         {district.website && (
-          <p className="font-body text-sm text-slate-400 mb-6">{district.website}</p>
+          <p className="font-body text-sm text-slate-500 mb-6">{district.website}</p>
         )}
         <p className="font-body text-slate-500 max-w-md mx-auto mb-8">
           We haven&apos;t scanned this district&apos;s website yet. Run a free accessibility scan to see
-          how it measures up against WCAG 2.1 AA and ADA Title II requirements.
+          how it measures up against WCAG 2.2 AA and ADA Title II requirements.
         </p>
         <Link href="/" className="btn-primary">
           Run a Free Scan
@@ -130,7 +130,7 @@ export default async function SchoolReportPage({
             </p>
             <p>
               The U.S. Department of Justice has set compliance deadlines for website accessibility.
-              Schools must meet WCAG 2.1 Level AA standards to ensure students, parents, and
+              Schools must meet WCAG 2.2 Level AA standards to ensure students, parents, and
               community members with disabilities can access important information online.
             </p>
             {district.website && (
@@ -167,13 +167,13 @@ export default async function SchoolReportPage({
         </div>
         <div className="text-center sm:text-left">
           <h1 className="font-display text-display-md text-ink mb-1">{district.name}</h1>
-          <p className="font-body text-sm text-slate-400">{location}</p>
+          <p className="font-body text-sm text-slate-500">{location}</p>
           <p className="font-body text-slate-600 mt-1">
             Accessibility Score:{' '}
             <span className="font-semibold text-ink">{district.score}/100</span>
           </p>
           {scannedDate && (
-            <p className="font-body text-sm text-slate-400 mt-1">Scanned {scannedDate}</p>
+            <p className="font-body text-sm text-slate-500 mt-1">Scanned {scannedDate}</p>
           )}
         </div>
       </div>
@@ -220,7 +220,7 @@ export default async function SchoolReportPage({
                     {issue.severity || 'minor'}
                   </span>
                   {issue.axeRuleId && (
-                    <span className="font-mono text-xs text-slate-400">{issue.axeRuleId}</span>
+                    <span className="font-mono text-xs text-slate-500">{issue.axeRuleId}</span>
                   )}
                   {issue.wcagCriteria && (
                     <span className="text-xs font-body text-slate-500 bg-slate-100 rounded-lg px-2 py-0.5">
@@ -235,7 +235,7 @@ export default async function SchoolReportPage({
             ))}
           </div>
           {issues.length > 5 && (
-            <p className="font-body text-sm text-slate-400 mt-3 text-center">
+            <p className="font-body text-sm text-slate-500 mt-3 text-center">
               + {issues.length - 5} more issues.{' '}
               <Link href="/signup" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Sign up for the full report
@@ -262,7 +262,7 @@ export default async function SchoolReportPage({
         <h2 className="font-display text-display-sm text-ink mb-3">About This Report</h2>
         <div className="font-body text-sm text-slate-600 leading-relaxed space-y-3">
           <p>
-            This is an automated accessibility scan of the {district.name} website using WCAG 2.1
+            This is an automated accessibility scan of the {district.name} website using WCAG 2.2
             Level AA standards, powered by{' '}
             <a href="https://www.deque.com/axe/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
               axe-core

@@ -38,7 +38,7 @@ export default function BlogIndexPage() {
                   <div className="flex items-center gap-3 mb-3">
                     <time
                       dateTime={post.date}
-                      className="font-body text-sm text-slate-400"
+                      className="font-body text-sm text-slate-500"
                     >
                       {new Date(post.date + 'T00:00:00').toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -49,7 +49,7 @@ export default function BlogIndexPage() {
                     <span className="text-slate-300" aria-hidden="true">
                       &middot;
                     </span>
-                    <span className="font-body text-sm text-slate-400">
+                    <span className="font-body text-sm text-slate-500">
                       {post.readTime} read
                     </span>
                   </div>

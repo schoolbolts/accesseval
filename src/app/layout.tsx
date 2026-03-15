@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: '%s | AccessEval',
   },
   description: 'Scan your school or government website for ADA Title II compliance. Get a free accessibility report with plain-English fix instructions in minutes.',
-  keywords: ['ada compliance', 'website accessibility', 'wcag 2.1', 'ada title ii', 'school website accessibility', 'government website compliance', 'accessibility scanner', 'ada website checker'],
+  keywords: ['ada compliance', 'website accessibility', 'wcag 2.2', 'wcag 2.1', 'ada title ii', 'school website accessibility', 'government website compliance', 'accessibility scanner', 'ada website checker'],
   authors: [{ name: 'AccessEval' }],
   creator: 'AccessEval',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://accesseval.com'),

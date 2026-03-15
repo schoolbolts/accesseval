@@ -50,7 +50,7 @@ const COMPARE_ROWS = [
   { label: 'Scan frequency', scan: 'Monthly', comply: 'Weekly', fix: 'Weekly' },
   { label: 'On-demand scans', scan: '2/month', comply: '5/month', fix: 'Unlimited' },
   { label: 'Letter grade + issue counts', scan: true, comply: true, fix: true },
-  { label: 'WCAG 2.1 AA coverage', scan: true, comply: true, fix: true },
+  { label: 'WCAG 2.2 AA coverage', scan: true, comply: true, fix: true },
   { label: 'PDF reports', scan: true, comply: true, fix: true },
   { label: 'Fix tracking dashboard', scan: false, comply: true, fix: true },
   { label: 'Accessibility statement generator', scan: false, comply: true, fix: true },
@@ -264,7 +264,7 @@ function SignupPage() {
                               plan === p.id ? 'text-emerald-600' : 'text-ink'
                             }`}
                           >
-                            {p.price}<span className="font-body text-xs font-normal text-slate-400">{p.period}</span>
+                            {p.price}<span className="font-body text-xs font-normal text-slate-500">{p.period}</span>
                           </span>
                         </span>
                         <span className="block font-body text-xs text-slate-500 mt-0.5 mb-2">
@@ -278,7 +278,7 @@ function SignupPage() {
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
-                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-500' : 'text-slate-400'}`}
+                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-500' : 'text-slate-500'}`}
                               >
                                 <path
                                   fillRule="evenodd"
@@ -354,7 +354,7 @@ function SignupPage() {
               )}
             </button>
 
-            <p className="text-center font-body text-xs text-slate-400">
+            <p className="text-center font-body text-xs text-slate-500">
               You&apos;ll complete payment on the next screen via Stripe. Cancel anytime.
             </p>
           </form>
@@ -382,7 +382,7 @@ function SignupPage() {
               <button
                 type="button"
                 onClick={() => setShowCompare(false)}
-                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
+                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-500 hover:text-slate-600"
                 aria-label="Close comparison"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -398,7 +398,7 @@ function SignupPage() {
                     <th className="text-left py-3 px-4 font-medium text-slate-500 w-[40%]">Feature</th>
                     <th className="text-center py-3 px-3 font-semibold text-ink">
                       <div>Scan</div>
-                      <div className="text-xs font-normal text-slate-400">$99/yr</div>
+                      <div className="text-xs font-normal text-slate-500">$99/yr</div>
                     </th>
                     <th className="text-center py-3 px-3 font-semibold text-emerald-600">
                       <div>Comply</div>
@@ -406,7 +406,7 @@ function SignupPage() {
                     </th>
                     <th className="text-center py-3 px-3 font-semibold text-ink">
                       <div>Fix</div>
-                      <div className="text-xs font-normal text-slate-400">$599/yr</div>
+                      <div className="text-xs font-normal text-slate-500">$599/yr</div>
                     </th>
                   </tr>
                 </thead>
@@ -449,7 +449,7 @@ function SignupPage() {
             </div>
 
             <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
-              <p className="font-body text-xs text-slate-400">All plans include WCAG 2.1 AA scanning</p>
+              <p className="font-body text-xs text-slate-500">All plans include WCAG 2.2 AA scanning</p>
               <button
                 type="button"
                 onClick={() => setShowCompare(false)}

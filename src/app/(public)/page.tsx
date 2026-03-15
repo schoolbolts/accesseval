@@ -21,7 +21,7 @@ export default function LandingPage() {
             name: 'AccessEval',
             applicationCategory: 'WebApplication',
             operatingSystem: 'Web',
-            description: 'ADA website accessibility scanner for schools and governments. Checks WCAG 2.1 AA compliance.',
+            description: 'ADA website accessibility scanner for schools and governments. Checks WCAG 2.2 AA compliance.',
             offers: {
               '@type': 'AggregateOffer',
               priceCurrency: 'USD',
@@ -95,7 +95,7 @@ export default function LandingPage() {
             </h2>
             <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
               In April 2024, the DOJ finalized new rules requiring all state and local government
-              websites to meet WCAG 2.1 AA standards. Entities serving 50,000+ people must comply
+              websites to meet WCAG 2.2 AA standards. Entities serving 50,000+ people must comply
               by <strong className="text-ink">April 24, 2026</strong>. Smaller entities and special
               districts have until <strong className="text-ink">April 26, 2027</strong>.
             </p>
@@ -270,7 +270,7 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Scan</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$99</span>
-                <span className="font-body text-slate-400 text-sm">/yr</span>
+                <span className="font-body text-slate-500 text-sm">/yr</span>
               </div>
               <p className="font-body text-slate-500 text-sm mb-6">
                 Automated monthly scans and baseline compliance reporting.
@@ -281,7 +281,7 @@ export default function LandingPage() {
                   'Monthly automated scans',
                   '2 on-demand scans/month',
                   'Letter grade + issue counts',
-                  'WCAG 2.1 AA coverage',
+                  'WCAG 2.2 AA coverage',
                   'PDF reports',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">
@@ -320,7 +320,7 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Comply</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$299</span>
-                <span className="font-body text-slate-400 text-sm">/yr</span>
+                <span className="font-body text-slate-500 text-sm">/yr</span>
               </div>
               <p className="font-body text-slate-500 text-sm mb-6">
                 Weekly scans, fix tracking, and official compliance documentation.
@@ -363,7 +363,7 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Fix</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$599</span>
-                <span className="font-body text-slate-400 text-sm">/yr</span>
+                <span className="font-body text-slate-500 text-sm">/yr</span>
               </div>
               <p className="font-body text-slate-500 text-sm mb-6">
                 Unlimited scanning with CMS-specific fix instructions.
