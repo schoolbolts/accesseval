@@ -23,13 +23,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body.' }, { status: 400 });
   }
 
-  const { name, orgName, email, password, siteUrl, plan } = body as {
+  const { name, orgName, email, password, siteUrl, plan, utmSource, utmMedium, utmCampaign } = body as {
     name?: string;
     orgName?: string;
     email?: string;
     password?: string;
     siteUrl?: string;
     plan?: string;
+    utmSource?: string;
+    utmMedium?: string;
+    utmCampaign?: string;
   };
 
   // Validate required fields
@@ -75,6 +78,9 @@ export async function POST(req: NextRequest) {
       stripeCustomerId,
       plan: selectedPlan,
       planStatus: 'active',
+      utmSource: utmSource || null,
+      utmMedium: utmMedium || null,
+      utmCampaign: utmCampaign || null,
       users: {
         create: {
           name,

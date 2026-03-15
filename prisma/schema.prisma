@@ -96,6 +96,9 @@ model Organization {
   stripeCustomerId String?    @map("stripe_customer_id")
   plan             Plan       @default(scan)
   planStatus       PlanStatus @default(active) @map("plan_status")
+  utmSource        String?    @map("utm_source")
+  utmMedium        String?    @map("utm_medium")
+  utmCampaign      String?    @map("utm_campaign")
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
 

@@ -21,10 +21,14 @@ export async function POST(_request: NextRequest) {
     return NextResponse.json({ error: 'No billing account found' }, { status: 404 });
   }
 
-  const portalSession = await createCustomerPortalSession(
-    org.stripeCustomerId,
-    `${process.env.BASE_URL}/settings`
-  );
-
-  return NextResponse.json({ url: portalSession.url });
+  try {
+    const portalSession = await createCustomerPortalSession(
+      org.stripeCustomerId,
+      `${process.env.BASE_URL || 'http://localhost:3000'}/settings`
+    );
+    return NextResponse.json({ url: portalSession.url });
+  } catch (err: any) {
+    console.error('Stripe billing portal error:', err.message);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

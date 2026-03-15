@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const PLANS = [
@@ -25,14 +25,25 @@ const PLANS = [
   },
 ] as const;
 
-export default function SignupPage() {
+export default function SignupPageWrapper() {
+  return (
+    <Suspense>
+      <SignupPage />
+    </Suspense>
+  );
+}
+
+function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [name, setName] = useState('');
   const [orgName, setOrgName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [siteUrl, setSiteUrl] = useState('');
-  const [plan, setPlan] = useState<'scan' | 'comply' | 'fix'>('scan');
+  const [plan, setPlan] = useState<'scan' | 'comply' | 'fix'>(
+    (searchParams.get('plan') as 'scan' | 'comply' | 'fix') || 'scan'
+  );
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +56,12 @@ export default function SignupPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, orgName, email, password, siteUrl, plan }),
+        body: JSON.stringify({
+          name, orgName, email, password, siteUrl, plan,
+          utmSource: searchParams.get('utm_source') || undefined,
+          utmMedium: searchParams.get('utm_medium') || undefined,
+          utmCampaign: searchParams.get('utm_campaign') || undefined,
+        }),
       });
 
       const data = await res.json();
