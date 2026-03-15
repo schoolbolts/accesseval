@@ -10,7 +10,14 @@
       "squarespace": "In Squarespace: click the image → click the pencil icon → fill in 'Image Alt Text'.",
       "google_sites": "In Google Sites: click the image → click the three dots → 'Alt text' → enter description.",
       "civicplus": "In CivicPlus: edit the page → click the image → fill in the 'Alternate Text' field.",
-      "finalsite": "In Finalsite Composer: click the image → 'Image Properties' → fill in 'Alt Text'."
+      "finalsite": "In Finalsite Composer: click the image → 'Image Properties' → fill in 'Alt Text'.",
+      "edlio": "In Edlio: edit the page → click the image → enter alt text in the 'Alternative Text' field.",
+      "blackboard": "In Blackboard Web Community Manager: edit the page → click the image → fill in the 'Alt Text' field in image properties.",
+      "thrillshare": "In Thrillshare: edit the page → click the image → add a description in the 'Alt Text' field.",
+      "drupal": "In Drupal: edit the content → click the image → fill in the 'Alternative text' field.",
+      "joomla": "In Joomla: edit the article → click the image → fill in the 'Image Description (Alt Text)' field.",
+      "granicus": "In Granicus: edit the page → click the image → fill in the 'Alt Text' field in the image settings.",
+      "revize": "In Revize: edit the page → click the image → enter a description in the 'Alt Text' field."
     }
   },
   "color-contrast": {
@@ -24,7 +31,13 @@
       "squarespace": "In Squarespace: edit the section → adjust colors in the Design panel.",
       "google_sites": "In Google Sites: select the text → change the text color from the formatting toolbar.",
       "civicplus": "In CivicPlus: edit the page → select the text → adjust colors in the editor toolbar.",
-      "finalsite": "In Finalsite: edit the element → change colors in the style settings."
+      "finalsite": "In Finalsite: edit the element → change colors in the style settings.",
+      "edlio": "In Edlio: edit the page → select the text → adjust colors in the formatting toolbar. If colors are set by the theme, contact Edlio support.",
+      "blackboard": "In Blackboard WCM: edit the page → select text → use the color picker in the toolbar. Theme colors may need to be updated by your site admin.",
+      "thrillshare": "In Thrillshare: go to Design → Colors and update the theme colors, or edit individual text elements to adjust contrast.",
+      "drupal": "In Drupal: adjust colors in your theme's settings (Appearance → Settings) or edit the CSS stylesheet.",
+      "granicus": "In Granicus: contact your site administrator to update the theme colors for better contrast.",
+      "revize": "In Revize: edit the page → select text → adjust the text or background color in the editor."
     }
   },
   "link-name": {
@@ -33,7 +46,11 @@
     "description": "This link has no text that describes where it goes. Screen reader users won't know what this link does.",
     "wcag": "2.4.4",
     "fix": {
-      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination."
+      "generic": "Add descriptive text to the link. Avoid 'click here' or 'read more' — describe the destination.",
+      "edlio": "In Edlio: edit the page → click the link → update the link text to describe where it goes (e.g., 'School Calendar' instead of 'Click here').",
+      "blackboard": "In Blackboard WCM: edit the page → click the link → change the display text to something descriptive.",
+      "thrillshare": "In Thrillshare: edit the page → click the link → update the link text to be descriptive of the destination.",
+      "drupal": "In Drupal: edit the content → click the link → update the link text field to describe the destination."
     }
   },
   "html-has-lang": {
@@ -47,7 +64,14 @@
       "squarespace": "Squarespace sets this automatically. If missing, contact Squarespace support.",
       "wix": "In Wix: go to Settings → Multilingual and ensure a language is set.",
       "civicplus": "Contact CivicPlus support to set the page language attribute in the template.",
-      "finalsite": "Contact Finalsite support to set the lang attribute in the site template."
+      "finalsite": "Contact Finalsite support to set the lang attribute in the site template.",
+      "edlio": "Contact Edlio support to set the lang attribute in the site template.",
+      "blackboard": "Contact your Blackboard Web Community Manager administrator to set the lang attribute in the site template.",
+      "thrillshare": "Thrillshare usually sets this automatically. If missing, contact Apptegy support.",
+      "drupal": "In Drupal: go to Configuration → Regional and language → Languages and set the default language.",
+      "joomla": "In Joomla: go to System → Global Configuration → set the default language.",
+      "granicus": "Contact your Granicus site administrator to set the page language in the template.",
+      "revize": "Contact Revize support to add lang=\"en\" to the site template."
     }
   },
   "label": {
@@ -60,7 +84,11 @@
       "wordpress": "In WordPress: use a form plugin (like Gravity Forms or WPForms) and ensure each field has a label configured.",
       "squarespace": "In Squarespace: edit the form block → click each field → enter a label in the field settings.",
       "civicplus": "In CivicPlus: edit the form → click each field → fill in the 'Label' property.",
-      "finalsite": "In Finalsite: edit the form → ensure each field has a visible label configured."
+      "finalsite": "In Finalsite: edit the form → ensure each field has a visible label configured.",
+      "edlio": "In Edlio: edit the form → click each field → enter a label in the field settings.",
+      "blackboard": "In Blackboard WCM: edit the form → ensure each field has a label configured in the field properties.",
+      "thrillshare": "In Thrillshare: edit the form → click each field → add a label.",
+      "drupal": "In Drupal: edit the form (Webform module) → ensure each field has a label configured."
     }
   },
   "button-name": {
@@ -74,7 +102,11 @@
       "squarespace": "In Squarespace: click the button → add descriptive button text in the settings.",
       "wix": "In Wix: click the button → edit the button text in the panel.",
       "civicplus": "In CivicPlus: edit the page → click the button → update the button label.",
-      "finalsite": "In Finalsite: edit the button element → add descriptive text."
+      "finalsite": "In Finalsite: edit the button element → add descriptive text.",
+      "edlio": "In Edlio: edit the page → click the button → add or update the button text.",
+      "blackboard": "In Blackboard WCM: edit the page → click the button → add descriptive text in the button settings.",
+      "thrillshare": "In Thrillshare: edit the page → click the button → add or update the button label.",
+      "drupal": "In Drupal: edit the content → add text or aria-label to the button element."
     }
   },
   "document-title": {
@@ -88,7 +120,14 @@
       "squarespace": "In Squarespace: edit the page → Settings → SEO → set the SEO Title.",
       "wix": "In Wix: go to Page SEO settings → enter a page title.",
       "civicplus": "In CivicPlus: edit the page → fill in the 'Page Title' or 'SEO Title' field.",
-      "finalsite": "In Finalsite: edit the page → fill in the 'Browser Title' field in page settings."
+      "finalsite": "In Finalsite: edit the page → fill in the 'Browser Title' field in page settings.",
+      "edlio": "In Edlio: edit the page → set the page title. Edlio generates the browser title from this.",
+      "blackboard": "In Blackboard WCM: edit the page → fill in the 'Page Name' field. This generates the browser title.",
+      "thrillshare": "In Thrillshare: edit the page → the page title is used as the browser title automatically.",
+      "drupal": "In Drupal: edit the content → set the Title field. Drupal generates the <title> tag from it.",
+      "joomla": "In Joomla: edit the article → fill in the 'Browser Page Title' in the Options tab.",
+      "granicus": "In Granicus: edit the page → fill in the page title field.",
+      "revize": "In Revize: edit the page → set the page title in the page properties."
     }
   },
   "heading-order": {
@@ -102,7 +141,12 @@
       "squarespace": "In Squarespace: click the text block → use the text style dropdown to set the correct heading level.",
       "wix": "In Wix: click the text → use the text theme dropdown to set H1, H2, or H3 in order.",
       "civicplus": "In CivicPlus: edit the page → select text → use the heading style dropdown to correct the level.",
-      "finalsite": "In Finalsite: edit the text element → use the paragraph format selector to choose the correct heading level."
+      "finalsite": "In Finalsite: edit the text element → use the paragraph format selector to choose the correct heading level.",
+      "edlio": "In Edlio: edit the page → select the text → use the heading dropdown to set the correct level (H1, H2, H3).",
+      "blackboard": "In Blackboard WCM: edit the page → select the text → use the 'Format' dropdown to choose the correct heading level.",
+      "thrillshare": "In Thrillshare: edit the page → select the text → use the heading selector to set the correct level.",
+      "drupal": "In Drupal: edit the content → select the text → use the Format dropdown to set the correct heading level.",
+      "joomla": "In Joomla: edit the article → select text → use the 'Paragraph' dropdown to set the correct heading level."
     }
   },
   "list": {

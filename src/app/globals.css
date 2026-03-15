@@ -270,6 +270,39 @@
   .prose-ae a {
     @apply text-emerald-600 underline underline-offset-2 hover:text-emerald-700;
   }
+
+  /* ── Legal prose (privacy, terms) ──────────────────────── */
+
+  .prose-legal {
+    @apply text-slate-600 leading-relaxed text-sm;
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  .prose-legal h2 {
+    @apply text-lg font-semibold text-ink mt-10 mb-3;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .prose-legal h3 {
+    @apply text-base font-semibold text-ink mt-6 mb-2;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+
+  .prose-legal p {
+    @apply mb-4;
+  }
+
+  .prose-legal ul {
+    @apply list-disc pl-5 mb-4 space-y-1;
+  }
+
+  .prose-legal a {
+    @apply text-emerald-600 underline underline-offset-2 hover:text-emerald-700;
+  }
+
+  .prose-legal strong {
+    @apply text-ink font-semibold;
+  }
 }
 
 @layer utilities {

@@ -33,10 +33,12 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
       severity: string;
       description: string;
       fixInstructions: string;
+      fixInstructionsCms?: string | null;
       wcagCriteria?: string;
     }>;
     screenshotUrl?: string | null;
     narrative?: string;
+    detectedCms?: string;
   } | null;
 
   const allIssues = resultsJson?.issues ?? [];
@@ -55,6 +57,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
     hasEmail,
     screenshotUrl: resultsJson?.screenshotUrl ?? null,
     narrative: resultsJson?.narrative ?? null,
+    detectedCms: resultsJson?.detectedCms ?? null,
   });
 }
 

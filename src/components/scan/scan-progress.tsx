@@ -1,11 +1,31 @@
 'use client';
 
-import { useState, useEffect, useCallback, FormEvent } from 'react';
+import { useState, useEffect, useCallback, useRef, FormEvent } from 'react';
+
+const CMS_LABELS: Record<string, string> = {
+  wordpress: 'WordPress',
+  squarespace: 'Squarespace',
+  wix: 'Wix',
+  civicplus: 'CivicPlus',
+  finalsite: 'Finalsite',
+  google_sites: 'Google Sites',
+  edlio: 'Edlio',
+  blackboard: 'Blackboard Web Community Manager',
+  thrillshare: 'Thrillshare (Apptegy)',
+  drupal: 'Drupal',
+  joomla: 'Joomla',
+  foxbright: 'Foxbright',
+  campussuite: 'Campus Suite',
+  schoolpointe: 'SchoolPointe',
+  granicus: 'Granicus',
+  revize: 'Revize',
+};
 
 interface ScanIssue {
   severity: string;
   description: string;
   fixInstructions: string;
+  fixInstructionsCms?: string | null;
   wcagCriteria?: string;
 }
 
@@ -22,6 +42,7 @@ interface ScanResult {
   hasEmail?: boolean;
   screenshotUrl?: string | null;
   narrative?: string | null;
+  detectedCms?: string | null;
 }
 
 function SeverityBadge({ severity }: { severity: string }) {
@@ -66,6 +87,14 @@ function GradeCircle({ grade, score }: { grade: string; score: number }) {
   );
 }
 
+function trackEvent(token: string, event: 'view' | 'email' | 'signup_click') {
+  fetch('/api/track', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token, event }),
+  }).catch(() => {});
+}
+
 export function ScanProgress({ token }: { token: string }) {
   const [result, setResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState('');
@@ -73,6 +102,7 @@ export function ScanProgress({ token }: { token: string }) {
   const [emailLoading, setEmailLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const viewTracked = useRef(false);
 
   const fetchResult = useCallback(async () => {
     try {
@@ -87,6 +117,10 @@ export function ScanProgress({ token }: { token: string }) {
       }
       const data: ScanResult = await res.json();
       setResult(data);
+      if (data.status === 'complete' && !viewTracked.current) {
+        viewTracked.current = true;
+        trackEvent(token, 'view');
+      }
       return data.status === 'complete';
     } catch {
       setError('Failed to fetch scan results. Please refresh the page.');
@@ -131,6 +165,7 @@ export function ScanProgress({ token }: { token: string }) {
       }
 
       setEmailSubmitted(true);
+      trackEvent(token, 'email');
       // Re-fetch to get 5 issues
       await fetchResult();
     } catch {
@@ -192,10 +227,11 @@ export function ScanProgress({ token }: { token: string }) {
     );
   }
 
-  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl, narrative } =
+  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl, narrative, detectedCms } =
     result;
 
-  const showEmailGate = !hasEmail && !emailSubmitted && (totalIssues ?? 0) > 3;
+  const hasUnlockedEmail = hasEmail || emailSubmitted;
+  const remainingIssues = (totalIssues ?? 0) - (issues?.length ?? 0);
   const displayUrl = scannedUrl?.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   return (
@@ -215,6 +251,12 @@ export function ScanProgress({ token }: { token: string }) {
           </a>
         ) : (
           <p className="font-body text-slate-400 text-sm">Free single-page scan</p>
+        )}
+        {detectedCms && detectedCms !== 'unknown' && (
+          <p className="font-body text-xs text-slate-400 mt-1">
+            Detected CMS: <span className="font-medium text-slate-500">{CMS_LABELS[detectedCms] ?? detectedCms}</span>
+            {' — fix instructions tailored to your platform'}
+          </p>
         )}
       </div>
 
@@ -298,125 +340,132 @@ export function ScanProgress({ token }: { token: string }) {
         </div>
       )}
 
-      {/* Email gate */}
-      {showEmailGate && (
-        <div className="card p-8 mb-6 text-center border border-emerald-100 animate-fade-up stagger-3">
-          <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5 text-emerald-600"
+      {/* Single unified CTA — changes based on whether we have their email */}
+      {!hasUnlockedEmail && remainingIssues > 0 ? (
+        /* Step 1: Email capture — the only ask on screen */
+        <div className="relative bg-navy-800 bg-grid rounded-2xl p-8 text-center overflow-hidden animate-fade-up stagger-3">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-2xl"
+            style={{
+              background:
+                'radial-gradient(ellipse at 50% 120%, rgba(5,150,105,0.15) 0%, transparent 70%)',
+            }}
+          />
+          <div className="relative z-10">
+            <h2 className="font-display text-display-sm text-white mb-2">
+              Unlock your full report
+            </h2>
+            <p className="font-body text-slate-400 text-sm mb-6 max-w-md mx-auto">
+              You&apos;re seeing {issues?.length ?? 0} of {totalIssues} issues found on this page.
+              Enter your email to see them all — plus fix instructions for each one.
+            </p>
+            <form
+              onSubmit={handleEmailSubmit}
+              className="flex flex-col sm:flex-row gap-3 max-w-sm mx-auto"
             >
-              <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
-              <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
-            </svg>
-          </div>
-          <h2 className="font-display text-display-sm text-ink mb-1">
-            See {(totalIssues ?? 0) - 3} more issue{(totalIssues ?? 0) - 3 !== 1 ? 's' : ''}
-          </h2>
-          <p className="font-body text-slate-500 text-sm mb-6">
-            Enter your email to unlock all issues from this scan.
-          </p>
-          <form
-            onSubmit={handleEmailSubmit}
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-          >
-            <div className="flex-1">
-              <label htmlFor="gate-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="gate-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@yourschool.edu"
-                required
+              <div className="flex-1">
+                <label htmlFor="gate-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="gate-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@yourschool.edu"
+                  required
+                  disabled={emailLoading}
+                  className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder:text-slate-500 font-body text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+                />
+                {emailError && (
+                  <p role="alert" className="mt-1 font-body text-xs text-red-400">
+                    {emailError}
+                  </p>
+                )}
+              </div>
+              <button
+                type="submit"
                 disabled={emailLoading}
-                className="input"
-              />
-              {emailError && (
-                <p role="alert" className="mt-1 font-body text-xs text-red-600">
-                  {emailError}
-                </p>
-              )}
-            </div>
-            <button
-              type="submit"
-              disabled={emailLoading}
-              className="btn-primary whitespace-nowrap"
+                className="btn-primary whitespace-nowrap"
+              >
+                {emailLoading ? (
+                  <>
+                    <svg
+                      aria-hidden="true"
+                      className="w-4 h-4 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
+                    </svg>
+                    Unlocking...
+                  </>
+                ) : (
+                  'Send my report'
+                )}
+              </button>
+            </form>
+            <p className="font-body text-slate-500 text-xs mt-4">
+              No spam. We&apos;ll send your full results and compliance tips.
+            </p>
+          </div>
+        </div>
+      ) : (
+        /* Step 2: After email (or no gating needed) — upsell to full site scan */
+        <div className="relative bg-navy-800 bg-grid rounded-2xl p-8 text-center overflow-hidden animate-fade-up stagger-3">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-2xl"
+            style={{
+              background:
+                'radial-gradient(ellipse at 50% 120%, rgba(5,150,105,0.15) 0%, transparent 70%)',
+            }}
+          />
+          <div className="relative z-10">
+            <h2 className="font-display text-display-sm text-white mb-2">
+              Ready to fix these issues?
+            </h2>
+            <p className="font-body text-slate-400 text-sm mb-6 max-w-md mx-auto">
+              This was a single-page scan. A full AccessEval report scans every page on your site
+              with step-by-step fix instructions, compliance documentation, and ongoing monitoring.
+            </p>
+            <a
+              href="/signup"
+              onClick={() => trackEvent(token, 'signup_click')}
+              className="btn-primary-lg inline-flex"
             >
-              {emailLoading ? (
-                <>
-                  <svg
-                    aria-hidden="true"
-                    className="w-4 h-4 animate-spin"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  Unlocking...
-                </>
-              ) : (
-                'Unlock issues'
-              )}
-            </button>
-          </form>
+              Start your free trial
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       )}
-
-      {/* CTA */}
-      <div className="relative bg-navy-800 bg-grid rounded-2xl p-8 text-center overflow-hidden animate-fade-up stagger-4">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-2xl"
-          style={{
-            background:
-              'radial-gradient(ellipse at 50% 120%, rgba(5,150,105,0.15) 0%, transparent 70%)',
-          }}
-        />
-        <div className="relative z-10">
-          <h2 className="font-display text-display-sm text-white mb-2">
-            Get your full site report
-          </h2>
-          <p className="font-body text-slate-400 text-sm mb-6 max-w-md mx-auto">
-            This was a single-page scan. A full report covers every page of your site with fix
-            instructions, compliance documentation, and ongoing monitoring.
-          </p>
-          <a href="/signup" className="btn-primary-lg inline-flex">
-            Start your free trial
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

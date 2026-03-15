@@ -9,6 +9,7 @@ const adminTabs = [
   { label: 'Scans', href: '/admin/scans' },
   { label: 'Free Scans', href: '/admin/free-scans' },
   { label: 'Districts', href: '/admin/districts' },
+  { label: 'Funnel', href: '/admin/funnel' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

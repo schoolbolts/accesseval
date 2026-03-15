@@ -39,6 +39,16 @@ enum CmsType {
   civicplus
   finalsite
   google_sites
+  edlio
+  blackboard
+  thrillshare
+  drupal
+  joomla
+  foxbright
+  campussuite
+  schoolpointe
+  granicus
+  revize
   other
   unknown
 }
@@ -324,6 +334,18 @@ model AuthToken {
 
   @@index([email])
   @@map("auth_tokens")
+}
+
+model FunnelEvent {
+  id        String   @id @default(uuid())
+  token     String
+  event     String   // "view" | "email" | "signup_click"
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([token])
+  @@index([event])
+  @@index([createdAt])
+  @@map("funnel_events")
 }
 
 model District {

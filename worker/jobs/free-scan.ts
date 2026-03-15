@@ -60,7 +60,9 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
     axeRuleId: issue.axeRuleId,
     severity: issue.severity,
     description: issue.description,
-    fixInstructions: issue.fixInstructions,
+    fixInstructions: issue.fixInstructionsCms || issue.fixInstructions,
+    fixInstructionsGeneric: issue.fixInstructions,
+    fixInstructionsCms: issue.fixInstructionsCms,
     elementSelector: issue.elementSelector,
     wcagCriteria: issue.wcagCriteria,
   }));
@@ -108,6 +110,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
         issues: topIssues,
         screenshotUrl,
         narrative,
+        detectedCms: scanResult.detectedCms,
       },
     },
   });

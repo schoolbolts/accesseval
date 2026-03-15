@@ -145,7 +145,7 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-24 px-4 bg-surface bg-dot-pattern" aria-labelledby="how-it-works-heading">
+      <section id="how-it-works" className="py-24 px-4 bg-surface bg-dot-pattern" aria-labelledby="how-it-works-heading">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="section-title mb-3">Simple process</p>
@@ -246,6 +246,7 @@ export default function LandingPage() {
 
       {/* Pricing */}
       <section
+        id="pricing"
         className="py-24 px-4 bg-surface bg-dot-pattern"
         aria-labelledby="pricing-heading"
       >
@@ -406,70 +407,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-navy-900 text-navy-300 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
-            {/* Brand */}
-            <div>
-              <p className="font-display font-bold text-xl text-white mb-3">AccessEval</p>
-              <p className="font-body text-sm text-navy-400 leading-relaxed">
-                ADA compliance for school districts, cities, and counties.
-              </p>
-            </div>
-
-            {/* Product */}
-            <div>
-              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
-                Product
-              </p>
-              <nav aria-label="Product links" className="flex flex-col gap-2.5">
-                {[
-                  { href: '/#how-it-works', label: 'How it works' },
-                  { href: '/#pricing', label: 'Pricing' },
-                  { href: '/schools', label: 'Reports' },
-                  { href: '/signup', label: 'Get started' },
-                ].map(({ href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Resources */}
-            <div>
-              <p className="font-body text-xs font-semibold text-navy-400 uppercase tracking-widest mb-4">
-                Resources
-              </p>
-              <nav aria-label="Resource links" className="flex flex-col gap-2.5">
-                {[
-                  { href: '/blog', label: 'Blog' },
-                  { href: '/scan', label: 'Free scan' },
-                ].map(({ href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    className="font-body text-sm text-navy-300 hover:text-white transition-colors"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          <div className="border-t border-navy-700 pt-8">
-            <p className="font-body text-sm text-navy-500 text-center">
-              &copy; {new Date().getFullYear()} AccessEval
-            </p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

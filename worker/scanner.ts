@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { AxeBuilder } from '@axe-core/playwright';
 import { getTranslation, getFixInstruction } from '../src/lib/translations';
+import { detectCms } from './detect-cms';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,6 +26,7 @@ export interface ScanPageResult {
   title: string;
   issues: ScannedIssue[];
   screenshotBuffer: Buffer | null;
+  detectedCms: string;
   error?: string;
 }
 
@@ -98,6 +100,13 @@ export async function scanPage(
 
     const title = await page.title();
 
+    // Auto-detect CMS if not specified
+    let effectiveCms = cmsType;
+    if (cmsType === 'unknown') {
+      const html = await page.content();
+      effectiveCms = detectCms(html);
+    }
+
     // Run axe-core with WCAG 2.1 AA tags
     const axeResults = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
@@ -112,7 +121,7 @@ export async function scanPage(
         translation?.fix.generic ??
         violation.help ??
         'No fix instructions available.';
-      const fixInstructionsCms = getFixInstruction(violation.id, cmsType) ?? null;
+      const fixInstructionsCms = getFixInstruction(violation.id, effectiveCms) ?? null;
       const wcagCriteria = translation?.wcag ?? extractWcagCriteria(violation) ?? null;
 
       for (const node of violation.nodes) {
@@ -155,7 +164,7 @@ export async function scanPage(
 
     await context.close();
 
-    return { url, title, issues, screenshotBuffer };
+    return { url, title, issues, screenshotBuffer, detectedCms: effectiveCms };
   } catch (err) {
     if (context) {
       try {
@@ -165,7 +174,7 @@ export async function scanPage(
       }
     }
     const error = err instanceof Error ? err.message : String(err);
-    return { url, title: '', issues: [], screenshotBuffer: null, error };
+    return { url, title: '', issues: [], screenshotBuffer: null, detectedCms: cmsType, error };
   }
 }
 
