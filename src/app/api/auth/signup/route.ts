@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/db';
 import { stripe as getStripe, PRICE_IDS, createCheckoutSession } from '@/lib/stripe';
 import { PLAN_LIMITS, PlanName } from '@/lib/plan-limits';
+import { validatePassword } from '@/lib/password';
 
 const VALID_PLANS: PlanName[] = ['scan', 'comply', 'fix'];
 
@@ -42,6 +43,11 @@ export async function POST(req: NextRequest) {
 
   if (!VALID_PLANS.includes(plan as PlanName)) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 });
+  }
+
+  const { valid, errors: passwordErrors } = validatePassword(password);
+  if (!valid) {
+    return NextResponse.json({ error: passwordErrors.join(', ') }, { status: 400 });
   }
 
   const selectedPlan = plan as PlanName;
