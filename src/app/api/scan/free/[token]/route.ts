@@ -36,6 +36,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
       wcagCriteria?: string;
     }>;
     screenshotUrl?: string | null;
+    narrative?: string;
   } | null;
 
   const allIssues = resultsJson?.issues ?? [];
@@ -53,6 +54,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
     totalIssues: allIssues.length,
     hasEmail,
     screenshotUrl: resultsJson?.screenshotUrl ?? null,
+    narrative: resultsJson?.narrative ?? null,
   });
 }
 

@@ -2,6 +2,7 @@ import { prisma } from '../../src/lib/db';
 import { createBrowser, scanPage } from '../scanner';
 import { scoreScanResults } from '../scorer';
 import { uploadScreenshot } from '../../src/lib/r2';
+import { generateFreeScanSummary } from '../../src/lib/ai-summary';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -77,6 +78,22 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
     }
   }
 
+  // Generate AI narrative
+  let narrative = '';
+  try {
+    narrative = await generateFreeScanSummary({
+      url,
+      score: scoreResult.score,
+      grade: scoreResult.grade,
+      criticalCount: scoreResult.criticalCount,
+      majorCount: scoreResult.majorCount,
+      minorCount: scoreResult.minorCount,
+      issues: topIssues.map((i) => ({ severity: i.severity, description: i.description })),
+    });
+  } catch (err) {
+    console.warn(`[free-scan] ${freeScanId} narrative generation failed:`, err);
+  }
+
   await prisma.freeScan.update({
     where: { id: freeScanId },
     data: {
@@ -90,6 +107,7 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
         totalIssues: scanResult.issues.length,
         issues: topIssues,
         screenshotUrl,
+        narrative,
       },
     },
   });

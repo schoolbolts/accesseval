@@ -21,6 +21,7 @@ interface ScanResult {
   totalIssues?: number;
   hasEmail?: boolean;
   screenshotUrl?: string | null;
+  narrative?: string | null;
 }
 
 function SeverityBadge({ severity }: { severity: string }) {
@@ -191,7 +192,7 @@ export function ScanProgress({ token }: { token: string }) {
     );
   }
 
-  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl } =
+  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl, narrative } =
     result;
 
   const showEmailGate = !hasEmail && !emailSubmitted && (totalIssues ?? 0) > 3;
@@ -243,6 +244,13 @@ export function ScanProgress({ token }: { token: string }) {
           )}
         </div>
       </div>
+
+      {/* AI narrative */}
+      {narrative && (
+        <div className="card p-6 mb-6 animate-fade-up">
+          <p className="font-body text-slate-600 text-sm leading-relaxed">{narrative}</p>
+        </div>
+      )}
 
       {/* Issue count stat cards */}
       <div className="grid grid-cols-3 gap-4 mb-6 animate-fade-up stagger-1">
