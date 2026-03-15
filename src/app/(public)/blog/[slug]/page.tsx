@@ -8,6 +8,308 @@ import { posts, getPost } from '../posts';
 /* ------------------------------------------------------------------ */
 
 const content: Record<string, React.ReactNode> = {
+  'accesseval-vs-wave-school-government-websites': (
+    <>
+      <p>
+        If you work in a school district or local government and have searched for accessibility
+        testing tools, you have almost certainly come across <strong>WAVE</strong> (the Web
+        Accessibility Evaluation Tool). Built by WebAIM, it is one of the most widely used free
+        accessibility checkers available. So how does it compare to AccessEval, and which one
+        should public entities use?
+      </p>
+
+      <h2>What WAVE does well</h2>
+      <p>
+        WAVE is a free browser extension and web service that overlays accessibility errors,
+        alerts, and structural elements directly on your page. You enter a URL (or use the browser
+        extension), and WAVE highlights issues like missing alt text, low contrast, empty links,
+        and heading structure problems. It is an excellent tool for a quick manual check of a
+        single page.
+      </p>
+      <p>
+        The price — free — is hard to beat, and it is trusted by accessibility professionals
+        worldwide. For a developer or webmaster reviewing a specific page, WAVE is a solid
+        first-line tool.
+      </p>
+
+      <h2>Where WAVE falls short for public entities</h2>
+      <p>
+        The challenge is that WAVE was designed for developers and accessibility specialists, not
+        for the school administrator or city clerk who needs to understand and act on the results.
+        Here is where public entities run into problems:
+      </p>
+      <ul>
+        <li><strong>One page at a time</strong> — WAVE scans a single URL. If your school website
+        has 200 pages, you need to manually scan each one. There is no way to crawl your full
+        site automatically.</li>
+        <li><strong>No ongoing monitoring</strong> — WAVE gives you a snapshot. It does not track
+        whether issues have been fixed, alert you when new issues appear, or maintain a history of
+        your compliance status over time.</li>
+        <li><strong>Technical output</strong> — The results use WCAG success criteria labels and
+        developer-oriented language. A non-technical user may not know what &ldquo;ARIA label
+        missing&rdquo; means or how to fix it in their CMS.</li>
+        <li><strong>No compliance documentation</strong> — WAVE does not generate accessibility
+        statements, compliance reports, or any documentation you can share with your board or
+        legal counsel.</li>
+        <li><strong>No fix guidance</strong> — It tells you what is wrong but not how to fix it
+        in your specific CMS (WordPress, Finalsite, Squarespace, etc.).</li>
+      </ul>
+
+      <h2>What AccessEval adds</h2>
+      <p>
+        AccessEval uses the same underlying engine (axe-core) that powers many professional
+        accessibility tools, but wraps it in a workflow designed for schools and governments:
+      </p>
+      <ul>
+        <li><strong>Full-site crawling</strong> — Enter your root URL and AccessEval crawls up to
+        100, 500, or 2,000 pages depending on your plan. No manual page-by-page scanning.</li>
+        <li><strong>Plain-English reports</strong> — Every issue is translated from technical WCAG
+        jargon into language a school webmaster can understand and act on.</li>
+        <li><strong>Ongoing monitoring</strong> — Weekly or monthly automated scans track your
+        compliance status over time. You can see if you are improving or if new issues have been
+        introduced.</li>
+        <li><strong>Compliance documentation</strong> — Generate accessibility statements and PDF
+        reports you can share with your school board, city council, or legal team.</li>
+        <li><strong>CMS-specific fix instructions</strong> — On the Fix plan, you get step-by-step
+        remediation guidance tailored to your content management system.</li>
+      </ul>
+
+      <h2>Should you use both?</h2>
+      <p>
+        Yes. WAVE is a great tool for spot-checking individual pages during content creation or
+        after making changes. AccessEval is the system of record for your overall compliance
+        status — it monitors your full site, tracks progress, and generates the documentation
+        you need to demonstrate compliance.
+      </p>
+      <p>
+        Think of WAVE as a spell-checker you run on a single document, and AccessEval as the
+        ongoing quality assurance system for your entire website.
+      </p>
+
+      <h2>Pricing comparison</h2>
+      <ul>
+        <li><strong>WAVE:</strong> Free (browser extension and single-page web tool). WAVE also
+        offers a paid API for developers who want to integrate scanning into their build process.</li>
+        <li><strong>AccessEval:</strong> $99/year for monthly scans of up to 100 pages, $299/year
+        for weekly scans of 500 pages with compliance docs, $599/year for 2,000 pages with
+        CMS-specific guidance.</li>
+      </ul>
+
+      <h2>The bottom line</h2>
+      <p>
+        WAVE is an excellent free tool for manual, one-off page checks. But if your school or
+        government needs to demonstrate ADA Title II compliance across your full website —
+        with ongoing monitoring, plain-English reports, and documentation — AccessEval fills the
+        gaps that WAVE leaves open. <a href="/">Run a free scan</a> to see the difference.
+      </p>
+    </>
+  ),
+
+  'accesseval-vs-siteimprove-public-entities': (
+    <>
+      <p>
+        <strong>Siteimprove</strong> is one of the most well-known names in web accessibility and
+        content quality. It is used by large universities, state agencies, and enterprise
+        organizations worldwide. If you are evaluating accessibility tools for a school district
+        or local government, you may be wondering how it compares to AccessEval.
+      </p>
+
+      <h2>What Siteimprove offers</h2>
+      <p>
+        Siteimprove is a comprehensive digital governance platform that goes well beyond
+        accessibility. It includes content quality auditing, SEO analysis, analytics, data
+        privacy scanning, and brand consistency checking — alongside its accessibility module.
+        The accessibility scanner tests against WCAG standards and provides detailed issue
+        tracking with prioritization.
+      </p>
+      <p>
+        For large organizations with dedicated web teams, compliance officers, and substantial
+        budgets, Siteimprove is a powerful platform. The accessibility module includes automated
+        scanning, assisted manual testing workflows, and integration with content management
+        systems.
+      </p>
+
+      <h2>The challenge for schools and small governments</h2>
+      <p>
+        Siteimprove is enterprise software with enterprise pricing. While exact pricing is not
+        published (it requires a sales conversation), contracts typically start at{' '}
+        <strong>$5,000 to $15,000 per year</strong> and can go much higher depending on the
+        number of pages and modules selected. For a K-12 school district with 200 pages or a
+        small city with a modest website, this is difficult to justify.
+      </p>
+      <p>
+        Beyond cost, the platform&rsquo;s depth can be a disadvantage for smaller organizations.
+        Siteimprove is designed for teams with dedicated web and accessibility staff. A school
+        webmaster who also handles parent communications, the staff directory, and the lunch menu
+        does not need an enterprise governance platform — they need clear answers about what is
+        wrong and how to fix it.
+      </p>
+
+      <h2>How AccessEval compares</h2>
+      <p>
+        AccessEval focuses specifically on what schools and local governments need for ADA Title II
+        compliance:
+      </p>
+      <ul>
+        <li><strong>Affordable pricing</strong> — $99 to $599 per year versus $5,000+ for
+        Siteimprove. AccessEval is designed to fit within a line-item budget without requiring
+        board approval or a procurement process.</li>
+        <li><strong>Plain-English reports</strong> — Where Siteimprove provides detailed technical
+        dashboards for web professionals, AccessEval translates every issue into language a
+        non-technical administrator can understand and act on.</li>
+        <li><strong>Same scanning engine</strong> — Both tools use industry-standard WCAG testing
+        methodologies. AccessEval scans with Playwright and axe-core, the same engine used by
+        major enterprise platforms.</li>
+        <li><strong>Compliance documentation</strong> — AccessEval generates accessibility
+        statements and PDF reports specifically designed for school boards and city councils.</li>
+        <li><strong>No sales process</strong> — Sign up, enter your URL, and start scanning.
+        No demos, no procurement, no annual contract negotiations.</li>
+      </ul>
+
+      <h2>What you give up</h2>
+      <p>
+        AccessEval does not offer SEO auditing, analytics, content quality scoring, or data
+        privacy scanning. It does not have assisted manual testing workflows or advanced
+        role-based access for large teams. If your organization has 10,000+ pages, a dedicated
+        web team, and needs a full digital governance suite, Siteimprove may be worth the
+        investment.
+      </p>
+      <p>
+        But if your primary goal is meeting ADA Title II requirements on a public entity budget,
+        AccessEval delivers the core accessibility scanning and compliance documentation you need
+        at a fraction of the cost.
+      </p>
+
+      <h2>Quick comparison</h2>
+      <ul>
+        <li><strong>Siteimprove:</strong> $5,000–$15,000+/yr. Full governance platform. Enterprise
+        onboarding. Best for large organizations with dedicated web teams.</li>
+        <li><strong>AccessEval:</strong> $99–$599/yr. Focused accessibility scanning. Self-serve
+        signup. Built for schools and small governments.</li>
+      </ul>
+
+      <h2>The bottom line</h2>
+      <p>
+        Siteimprove is a serious platform for serious budgets. For the majority of school districts
+        and municipalities — especially those under 50,000 people with the April 2027 deadline
+        approaching — AccessEval provides the same core scanning capability at 90% less cost,
+        with reports designed for the people who actually need to read them.{' '}
+        <a href="/">Try a free scan</a> to see what you get.
+      </p>
+    </>
+  ),
+
+  'accesseval-vs-userway-overlay-widgets': (
+    <>
+      <p>
+        <strong>UserWay</strong> is one of the most visible accessibility companies on the web. If
+        you have seen a small wheelchair icon in the corner of a website that opens a panel with
+        font size adjustments, contrast toggles, and screen reader options — that is likely a
+        UserWay widget (or one of its competitors like accessiBe or EqualWeb). These are called
+        accessibility overlays.
+      </p>
+      <p>
+        Many school districts and municipalities have adopted overlay widgets because they are
+        easy to install and appear to solve the compliance problem quickly. But there is a
+        fundamental difference between what overlays do and what ADA Title II actually requires.
+      </p>
+
+      <h2>What UserWay does</h2>
+      <p>
+        UserWay provides a JavaScript widget that sits on top of your website and offers users
+        adjustable settings — larger text, higher contrast, dyslexia-friendly fonts, keyboard
+        navigation aids, and more. Some plans also include AI-powered remediation that attempts to
+        fix underlying code issues automatically (for example, generating alt text for images or
+        adding ARIA labels).
+      </p>
+      <p>
+        The appeal is obvious: install one script tag and get instant accessibility improvements
+        without changing your website code. Pricing for the remediation product (UserWay&rsquo;s
+        &ldquo;AI-Powered Accessibility&rdquo;) typically starts around $490 per month for small
+        sites, though pricing varies.
+      </p>
+
+      <h2>Why overlays are not enough for ADA compliance</h2>
+      <p>
+        The accessibility community — including the leading disability rights organizations — has
+        been vocal about the limitations of overlay widgets. Here is why:
+      </p>
+      <ul>
+        <li><strong>They do not fix the source code</strong> — Overlays attempt to patch
+        accessibility issues at runtime using JavaScript. If the overlay fails to load, encounters
+        a conflict, or if a user has JavaScript disabled, the underlying accessibility barriers
+        remain.</li>
+        <li><strong>Screen reader users often disable them</strong> — Many users who rely on
+        assistive technology already have their preferred settings configured. An overlay that
+        changes page behavior can actually interfere with their tools.</li>
+        <li><strong>They cannot fix structural problems</strong> — Issues like missing form labels,
+        broken heading hierarchy, inaccessible PDFs, and keyboard traps in third-party widgets
+        cannot be reliably fixed by a JavaScript overlay.</li>
+        <li><strong>They do not satisfy legal requirements</strong> — Multiple court cases and DOJ
+        settlement agreements have found that overlay widgets alone do not constitute ADA
+        compliance. The DOJ&rsquo;s Title II rule specifically requires conformance with WCAG 2.1
+        Level AA — not the presence of a remediation widget.</li>
+        <li><strong>They have been named in lawsuits</strong> — Companies using overlay products
+        have been sued specifically because the overlay failed to make the site accessible.
+        Having an overlay installed does not provide legal protection.</li>
+      </ul>
+
+      <h2>How AccessEval approaches the problem differently</h2>
+      <p>
+        AccessEval does not add a widget to your site. Instead, it scans your actual website code
+        to identify specific WCAG 2.1 AA violations, then tells you exactly what needs to be
+        fixed and how:
+      </p>
+      <ul>
+        <li><strong>Real scanning, real issues</strong> — AccessEval crawls your site with Playwright
+        and tests every page with axe-core. You get a list of actual code-level issues, not a
+        cosmetic layer on top of broken code.</li>
+        <li><strong>Fix the source</strong> — Reports include plain-English descriptions of each
+        issue and, on the Fix plan, CMS-specific instructions for how to resolve them in
+        WordPress, Finalsite, Squarespace, and other platforms.</li>
+        <li><strong>Documentation that holds up</strong> — AccessEval generates accessibility
+        statements and compliance reports based on your actual scan results — evidence that you
+        are actively working toward compliance, not just installing a widget.</li>
+        <li><strong>Ongoing monitoring</strong> — Weekly or monthly automated scans catch new
+        issues as your site content changes, rather than relying on a JavaScript layer to mask
+        them.</li>
+      </ul>
+
+      <h2>What about AI-generated fixes?</h2>
+      <p>
+        UserWay&rsquo;s AI remediation can help with some issues — automatically generating alt
+        text, for example. But AI-generated alt text is often generic or inaccurate, and relying
+        on automated fixes for critical accessibility issues creates risk. The DOJ expects
+        organizations to actually fix their web content, not to rely on third-party tools that
+        may or may not work correctly for every user.
+      </p>
+
+      <h2>Pricing comparison</h2>
+      <ul>
+        <li><strong>UserWay Widget (free tier):</strong> Basic toolbar with user-side adjustments.
+        Does not fix code issues.</li>
+        <li><strong>UserWay AI Remediation:</strong> Approximately $490+/month ($5,880+/year) for
+        automated code fixes. Effectiveness varies.</li>
+        <li><strong>AccessEval:</strong> $99 to $599/year. Identifies real issues, provides fix
+        guidance, generates compliance documentation.</li>
+      </ul>
+
+      <h2>The bottom line</h2>
+      <p>
+        Overlay widgets are appealing because they promise a quick fix. But ADA Title II requires
+        your website to actually conform to WCAG 2.1 Level AA — not to have a JavaScript widget
+        attempting to paper over the issues. For school districts and municipalities facing
+        compliance deadlines (April 2026 for 50,000+ populations, April 2027 for smaller
+        entities), the path to real compliance starts with understanding what is actually wrong
+        with your site.
+      </p>
+      <p>
+        <a href="/">Run a free AccessEval scan</a> to see the real accessibility issues on your
+        website — and get a clear roadmap for fixing them.
+      </p>
+    </>
+  ),
+
   'accesseval-vs-audioeye-school-districts': (
     <>
       <p>

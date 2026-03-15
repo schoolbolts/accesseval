@@ -10,6 +10,36 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'accesseval-vs-wave-school-government-websites',
+    title: 'AccessEval vs WAVE: Which Accessibility Tool Is Better for Schools and Governments?',
+    description:
+      'WAVE is free but limited. AccessEval adds monitoring, plain-English reports, and compliance docs. Here is how they compare for public entities.',
+    date: '2026-03-14',
+    author: 'AccessEval Team',
+    readTime: '6 min',
+    tags: ['Comparison', 'Tools', 'WAVE'],
+  },
+  {
+    slug: 'accesseval-vs-siteimprove-public-entities',
+    title: 'AccessEval vs Siteimprove: ADA Compliance for Schools and Municipalities',
+    description:
+      'Siteimprove is powerful but expensive. AccessEval delivers the same core scanning at a fraction of the cost. A comparison for budget-conscious public entities.',
+    date: '2026-03-14',
+    author: 'AccessEval Team',
+    readTime: '6 min',
+    tags: ['Comparison', 'Tools', 'Siteimprove'],
+  },
+  {
+    slug: 'accesseval-vs-userway-overlay-widgets',
+    title: 'AccessEval vs UserWay: Why Overlays Are Not Enough for ADA Compliance',
+    description:
+      'UserWay adds an accessibility widget to your site. AccessEval finds and helps you fix the actual code issues. Here is why the difference matters under ADA Title II.',
+    date: '2026-03-14',
+    author: 'AccessEval Team',
+    readTime: '7 min',
+    tags: ['Comparison', 'Tools', 'Overlays'],
+  },
+  {
     slug: 'accesseval-vs-audioeye-school-districts',
     title: 'AccessEval vs AudioEye: Which ADA Compliance Tool Is Right for School Districts?',
     description:
