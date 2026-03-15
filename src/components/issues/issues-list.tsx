@@ -39,19 +39,22 @@ const filters: { label: string; value: IssueSeverity | 'all' }[] = [
 export default function IssuesList({ issues, showCmsInstructions }: IssuesListProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filter, setFilter] = useState<IssueSeverity | 'all'>('all');
-  const [ignored, setIgnored] = useState<Set<string>>(new Set());
+  const [statusMap, setStatusMap] = useState<Record<string, 'open' | 'fixed' | 'ignored'>>({});
+  const [showResolved, setShowResolved] = useState(false);
 
   const filtered = filter === 'all' ? issues : issues.filter((i) => i.severity === filter);
-  const visible = filtered.filter((i) => !ignored.has(i.id));
+  const visible = showResolved
+    ? filtered
+    : filtered.filter((i) => !['fixed', 'ignored'].includes(statusMap[i.id] ?? 'open'));
 
-  async function handleIgnore(id: string) {
+  async function updateIssueStatus(id: string, status: 'open' | 'fixed' | 'ignored') {
     try {
       await fetch(`/api/issues/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'ignored' }),
+        body: JSON.stringify({ status }),
       });
-      setIgnored((prev) => { const next = new Set(prev); next.add(id); return next; });
+      setStatusMap((prev) => ({ ...prev, [id]: status }));
     } catch {
       // silently fail — user can retry
     }
@@ -75,7 +78,16 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
             {f.label}
           </button>
         ))}
-        <span className="ml-auto text-sm font-body text-slate-400 self-center">{visible.length} shown</span>
+        <label className="ml-auto flex items-center gap-1.5 text-sm font-body text-slate-400 self-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showResolved}
+            onChange={(e) => setShowResolved(e.target.checked)}
+            className="accent-emerald-600"
+          />
+          Show resolved
+        </label>
+        <span className="text-sm font-body text-slate-400 self-center">{visible.length} shown</span>
       </div>
 
       {visible.length === 0 ? (
@@ -110,12 +122,34 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                     )}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={() => handleIgnore(issue.id)}
-                      className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
-                    >
-                      Ignore
-                    </button>
+                    {(statusMap[issue.id] === 'fixed' || statusMap[issue.id] === 'ignored') ? (
+                      <>
+                        <span className={`text-xs font-body font-medium ${statusMap[issue.id] === 'fixed' ? 'text-emerald-600' : 'text-slate-400'}`}>
+                          {statusMap[issue.id] === 'fixed' ? 'Fixed' : 'Ignored'}
+                        </span>
+                        <button
+                          onClick={() => updateIssueStatus(issue.id, 'open')}
+                          className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
+                        >
+                          Reopen
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => updateIssueStatus(issue.id, 'fixed')}
+                          className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+                        >
+                          Fixed
+                        </button>
+                        <button
+                          onClick={() => updateIssueStatus(issue.id, 'ignored')}
+                          className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
+                        >
+                          Ignore
+                        </button>
+                      </>
+                    )}
                     <button
                       onClick={() => setExpanded(isExpanded ? null : issue.id)}
                       className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium transition-colors"

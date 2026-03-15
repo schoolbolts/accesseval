@@ -11,7 +11,7 @@ const PLANS = [
     price: '$99',
     period: '/yr',
     tagline: 'Find out where you stand',
-    features: ['Up to 100 pages', 'Monthly automated scans', 'Letter grade + PDF reports'],
+    features: ['1 website, up to 100 pages', 'Monthly automated scans', 'Letter grade + PDF reports'],
     popular: false,
   },
   {
@@ -21,10 +21,10 @@ const PLANS = [
     period: '/yr',
     tagline: 'Stay compliant year-round',
     features: [
-      'Up to 500 pages',
+      'Up to 5 websites, 500 pages each',
       'Weekly scans + fix tracking',
       'Compliance docs + accessibility statement',
-      'Team member access',
+      'Team member access (3 seats)',
     ],
     popular: true,
   },
@@ -35,7 +35,7 @@ const PLANS = [
     period: '/yr',
     tagline: 'Full remediation support',
     features: [
-      'Up to 2,000 pages',
+      'Up to 10 websites, 2,000 pages each',
       'CMS-specific fix instructions',
       'Shareable reports for IT vendors',
       'Priority support + all Comply features',
@@ -45,7 +45,8 @@ const PLANS = [
 ] as const;
 
 const COMPARE_ROWS = [
-  { label: 'Pages monitored', scan: '100', comply: '500', fix: '2,000' },
+  { label: 'Websites', scan: '1', comply: 'Up to 5', fix: 'Up to 10' },
+  { label: 'Pages per site', scan: '100', comply: '500', fix: '2,000' },
   { label: 'Scan frequency', scan: 'Monthly', comply: 'Weekly', fix: 'Weekly' },
   { label: 'On-demand scans', scan: '2/month', comply: '5/month', fix: 'Unlimited' },
   { label: 'Letter grade + issue counts', scan: true, comply: true, fix: true },
@@ -125,7 +126,7 @@ function SignupPage() {
         <div className="text-center mb-8">
           <h1 className="font-display text-display-md text-ink">Get started with AccessEval</h1>
           <p className="font-body text-slate-500 mt-2">
-            Set up your account in under a minute. You&apos;ll pick your plan and pay on the next screen.
+            Set up your account in under a minute. Payment is handled securely through Stripe.
           </p>
         </div>
 

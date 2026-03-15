@@ -31,6 +31,43 @@ export async function GET() {
   return NextResponse.json({ sites, activeSiteId });
 }
 
+/** PATCH /api/sites — update a site (e.g., CMS type) */
+export async function PATCH(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const body = await req.json();
+  const { siteId, cmsType } = body as { siteId?: string; cmsType?: string };
+
+  if (!siteId) {
+    return NextResponse.json({ error: 'siteId is required' }, { status: 400 });
+  }
+
+  const validCmsTypes = ['wordpress', 'squarespace', 'wix', 'civicplus', 'finalsite', 'google_sites', 'other', 'unknown'];
+  if (cmsType && !validCmsTypes.includes(cmsType)) {
+    return NextResponse.json({ error: 'Invalid CMS type' }, { status: 400 });
+  }
+
+  // Verify the site belongs to the user's org
+  const site = await prisma.site.findFirst({
+    where: { id: siteId, organizationId: session.user.organizationId },
+  });
+
+  if (!site) {
+    return NextResponse.json({ error: 'Site not found' }, { status: 404 });
+  }
+
+  const updated = await prisma.site.update({
+    where: { id: siteId },
+    data: {
+      ...(cmsType ? { cmsType: cmsType as any } : {}),
+    },
+    select: { id: true, url: true, cmsType: true },
+  });
+
+  return NextResponse.json({ site: updated });
+}
+
 /** POST /api/sites — add a new site */
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);

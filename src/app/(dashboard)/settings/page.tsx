@@ -2,15 +2,37 @@
 
 import { useState, useEffect } from 'react';
 
+const CMS_OPTIONS = [
+  { value: 'unknown', label: 'Not sure / Other' },
+  { value: 'wordpress', label: 'WordPress' },
+  { value: 'finalsite', label: 'Finalsite' },
+  { value: 'squarespace', label: 'Squarespace' },
+  { value: 'wix', label: 'Wix' },
+  { value: 'civicplus', label: 'CivicPlus' },
+  { value: 'google_sites', label: 'Google Sites' },
+  { value: 'other', label: 'Other CMS' },
+] as const;
+
+interface SiteInfo {
+  id: string;
+  url: string;
+  cmsType: string;
+  maxPages: number;
+}
+
 export default function SettingsPage() {
-  const [members, setMembers] = useState<any[]>([]);
+  const [sites, setSites] = useState<SiteInfo[]>([]);
   const [invitations, setInvitations] = useState<any[]>([]);
   const [inviteEmail, setInviteEmail] = useState('');
   const [billingLoading, setBillingLoading] = useState(false);
+  const [savingCms, setSavingCms] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/invitations').then((r) => r.json()).then((data) => {
       setInvitations(data.invitations || []);
+    });
+    fetch('/api/sites').then((r) => r.json()).then((data) => {
+      setSites(data.sites || []);
     });
   }, []);
 
@@ -43,11 +65,76 @@ export default function SettingsPage() {
     setBillingLoading(false);
   }
 
+  async function updateCmsType(siteId: string, cmsType: string) {
+    setSavingCms(siteId);
+    try {
+      const res = await fetch('/api/sites', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ siteId, cmsType }),
+      });
+      if (res.ok) {
+        setSites((prev) =>
+          prev.map((s) => (s.id === siteId ? { ...s, cmsType } : s))
+        );
+      }
+    } finally {
+      setSavingCms(null);
+    }
+  }
+
   return (
     <div className="p-8 max-w-3xl">
       <div className="mb-8 animate-fade-up">
         <h1 className="page-title">Settings</h1>
-        <p className="page-subtitle">Manage your account, billing, and team.</p>
+        <p className="page-subtitle">Manage your sites, billing, and team.</p>
+      </div>
+
+      {/* Sites card */}
+      <div className="card p-6 mb-5 animate-fade-up">
+        <h2 className="font-body font-semibold text-ink mb-1">Your websites</h2>
+        <p className="text-sm font-body text-slate-500 mb-5">
+          Set your CMS platform so we can generate platform-specific fix instructions.
+        </p>
+
+        {sites.length === 0 ? (
+          <p className="text-sm font-body text-slate-400">No sites configured.</p>
+        ) : (
+          <div className="space-y-3">
+            {sites.map((site) => (
+              <div
+                key={site.id}
+                className="flex items-center justify-between gap-4 px-4 py-3 bg-surface rounded-xl border border-slate-100"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-body font-medium text-ink truncate">
+                    {site.url.replace(/^https?:\/\//, '')}
+                  </p>
+                  <p className="text-xs font-body text-slate-400">
+                    Up to {site.maxPages.toLocaleString()} pages
+                  </p>
+                </div>
+                <div className="shrink-0 flex items-center gap-2">
+                  <select
+                    value={site.cmsType}
+                    onChange={(e) => updateCmsType(site.id, e.target.value)}
+                    disabled={savingCms === site.id}
+                    className="text-sm font-body bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:opacity-50"
+                  >
+                    {CMS_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  {savingCms === site.id && (
+                    <span className="text-xs font-body text-slate-400">Saving...</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Billing card */}

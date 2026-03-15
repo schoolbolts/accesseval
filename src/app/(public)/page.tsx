@@ -276,7 +276,7 @@ export default function LandingPage() {
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
-                  'Up to 100 pages',
+                  '1 website, up to 100 pages',
                   'Monthly automated scans',
                   '2 on-demand scans/month',
                   'Letter grade + issue counts',
@@ -326,12 +326,12 @@ export default function LandingPage() {
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
-                  'Up to 500 pages',
+                  'Up to 5 websites, 500 pages each',
                   'Weekly automated scans',
                   '5 on-demand scans/month',
                   'Fix tracking dashboard',
                   'Accessibility statement generator',
-                  'Team member access',
+                  'Team access (3 seats)',
                   'Email digest reports',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">
@@ -369,12 +369,12 @@ export default function LandingPage() {
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
-                  'Up to 2,000 pages',
+                  'Up to 10 websites, 2,000 pages each',
                   'Weekly automated scans',
                   'Unlimited on-demand scans',
                   'CMS-specific fix instructions',
                   'Shared reports for IT vendors',
-                  'Priority email support',
+                  'Priority support + 10 team seats',
                   'All Comply features',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">

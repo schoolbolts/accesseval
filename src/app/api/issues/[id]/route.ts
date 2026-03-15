@@ -38,13 +38,14 @@ export async function PATCH(
   }
 
   const body = await req.json().catch(() => ({}));
-  if (body.status !== 'ignored') {
-    return NextResponse.json({ error: 'Only status "ignored" is supported' }, { status: 400 });
+  const validStatuses = ['open', 'fixed', 'ignored'];
+  if (!validStatuses.includes(body.status)) {
+    return NextResponse.json({ error: `Status must be one of: ${validStatuses.join(', ')}` }, { status: 400 });
   }
 
   const siteIssue = await prisma.siteIssue.updateMany({
     where: { siteId: site.id, fingerprint: issue.fingerprint },
-    data: { status: 'ignored', statusChangedAt: new Date() },
+    data: { status: body.status, statusChangedAt: new Date() },
   });
 
   return NextResponse.json({ updated: siteIssue.count });
