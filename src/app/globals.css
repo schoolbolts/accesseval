@@ -208,7 +208,7 @@
   /* ── Section headings ────────────────────────────────────── */
 
   .section-title {
-    @apply text-xs font-semibold text-slate-500
+    @apply text-xs font-semibold text-slate-600
       uppercase tracking-widest;
     font-family: var(--font-outfit), system-ui, sans-serif;
   }
@@ -219,7 +219,7 @@
   }
 
   .page-subtitle {
-    @apply text-sm text-slate-500 mt-1;
+    @apply text-sm text-slate-600 mt-1;
     font-family: var(--font-outfit), system-ui, sans-serif;
   }
 

@@ -57,7 +57,7 @@ export function FreeScanForm() {
           disabled={loading}
           aria-describedby={error ? 'scan-url-error' : undefined}
           aria-invalid={error ? true : undefined}
-          className="input-lg w-full bg-white/95 text-ink placeholder:text-slate-400 border-white/20 focus:border-white focus:ring-white/20"
+          className="input-lg w-full bg-white/95 text-ink placeholder:text-slate-500 border-white/20 focus:border-white focus:ring-white/20"
         />
         {error && (
           <p id="scan-url-error" role="alert" className="mt-2 text-sm text-red-300 font-body">

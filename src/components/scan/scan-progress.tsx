@@ -149,16 +149,34 @@ function ScanProcessingAnimation() {
   const [completedChecks, setCompletedChecks] = useState<number[]>([]);
 
   useEffect(() => {
-    // Animate progress from 0 to 97% over ~30 seconds, then hold
+    const startTime = Date.now();
+
+    // Progress tied to elapsed time, not arbitrary increments
+    // 0-60%: first 15s (quick visible progress)
+    // 60-85%: next 20s (steady but slowing)
+    // 85-92%: next 20s (crawling)
+    // 92-97%: holds here until done (never jumps ahead)
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 97) return 97;
-        // Fast start, slows down near end
-        const remaining = 97 - prev;
-        const increment = Math.max(0.3, remaining * 0.06);
-        return Math.min(97, prev + increment);
-      });
-    }, 200);
+      const elapsed = (Date.now() - startTime) / 1000;
+      let target: number;
+
+      if (elapsed < 15) {
+        // 0-60% in first 15 seconds
+        target = (elapsed / 15) * 60;
+      } else if (elapsed < 35) {
+        // 60-85% over next 20 seconds
+        target = 60 + ((elapsed - 15) / 20) * 25;
+      } else if (elapsed < 55) {
+        // 85-92% over next 20 seconds
+        target = 85 + ((elapsed - 35) / 20) * 7;
+      } else {
+        // Slowly crawl toward 97, never quite reaching it
+        const extra = (elapsed - 55) / 60; // 0→1 over 60 more seconds
+        target = 92 + extra * 5; // 92→97 over 60s
+      }
+
+      setProgress(Math.min(97, target));
+    }, 250);
 
     // Cycle through WCAG checks — one every ~600ms
     const checkInterval = setInterval(() => {

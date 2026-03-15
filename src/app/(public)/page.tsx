@@ -259,7 +259,7 @@ export default function LandingPage() {
             >
               Simple, annual pricing
             </h2>
-            <p className="font-body text-slate-500 max-w-md mx-auto">
+            <p className="font-body text-slate-600 max-w-md mx-auto">
               Everything you need to achieve and maintain ADA compliance.
             </p>
           </div>
