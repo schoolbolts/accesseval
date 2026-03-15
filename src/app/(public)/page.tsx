@@ -82,6 +82,68 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Why compliance matters */}
+      <section className="py-24 px-4 bg-white" aria-labelledby="why-heading">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="section-title mb-3">The law changed</p>
+            <h2
+              id="why-heading"
+              className="font-display text-display-md text-ink mb-4"
+            >
+              ADA Title II now covers your website
+            </h2>
+            <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
+              In April 2024, the DOJ finalized new rules requiring all state and local government
+              websites to meet WCAG 2.1 AA standards. Schools, cities, counties, and special
+              districts must comply by <strong className="text-ink">April 24, 2026</strong> or
+              face legal action.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <div className="card-padded text-center">
+              <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-7 h-7 text-red-500">
+                  <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h3 className="font-display text-display-sm text-ink mb-2">Real legal exposure</h3>
+              <p className="font-body text-slate-500 text-sm leading-relaxed">
+                ADA lawsuits against schools and municipalities are surging. Settlements
+                routinely cost $50K-$300K — not including remediation.
+              </p>
+            </div>
+
+            <div className="card-padded text-center">
+              <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-7 h-7 text-amber-500">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h3 className="font-display text-display-sm text-ink mb-2">Hard deadline</h3>
+              <p className="font-body text-slate-500 text-sm leading-relaxed">
+                The DOJ gave organizations with populations under 50,000 until April 2026.
+                After that, non-compliance is a federal civil rights violation.
+              </p>
+            </div>
+
+            <div className="card-padded text-center">
+              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-7 h-7 text-emerald-500">
+                  <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h3 className="font-display text-display-sm text-ink mb-2">Affordable fix</h3>
+              <p className="font-body text-slate-500 text-sm leading-relaxed">
+                Most districts and towns can reach compliance for under $599/year.
+                That&apos;s less than a single hour of ADA consulting.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How it works */}
       <section className="py-24 px-4 bg-white" aria-labelledby="how-it-works-heading">
         <div className="max-w-5xl mx-auto">
