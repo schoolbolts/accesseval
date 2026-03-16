@@ -21,10 +21,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/pg ./node_modules/pg
 COPY --from=builder /app/prisma/migrations ./prisma/migrations
-RUN npm install --no-save prisma dotenv
+RUN npm install --no-save prisma @prisma/client dotenv
 
 EXPOSE 3000
 CMD npx prisma migrate deploy; node server.js
