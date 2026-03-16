@@ -50,19 +50,20 @@ Additionally, schools and governments purchasing above ~$300 typically require p
 **Invoice path (new):**
 1. User clicks "Need a PO or invoice?" on pricing page
 2. Form collects: organization name, billing contact email, billing address, PO number (optional), selected tier
-3. Backend creates a Stripe Invoice via API with NET-30 terms
+3. Backend automatically creates a Stripe Invoice with NET-30 terms and sends it — no manual review step
 4. Stripe emails the PDF invoice to the billing contact
 5. Customer pays via ACH/bank transfer (details on invoice)
-6. Account activated on invoice creation (not payment) — trust-based for government/school customers
-7. If unpaid after 30 days, Stripe sends automatic reminders (configurable)
+6. **Account activated on payment** — Stripe `invoice.paid` webhook triggers account activation
+7. If unpaid after 60 days, invoice auto-voided and request cleaned up
 
-**Why activate on invoice creation, not payment:** Schools/governments are reliable payers but slow (30-60 days). Requiring payment before access would make the product unusable for this market. The risk of non-payment on a $299-599 annual subscription from a school district is negligible.
+**Account is not active until payment.** This means fake/spam invoice requests have zero cost — they just result in unpaid invoices that auto-expire. No manual review needed in the happy path. Stripe sends automatic payment reminders at day 15 and day 30.
 
 ### Stripe Configuration
 
 - Enable Stripe Invoicing on the existing Stripe account
 - Create invoice items matching existing Stripe products (Comply, Fix)
 - Configure automatic payment reminders at day 15 and day 30
+- Auto-void unpaid invoices after 60 days
 - ACH/bank transfer payment method enabled on invoices
 
 ### PO Number Handling
