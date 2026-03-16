@@ -15,7 +15,7 @@ export default async function StatementPage() {
 
   if (!hasFeature) {
     return (
-      <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+      <div className="p-6 lg:p-8 max-w-7xl mx-auto">
         <div className="mb-8 animate-fade-up">
           <h1 className="page-title">Accessibility Statement</h1>
           <p className="page-subtitle">Generate a public-facing accessibility statement for your website.</p>
@@ -44,7 +44,7 @@ export default async function StatementPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
       <div className="mb-8 animate-fade-up">
         <h1 className="page-title">Accessibility Statement</h1>
         <p className="page-subtitle">Generate a public-facing accessibility statement for your website.</p>

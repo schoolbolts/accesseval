@@ -110,7 +110,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-8 max-w-7xl">
       <div className="mb-8 animate-fade-up">
         <h1 className="page-title">Settings</h1>
         <p className="page-subtitle">Manage your sites, billing, and team.</p>

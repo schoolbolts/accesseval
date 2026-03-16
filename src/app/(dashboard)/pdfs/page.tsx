@@ -22,7 +22,7 @@ export default async function PdfsPage() {
 
   if (!hasPdfInventory) {
     return (
-      <div className="p-8 max-w-2xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-8">PDF Inventory</h1>
         <div className="card p-8 text-center animate-fade-up">
           <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -44,7 +44,7 @@ export default async function PdfsPage() {
 
   if (!site) {
     return (
-      <div className="p-8 max-w-5xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">PDF Inventory</h1>
         <div className="card p-8 text-center mt-6">
           <p className="text-slate-600 text-sm">No site configured yet.</p>
@@ -61,7 +61,7 @@ export default async function PdfsPage() {
 
   if (!latestScan) {
     return (
-      <div className="p-8 max-w-5xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">PDF Inventory</h1>
         <div className="card p-8 text-center mt-6">
           <p className="text-slate-600 text-sm">No completed scans yet.</p>
@@ -83,7 +83,7 @@ export default async function PdfsPage() {
   });
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-8 max-w-7xl">
       <div className="mb-8 animate-fade-up">
         <h1 className="page-title">PDF Inventory</h1>
         <p className="page-subtitle">

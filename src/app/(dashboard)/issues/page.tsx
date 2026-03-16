@@ -19,7 +19,7 @@ export default async function IssuesPage() {
 
   if (!site) {
     return (
-      <div className="p-8 max-w-5xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">Issues</h1>
         <div className="card p-8 text-center mt-6">
           <p className="text-slate-600 text-sm">No site configured yet.</p>
@@ -36,7 +36,7 @@ export default async function IssuesPage() {
 
   if (!latestScan) {
     return (
-      <div className="p-8 max-w-5xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">Issues</h1>
         <div className="card p-8 text-center mt-6">
           <p className="text-slate-600 text-sm">No completed scans yet.</p>
@@ -66,7 +66,7 @@ export default async function IssuesPage() {
   });
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-8 max-w-7xl">
       <div className="flex items-start justify-between mb-8 animate-fade-up">
         <div>
           <h1 className="page-title">Issues</h1>

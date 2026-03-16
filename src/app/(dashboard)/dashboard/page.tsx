@@ -42,7 +42,7 @@ export default async function DashboardPage() {
 
   if (!site) {
     return (
-      <div className="p-8 max-w-6xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">Dashboard</h1>
         <div className="card p-10 text-center mt-6">
           <p className="text-slate-600 mb-2">No site configured yet.</p>
@@ -94,7 +94,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8 animate-fade-up">
         <div>

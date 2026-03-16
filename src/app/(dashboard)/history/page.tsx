@@ -29,7 +29,7 @@ export default async function HistoryPage() {
 
   if (!site) {
     return (
-      <div className="p-8 max-w-6xl">
+      <div className="p-8 max-w-7xl">
         <h1 className="page-title mb-1">Scan History</h1>
         <div className="card p-8 text-center mt-6">
           <p className="text-slate-600 text-sm">No site configured yet.</p>
@@ -58,7 +58,7 @@ export default async function HistoryPage() {
   });
 
   return (
-    <div className="p-8 max-w-6xl">
+    <div className="p-8 max-w-7xl">
       <div className="flex items-start justify-between mb-8 animate-fade-up">
         <div>
           <h1 className="page-title">Scan History</h1>

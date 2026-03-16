@@ -27,7 +27,7 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-8 max-w-7xl">
       <div className="mb-8 animate-fade-up">
         <h1 className="page-title">Board Reports</h1>
         <p className="page-subtitle">Generate a compliance report for your board or administration.</p>
