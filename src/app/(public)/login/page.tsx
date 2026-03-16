@@ -69,7 +69,7 @@ function LoginContent() {
       <div className="w-full max-w-md animate-fade-up">
         <div className="text-center mb-8">
           <h1 className="font-display text-display-md text-ink">Welcome back</h1>
-          <p className="font-body text-slate-500 mt-2">Sign in to your AccessEval account.</p>
+          <p className="font-body text-slate-600 mt-2">Sign in to your AccessEval account.</p>
         </div>
 
         <div className="card p-8">
@@ -89,13 +89,13 @@ function LoginContent() {
           <div className="flex rounded-lg bg-slate-100 p-0.5 mb-6">
             <button
               onClick={() => { setMode('password'); setMagicSent(false); setError(''); }}
-              className={`flex-1 text-sm font-medium py-2 rounded-md transition-all ${mode === 'password' ? 'bg-white text-ink shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`flex-1 text-sm font-medium py-2 rounded-md transition-all ${mode === 'password' ? 'bg-white text-ink shadow-sm' : 'text-slate-600 hover:text-slate-700'}`}
             >
               Password
             </button>
             <button
               onClick={() => { setMode('magic'); setError(''); }}
-              className={`flex-1 text-sm font-medium py-2 rounded-md transition-all ${mode === 'magic' ? 'bg-white text-ink shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`flex-1 text-sm font-medium py-2 rounded-md transition-all ${mode === 'magic' ? 'bg-white text-ink shadow-sm' : 'text-slate-600 hover:text-slate-700'}`}
             >
               Email link
             </button>
@@ -185,13 +185,13 @@ function LoginContent() {
                 {loading ? 'Sending…' : 'Send sign-in link'}
               </button>
 
-              <p className="text-center font-body text-xs text-slate-500">
+              <p className="text-center font-body text-xs text-slate-600">
                 We&apos;ll email you a link that signs you in instantly — no password needed.
               </p>
             </form>
           )}
 
-          <p className="mt-6 text-center font-body text-sm text-slate-500">
+          <p className="mt-6 text-center font-body text-sm text-slate-600">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-emerald-600 hover:text-emerald-700 font-semibold">
               Get started

@@ -45,7 +45,7 @@ export default function ReportsPage() {
           </div>
           <div className="flex-1">
             <h2 className="font-body font-semibold text-ink mb-1">Accessibility Compliance Report</h2>
-            <p className="text-sm font-body text-slate-500 mb-5 leading-relaxed">
+            <p className="text-sm font-body text-slate-600 mb-5 leading-relaxed">
               Includes your accessibility grade, issue summary, progress over time, and actionable recommendations.
               Ready to share with leadership, legal, or your board.
             </p>

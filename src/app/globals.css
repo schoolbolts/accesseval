@@ -201,7 +201,7 @@
   }
 
   .stat-label {
-    @apply text-xs font-medium text-slate-500 uppercase tracking-widest mt-2;
+    @apply text-xs font-medium text-slate-600 uppercase tracking-widest mt-2;
     font-family: var(--font-outfit), system-ui, sans-serif;
   }
 

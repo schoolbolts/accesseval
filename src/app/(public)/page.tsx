@@ -93,7 +93,7 @@ export default function LandingPage() {
             >
               ADA Title II now covers your website
             </h2>
-            <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="font-body text-slate-600 max-w-2xl mx-auto leading-relaxed">
               In April 2024, the DOJ finalized new rules requiring all state and local government
               websites to meet WCAG 2.2 AA standards. Entities serving 50,000+ people must comply
               by <strong className="text-ink">April 24, 2026</strong>. Smaller entities and special
@@ -109,7 +109,7 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="font-display text-display-sm text-ink mb-2">Real legal exposure</h3>
-              <p className="font-body text-slate-500 text-sm leading-relaxed">
+              <p className="font-body text-slate-600 text-sm leading-relaxed">
                 ADA lawsuits against schools and municipalities are surging. Settlements
                 routinely cost $50K-$300K — not including remediation.
               </p>
@@ -122,7 +122,7 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="font-display text-display-sm text-ink mb-2">Hard deadline</h3>
-              <p className="font-body text-slate-500 text-sm leading-relaxed">
+              <p className="font-body text-slate-600 text-sm leading-relaxed">
                 Populations of 50,000+ must comply by April 24, 2026. Under 50,000 and special
                 districts have until April 26, 2027. After that, non-compliance is a federal civil rights violation.
               </p>
@@ -135,7 +135,7 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="font-display text-display-sm text-ink mb-2">Affordable fix</h3>
-              <p className="font-body text-slate-500 text-sm leading-relaxed">
+              <p className="font-body text-slate-600 text-sm leading-relaxed">
                 Most districts and towns can reach compliance for under $599/year.
                 That&apos;s less than a single hour of ADA consulting.
               </p>
@@ -191,7 +191,7 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <h3 className="font-display text-display-sm text-ink mb-2">{title}</h3>
-                <p className="font-body text-slate-500 text-sm leading-relaxed">{description}</p>
+                <p className="font-body text-slate-600 text-sm leading-relaxed">{description}</p>
               </div>
             ))}
           </div>
@@ -209,7 +209,7 @@ export default function LandingPage() {
             >
               Plain-English reports, not consultant jargon
             </h2>
-            <p className="font-body text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="font-body text-slate-600 max-w-2xl mx-auto leading-relaxed">
               Every scan produces a letter grade and a prioritized list of issues with
               step-by-step fix instructions anyone on your team can follow.
             </p>
@@ -217,7 +217,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <p className="font-body text-sm font-semibold text-slate-500 uppercase tracking-widest mb-3">
+              <p className="font-body text-sm font-semibold text-slate-600 uppercase tracking-widest mb-3">
                 Compliance Dashboard
               </p>
               <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
@@ -229,7 +229,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div>
-              <p className="font-body text-sm font-semibold text-slate-500 uppercase tracking-widest mb-3">
+              <p className="font-body text-sm font-semibold text-slate-600 uppercase tracking-widest mb-3">
                 Site Report Card
               </p>
               <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
@@ -270,9 +270,9 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Scan</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$99</span>
-                <span className="font-body text-slate-500 text-sm">/yr</span>
+                <span className="font-body text-slate-600 text-sm">/yr</span>
               </div>
-              <p className="font-body text-slate-500 text-sm mb-6">
+              <p className="font-body text-slate-600 text-sm mb-6">
                 Automated monthly scans and baseline compliance reporting.
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
@@ -320,9 +320,9 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Comply</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$299</span>
-                <span className="font-body text-slate-500 text-sm">/yr</span>
+                <span className="font-body text-slate-600 text-sm">/yr</span>
               </div>
-              <p className="font-body text-slate-500 text-sm mb-6">
+              <p className="font-body text-slate-600 text-sm mb-6">
                 Weekly scans, fix tracking, and official compliance documentation.
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
@@ -363,9 +363,9 @@ export default function LandingPage() {
               <h3 className="font-display text-display-sm text-ink mb-1">Fix</h3>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="font-display text-display-lg text-ink">$599</span>
-                <span className="font-body text-slate-500 text-sm">/yr</span>
+                <span className="font-body text-slate-600 text-sm">/yr</span>
               </div>
-              <p className="font-body text-slate-500 text-sm mb-6">
+              <p className="font-body text-slate-600 text-sm mb-6">
                 Unlimited scanning with CMS-specific fix instructions.
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">

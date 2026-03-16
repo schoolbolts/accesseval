@@ -21,7 +21,7 @@ export default function BlogIndexPage() {
             <h1 className="font-display text-display-lg text-ink mb-4">
               Accessibility Insights for Schools &amp; Governments
             </h1>
-            <p className="font-body text-lg text-slate-500 max-w-2xl leading-relaxed">
+            <p className="font-body text-lg text-slate-600 max-w-2xl leading-relaxed">
               Practical guides on ADA compliance, WCAG standards, and keeping your public-facing
               websites accessible to everyone.
             </p>
@@ -38,7 +38,7 @@ export default function BlogIndexPage() {
                   <div className="flex items-center gap-3 mb-3">
                     <time
                       dateTime={post.date}
-                      className="font-body text-sm text-slate-500"
+                      className="font-body text-sm text-slate-600"
                     >
                       {new Date(post.date + 'T00:00:00').toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -49,7 +49,7 @@ export default function BlogIndexPage() {
                     <span className="text-slate-300" aria-hidden="true">
                       &middot;
                     </span>
-                    <span className="font-body text-sm text-slate-500">
+                    <span className="font-body text-sm text-slate-600">
                       {post.readTime} read
                     </span>
                   </div>
@@ -58,7 +58,7 @@ export default function BlogIndexPage() {
                     {post.title}
                   </h2>
 
-                  <p className="font-body text-slate-500 leading-relaxed mb-4">
+                  <p className="font-body text-slate-600 leading-relaxed mb-4">
                     {post.description}
                   </p>
 
@@ -66,7 +66,7 @@ export default function BlogIndexPage() {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-xs font-body font-medium text-slate-500"
+                        className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-xs font-body font-medium text-slate-600"
                       >
                         {tag}
                       </span>

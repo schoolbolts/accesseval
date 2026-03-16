@@ -64,7 +64,7 @@ export default function AdminPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="p-8 font-body text-slate-500">Loading...</div>;
+  if (loading) return <div className="p-8 font-body text-slate-600">Loading...</div>;
   if (error) return <div className="p-8 font-body text-red-500">{error}</div>;
   if (!stats) return null;
 
@@ -87,19 +87,19 @@ export default function AdminPage() {
           <h2 className="font-display font-semibold text-ink mb-4">Free Scan Funnel</h2>
           <div className="space-y-3 font-body text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-500">Free scans (all time)</span>
+              <span className="text-slate-600">Free scans (all time)</span>
               <span className="font-semibold text-ink">{stats.funnel.freeScansTotal}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Free scans (7d)</span>
+              <span className="text-slate-600">Free scans (7d)</span>
               <span className="font-semibold text-ink">{stats.funnel.freeScansWeek}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Emails captured</span>
+              <span className="text-slate-600">Emails captured</span>
               <span className="font-semibold text-ink">{stats.funnel.freeScansWithEmail}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Email capture rate</span>
+              <span className="text-slate-600">Email capture rate</span>
               <span className="font-semibold text-emerald-600">{stats.funnel.emailCaptureRate}%</span>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function AdminPage() {
           <div className="space-y-3 font-body text-sm">
             {Object.entries(stats.planDistribution).map(([plan, count]) => (
               <div key={plan} className="flex justify-between">
-                <span className="text-slate-500 capitalize">{plan}</span>
+                <span className="text-slate-600 capitalize">{plan}</span>
                 <span className="font-semibold text-ink">{count}</span>
               </div>
             ))}
@@ -123,7 +123,7 @@ export default function AdminPage() {
               <div className="space-y-2 font-body text-sm">
                 {stats.utmSources.map((u) => (
                   <div key={u.source} className="flex justify-between">
-                    <span className="text-slate-500">{u.source}</span>
+                    <span className="text-slate-600">{u.source}</span>
                     <span className="font-semibold text-ink">{u.count}</span>
                   </div>
                 ))}
@@ -151,7 +151,7 @@ export default function AdminPage() {
               {stats.recentSignups.map((s, i) => (
                 <tr key={i} className="border-b border-slate-50">
                   <td className="py-2.5 px-3 text-ink">{s.name}</td>
-                  <td className="py-2.5 px-3 text-slate-500">{s.email}</td>
+                  <td className="py-2.5 px-3 text-slate-600">{s.email}</td>
                   <td className="py-2.5 px-3">
                     <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-semibold capitalize">
                       {s.plan}
@@ -184,9 +184,9 @@ export default function AdminPage() {
               {stats.recentFreeScans.map((f, i) => (
                 <tr key={i} className="border-b border-slate-50">
                   <td className="py-2.5 px-3 text-ink truncate max-w-[200px]">{f.url}</td>
-                  <td className="py-2.5 px-3 text-slate-500">{f.email || '—'}</td>
+                  <td className="py-2.5 px-3 text-slate-600">{f.email || '—'}</td>
                   <td className="py-2.5 px-3 font-semibold">{f.grade || '—'}</td>
-                  <td className="py-2.5 px-3 text-slate-500">{f.score ?? '—'}</td>
+                  <td className="py-2.5 px-3 text-slate-600">{f.score ?? '—'}</td>
                   <td className="py-2.5 px-3 text-slate-400">{new Date(f.date).toLocaleDateString()}</td>
                 </tr>
               ))}

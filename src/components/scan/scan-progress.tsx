@@ -280,7 +280,7 @@ function ScanProcessingAnimation() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="font-mono text-xs text-slate-500">{check.id}</span>
+                <span className="font-mono text-xs text-slate-600">{check.id}</span>
                 <span className="font-body text-sm text-slate-600 truncate">{check.name}</span>
               </div>
             );
@@ -288,7 +288,7 @@ function ScanProcessingAnimation() {
         </div>
 
         {/* Estimate */}
-        <p className="font-body text-sm text-slate-500 mt-8">
+        <p className="font-body text-sm text-slate-600 mt-8">
           Usually takes 30–90 seconds
         </p>
       </div>
@@ -424,10 +424,10 @@ export function ScanProgress({ token }: { token: string }) {
             {displayUrl}
           </a>
         ) : (
-          <p className="font-body text-slate-500 text-base">Free single-page scan</p>
+          <p className="font-body text-slate-600 text-base">Free single-page scan</p>
         )}
         {detectedCms && detectedCms !== 'unknown' && (
-          <p className="font-body text-sm text-slate-500 mt-1">
+          <p className="font-body text-sm text-slate-600 mt-1">
             Detected CMS: <span className="font-medium text-slate-600">{CMS_LABELS[detectedCms] ?? detectedCms}</span>
             {' — fix instructions tailored to your platform'}
           </p>
@@ -442,7 +442,7 @@ export function ScanProgress({ token }: { token: string }) {
             {grade !== undefined && score !== undefined ? (
               <GradeCircle grade={grade} score={score} />
             ) : (
-              <p className="font-body text-slate-500">No score available</p>
+              <p className="font-body text-slate-600">No score available</p>
             )}
           </div>
 
@@ -490,7 +490,7 @@ export function ScanProgress({ token }: { token: string }) {
           <h2 className="font-display text-display-sm text-ink mb-1">
             Top issues
           </h2>
-          <p className="font-body text-base text-slate-500 mb-5">
+          <p className="font-body text-base text-slate-600 mb-5">
             Showing {issues.length} of {totalIssues}
           </p>
           <ul className="space-y-4">
@@ -525,7 +525,7 @@ export function ScanProgress({ token }: { token: string }) {
 
                 <p className="font-body text-base text-slate-600 leading-relaxed">{issue.fixInstructions}</p>
                 {issue.wcagCriteria && (
-                  <p className="font-mono text-sm text-slate-500 mt-3">
+                  <p className="font-mono text-sm text-slate-600 mt-3">
                     WCAG: {issue.wcagCriteria}
                   </p>
                 )}
@@ -573,7 +573,7 @@ export function ScanProgress({ token }: { token: string }) {
                   disabled={emailLoading}
                   aria-describedby={emailError ? 'gate-email-error' : undefined}
                   aria-invalid={emailError ? true : undefined}
-                  className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder:text-slate-500 font-body text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+                  className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder:text-slate-400 font-body text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none"
                 />
                 {emailError && (
                   <p id="gate-email-error" role="alert" className="mt-1 font-body text-xs text-red-400">

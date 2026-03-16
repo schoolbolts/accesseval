@@ -124,7 +124,7 @@ export default function StatementForm() {
             <p className="text-sm font-body text-red-600 mt-2">{error}</p>
           )}
           {publicUrl && (
-            <p className="text-sm font-body text-slate-500 pt-1">
+            <p className="text-sm font-body text-slate-600 pt-1">
               Public URL:{' '}
               <a href={publicUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 hover:underline">
                 {publicUrl}

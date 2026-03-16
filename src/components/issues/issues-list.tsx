@@ -116,7 +116,7 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                       {issue.page.title || issue.page.url}
                     </p>
                     {issue.wcagCriteria && (
-                      <span className="inline-block mt-1.5 text-xs font-body text-slate-500 bg-slate-100 rounded-lg px-2 py-0.5">
+                      <span className="inline-block mt-1.5 text-xs font-body text-slate-600 bg-slate-100 rounded-lg px-2 py-0.5">
                         WCAG {issue.wcagCriteria}
                       </span>
                     )}

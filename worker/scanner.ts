@@ -99,6 +99,30 @@ export async function scanPage(
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
     await page.waitForTimeout(2000);
 
+    // Handle Cloudflare challenge — Playwright is a real browser so the
+    // JS challenge auto-resolves; we just need to wait for the redirect.
+    const pageTitle = await page.title();
+    if (
+      pageTitle.includes('Just a moment') ||
+      pageTitle.includes('Attention Required') ||
+      pageTitle.includes('Checking your browser')
+    ) {
+      console.log(`[scanner] Cloudflare challenge detected on ${url}, waiting for resolution...`);
+      try {
+        // Wait up to 15s for Cloudflare to finish its challenge and redirect
+        await page.waitForFunction(
+          () => !document.title.includes('Just a moment') &&
+                !document.title.includes('Attention Required') &&
+                !document.title.includes('Checking your browser'),
+          { timeout: 15_000 }
+        );
+        // Give the real page time to settle after redirect
+        await page.waitForTimeout(2000);
+      } catch {
+        console.warn(`[scanner] Cloudflare challenge did not resolve for ${url}`);
+      }
+    }
+
     const title = await page.title();
 
     // Auto-detect CMS if not specified

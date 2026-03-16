@@ -32,7 +32,7 @@ export default async function HistoryPage() {
       <div className="p-8 max-w-6xl">
         <h1 className="page-title mb-1">Scan History</h1>
         <div className="card p-8 text-center mt-6">
-          <p className="text-slate-500 text-sm">No site configured yet.</p>
+          <p className="text-slate-600 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ export default async function HistoryPage() {
                 <td className="px-5 py-3.5 text-center font-body text-amber-600 font-medium">
                   {scan.minorCount}
                 </td>
-                <td className="px-5 py-3.5 text-center font-body text-slate-500 capitalize">
+                <td className="px-5 py-3.5 text-center font-body text-slate-600 capitalize">
                   {scan.triggeredBy}
                 </td>
                 <td className="px-5 py-3.5 text-center">

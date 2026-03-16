@@ -45,7 +45,7 @@ export default async function DashboardPage() {
       <div className="p-8 max-w-6xl">
         <h1 className="page-title mb-1">Dashboard</h1>
         <div className="card p-10 text-center mt-6">
-          <p className="text-slate-500 mb-2">No site configured yet.</p>
+          <p className="text-slate-600 mb-2">No site configured yet.</p>
           <p className="text-sm text-slate-400">Set up your site in Settings to start scanning.</p>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default async function DashboardPage() {
               </svg>
             </div>
             <h2 className="font-display text-display-sm text-ink mb-2">Run your first scan</h2>
-            <p className="font-body text-sm text-slate-500 max-w-sm mx-auto mb-6">
+            <p className="font-body text-sm text-slate-600 max-w-sm mx-auto mb-6">
               We&apos;ll crawl your site and check every page for accessibility issues against WCAG 2.2 AA standards.
             </p>
             <div className="flex justify-center">
@@ -151,7 +151,7 @@ export default async function DashboardPage() {
               {latestScan.score != null && (
                 <p className="font-display text-display-sm text-ink">{latestScan.score}<span className="text-slate-400">/100</span></p>
               )}
-              <p className="font-body text-xs text-slate-500 mt-1 uppercase tracking-wider font-medium">Accessibility Score</p>
+              <p className="font-body text-xs text-slate-600 mt-1 uppercase tracking-wider font-medium">Accessibility Score</p>
             </div>
 
             {/* Issue counts — 3 stat cards */}
@@ -176,11 +176,11 @@ export default async function DashboardPage() {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="card-padded animate-fade-up stagger-5">
                 <div className="text-2xl font-display font-bold text-ink">{openIssues}</div>
-                <div className="text-sm font-body text-slate-500 mt-1">Open issues</div>
+                <div className="text-sm font-body text-slate-600 mt-1">Open issues</div>
               </div>
               <div className="card-padded animate-fade-up stagger-6">
                 <div className="text-2xl font-display font-bold text-emerald-600">{fixedThisMonth}</div>
-                <div className="text-sm font-body text-slate-500 mt-1">Fixed this month</div>
+                <div className="text-sm font-body text-slate-600 mt-1">Fixed this month</div>
               </div>
             </div>
           )}

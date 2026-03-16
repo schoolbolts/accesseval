@@ -1344,7 +1344,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <h2 className="font-display text-display-sm text-ink mb-2">
                 Check your website&rsquo;s accessibility
               </h2>
-              <p className="font-body text-slate-500 mb-6 max-w-md mx-auto">
+              <p className="font-body text-slate-600 mb-6 max-w-md mx-auto">
                 Run a free scan and get a plain-English report of every accessibility issue — no
                 account required.
               </p>

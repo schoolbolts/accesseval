@@ -32,7 +32,7 @@ export default async function PdfsPage() {
             </svg>
           </div>
           <p className="font-body font-semibold text-ink mb-2">PDF Inventory requires the Comply or Fix plan.</p>
-          <p className="text-sm font-body text-slate-500">
+          <p className="text-sm font-body text-slate-600">
             Upgrade your plan to see all PDFs found during scans and track which ones need review.
           </p>
         </div>
@@ -47,7 +47,7 @@ export default async function PdfsPage() {
       <div className="p-8 max-w-5xl">
         <h1 className="page-title mb-1">PDF Inventory</h1>
         <div className="card p-8 text-center mt-6">
-          <p className="text-slate-500 text-sm">No site configured yet.</p>
+          <p className="text-slate-600 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ export default async function PdfsPage() {
       <div className="p-8 max-w-5xl">
         <h1 className="page-title mb-1">PDF Inventory</h1>
         <div className="card p-8 text-center mt-6">
-          <p className="text-slate-500 text-sm">No completed scans yet.</p>
+          <p className="text-slate-600 text-sm">No completed scans yet.</p>
         </div>
       </div>
     );
@@ -121,7 +121,7 @@ export default async function PdfsPage() {
                     {pdf.filename}
                   </a>
                 </td>
-                <td className="px-5 py-3.5 font-body text-slate-500 truncate max-w-xs">
+                <td className="px-5 py-3.5 font-body text-slate-600 truncate max-w-xs">
                   {pdf.page.title || pdf.page.url}
                 </td>
                 <td className="px-5 py-3.5 text-right font-body text-slate-600 font-mono text-xs">

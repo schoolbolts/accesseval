@@ -78,13 +78,13 @@ export default function AdminFreeScansPage() {
                   {scans.map((scan) => (
                     <tr key={scan.id} className="border-b border-slate-50 hover:bg-slate-50/50">
                       <td className="py-2.5 px-4 text-ink truncate max-w-[200px]">{scan.url}</td>
-                      <td className="py-2.5 px-3 text-slate-500">{scan.email || '—'}</td>
+                      <td className="py-2.5 px-3 text-slate-600">{scan.email || '—'}</td>
                       <td className="py-2.5 px-3 text-center">
                         {scan.email ? (
                           scan.converted ? (
                             <span className="inline-block px-2 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700">Yes</span>
                           ) : (
-                            <span className="inline-block px-2 py-0.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-500">No</span>
+                            <span className="inline-block px-2 py-0.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-600">No</span>
                           )
                         ) : '—'}
                       </td>

@@ -69,7 +69,7 @@ export default function AdminFunnelPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-body font-medium transition-colors ${
               days === d
                 ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
             {d}d
@@ -91,7 +91,7 @@ export default function AdminFunnelPage() {
             <div key={step.label}>
               <div className="flex items-baseline justify-between mb-1">
                 <span className="font-body text-sm font-medium text-ink">{step.label}</span>
-                <span className="font-body text-sm text-slate-500">
+                <span className="font-body text-sm text-slate-600">
                   {step.count}{' '}
                   <span className="text-slate-400 text-xs">({step.pct}%)</span>
                 </span>
@@ -155,13 +155,13 @@ export default function AdminFunnelPage() {
                   <td className="py-2.5 px-4">
                     <span
                       className={`inline-block px-2 py-0.5 rounded-md text-xs font-semibold ${
-                        eventColor[ev.event] || 'bg-slate-100 text-slate-500'
+                        eventColor[ev.event] || 'bg-slate-100 text-slate-600'
                       }`}
                     >
                       {eventLabel[ev.event] || ev.event}
                     </span>
                   </td>
-                  <td className="py-2.5 px-4 text-slate-500 font-mono text-xs">
+                  <td className="py-2.5 px-4 text-slate-600 font-mono text-xs">
                     <a
                       href={`/scan/${ev.token}`}
                       target="_blank"

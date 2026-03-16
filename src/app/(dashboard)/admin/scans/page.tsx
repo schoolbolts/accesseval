@@ -99,7 +99,7 @@ export default function AdminScansPage() {
                       <td className="py-2.5 px-4 text-ink truncate max-w-[180px]">
                         {scan.siteUrl.replace(/^https?:\/\//, '')}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-500 truncate max-w-[140px]">{scan.orgName}</td>
+                      <td className="py-2.5 px-3 text-slate-600 truncate max-w-[140px]">{scan.orgName}</td>
                       <td className="py-2.5 px-3">
                         <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${statusColors[scan.status] || 'bg-slate-100 text-slate-600'}`}>
                           {scan.status}

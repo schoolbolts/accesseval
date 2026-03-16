@@ -125,7 +125,7 @@ function SignupPage() {
       <div className="w-full max-w-lg animate-fade-up">
         <div className="text-center mb-8">
           <h1 className="font-display text-display-md text-ink">Get started with AccessEval</h1>
-          <p className="font-body text-slate-500 mt-2">
+          <p className="font-body text-slate-600 mt-2">
             Set up your account in under a minute. Payment is handled securely through Stripe.
           </p>
         </div>
@@ -264,21 +264,21 @@ function SignupPage() {
                               plan === p.id ? 'text-emerald-600' : 'text-ink'
                             }`}
                           >
-                            {p.price}<span className="font-body text-xs font-normal text-slate-500">{p.period}</span>
+                            {p.price}<span className="font-body text-xs font-normal text-slate-600">{p.period}</span>
                           </span>
                         </span>
-                        <span className="block font-body text-xs text-slate-500 mt-0.5 mb-2">
+                        <span className="block font-body text-xs text-slate-600 mt-0.5 mb-2">
                           {p.tagline}
                         </span>
                         <span className="flex flex-wrap gap-x-3 gap-y-1">
                           {p.features.map((f) => (
-                            <span key={f} className="flex items-center gap-1 font-body text-[11px] text-slate-500">
+                            <span key={f} className="flex items-center gap-1 font-body text-[11px] text-slate-600">
                               <svg
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
-                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-500' : 'text-slate-500'}`}
+                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-500' : 'text-slate-600'}`}
                               >
                                 <path
                                   fillRule="evenodd"
@@ -354,12 +354,12 @@ function SignupPage() {
               )}
             </button>
 
-            <p className="text-center font-body text-xs text-slate-500">
+            <p className="text-center font-body text-xs text-slate-600">
               You&apos;ll complete payment on the next screen via Stripe. Cancel anytime.
             </p>
           </form>
 
-          <p className="mt-6 text-center font-body text-sm text-slate-500">
+          <p className="mt-6 text-center font-body text-sm text-slate-600">
             Already have an account?{' '}
             <Link href="/login" className="text-emerald-600 hover:text-emerald-700 font-semibold">
               Log in
@@ -382,7 +382,7 @@ function SignupPage() {
               <button
                 type="button"
                 onClick={() => setShowCompare(false)}
-                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-500 hover:text-slate-600"
+                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-600 hover:text-slate-600"
                 aria-label="Close comparison"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -395,10 +395,10 @@ function SignupPage() {
               <table className="w-full font-body text-sm">
                 <thead>
                   <tr className="border-b border-slate-100 bg-slate-50/50">
-                    <th className="text-left py-3 px-4 font-medium text-slate-500 w-[40%]">Feature</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600 w-[40%]">Feature</th>
                     <th className="text-center py-3 px-3 font-semibold text-ink">
                       <div>Scan</div>
-                      <div className="text-xs font-normal text-slate-500">$99/yr</div>
+                      <div className="text-xs font-normal text-slate-600">$99/yr</div>
                     </th>
                     <th className="text-center py-3 px-3 font-semibold text-emerald-600">
                       <div>Comply</div>
@@ -406,7 +406,7 @@ function SignupPage() {
                     </th>
                     <th className="text-center py-3 px-3 font-semibold text-ink">
                       <div>Fix</div>
-                      <div className="text-xs font-normal text-slate-500">$599/yr</div>
+                      <div className="text-xs font-normal text-slate-600">$599/yr</div>
                     </th>
                   </tr>
                 </thead>
@@ -449,7 +449,7 @@ function SignupPage() {
             </div>
 
             <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
-              <p className="font-body text-xs text-slate-500">All plans include WCAG 2.2 AA scanning</p>
+              <p className="font-body text-xs text-slate-600">All plans include WCAG 2.2 AA scanning</p>
               <button
                 type="button"
                 onClick={() => setShowCompare(false)}

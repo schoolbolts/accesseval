@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md animate-fade-up">
         <div className="text-center mb-8">
           <h1 className="font-display text-display-md text-ink">Reset your password</h1>
-          <p className="font-body text-slate-500 mt-2">
+          <p className="font-body text-slate-600 mt-2">
             Enter your email and we&apos;ll send you a reset link.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
                 {loading ? 'Sending…' : 'Send reset link'}
               </button>
 
-              <p className="text-center font-body text-sm text-slate-500">
+              <p className="text-center font-body text-sm text-slate-600">
                 Remember your password?{' '}
                 <Link href="/login" className="text-emerald-600 hover:text-emerald-700 font-semibold">
                   Sign in

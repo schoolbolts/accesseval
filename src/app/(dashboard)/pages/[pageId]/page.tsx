@@ -121,7 +121,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       <div className="mb-6 animate-fade-up">
         <Link
           href="/pages"
-          className="text-sm font-body text-slate-500 hover:text-emerald-600 transition-colors inline-flex items-center gap-1.5"
+          className="text-sm font-body text-slate-600 hover:text-emerald-600 transition-colors inline-flex items-center gap-1.5"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
             <path fillRule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clipRule="evenodd" />
@@ -162,15 +162,15 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       <div className="grid grid-cols-3 gap-3 mb-6 animate-fade-up stagger-2">
         <div className="card-padded text-center">
           <div className="text-xl font-display font-bold text-red-500">{counts.critical}</div>
-          <div className="text-xs font-body text-slate-500 mt-0.5">Critical</div>
+          <div className="text-xs font-body text-slate-600 mt-0.5">Critical</div>
         </div>
         <div className="card-padded text-center">
           <div className="text-xl font-display font-bold text-orange-500">{counts.major}</div>
-          <div className="text-xs font-body text-slate-500 mt-0.5">Major</div>
+          <div className="text-xs font-body text-slate-600 mt-0.5">Major</div>
         </div>
         <div className="card-padded text-center">
           <div className="text-xl font-display font-bold text-amber-500">{counts.minor}</div>
-          <div className="text-xs font-body text-slate-500 mt-0.5">Minor</div>
+          <div className="text-xs font-body text-slate-600 mt-0.5">Minor</div>
         </div>
       </div>
 
@@ -182,7 +182,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
               <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
             </svg>
           </div>
-          <p className="text-sm font-body text-slate-500">No accessibility issues found on this page.</p>
+          <p className="text-sm font-body text-slate-600">No accessibility issues found on this page.</p>
         </div>
       ) : (
         <div className="space-y-4 animate-fade-up stagger-3">
@@ -201,7 +201,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                     <div className="flex items-center gap-3 mt-1.5">
                       <span className="text-xs font-mono text-slate-400">{ruleId}</span>
                       {group.wcagCriteria && (
-                        <span className="text-xs font-body text-slate-500 bg-slate-100 rounded-lg px-2 py-0.5">
+                        <span className="text-xs font-body text-slate-600 bg-slate-100 rounded-lg px-2 py-0.5">
                           WCAG {group.wcagCriteria}
                         </span>
                       )}
@@ -220,13 +220,13 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                     {/* Fix instructions (show once on first instance) */}
                     {idx === 0 && issue.fixInstructions && (
                       <div className="mb-4">
-                        <h4 className="text-xs font-body font-medium text-slate-500 uppercase tracking-wider mb-1.5">How to fix</h4>
+                        <h4 className="text-xs font-body font-medium text-slate-600 uppercase tracking-wider mb-1.5">How to fix</h4>
                         <p className="text-sm font-body text-slate-700 leading-relaxed">{issue.fixInstructions}</p>
                       </div>
                     )}
                     {idx === 0 && showCms && issue.fixInstructionsCms && (
                       <div className="mb-4">
-                        <h4 className="text-xs font-body font-medium text-slate-500 uppercase tracking-wider mb-1.5">CMS instructions</h4>
+                        <h4 className="text-xs font-body font-medium text-slate-600 uppercase tracking-wider mb-1.5">CMS instructions</h4>
                         <p className="text-sm font-body text-slate-700 leading-relaxed">{issue.fixInstructionsCms}</p>
                       </div>
                     )}

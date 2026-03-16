@@ -23,11 +23,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'URL must use http or https' }, { status: 400 });
   }
 
-  // Get IP address
-  const ip =
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    req.headers.get('x-real-ip') ||
-    '127.0.0.1';
+  // Get IP address — try multiple headers for various proxy setups
+  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  const realIp = req.headers.get('x-real-ip');
+  const cfIp = req.headers.get('cf-connecting-ip');
+  const ip = cfIp || forwarded || realIp || '127.0.0.1';
+
+  console.log(`[free-scan] IP detection: cf-connecting-ip=${cfIp}, x-forwarded-for=${forwarded}, x-real-ip=${realIp}, resolved=${ip}`);
 
   // Rate limit: 3 per IP per day
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -37,6 +39,8 @@ export async function POST(req: NextRequest) {
       createdAt: { gte: oneDayAgo },
     },
   });
+
+  console.log(`[free-scan] Rate limit check: ip=${ip}, recentScans=${recentScans}/3`);
 
   if (recentScans >= 3) {
     return NextResponse.json(

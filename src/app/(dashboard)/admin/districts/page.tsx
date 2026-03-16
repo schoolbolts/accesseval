@@ -147,10 +147,10 @@ export default function AdminDistrictsPage() {
                   {districts.map((d) => (
                     <tr key={d.id} className="border-b border-slate-50 hover:bg-slate-50/50">
                       <td className="py-2.5 px-4 text-ink font-medium truncate max-w-[200px]">{d.name}</td>
-                      <td className="py-2.5 px-3 text-slate-500 text-xs whitespace-nowrap">
+                      <td className="py-2.5 px-3 text-slate-600 text-xs whitespace-nowrap">
                         {d.city}{d.city && d.stateCode ? ', ' : ''}{d.stateCode}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-500 truncate max-w-[180px] text-xs">
+                      <td className="py-2.5 px-3 text-slate-600 truncate max-w-[180px] text-xs">
                         {d.website ? (
                           <a href={d.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
                             {d.website.replace(/^https?:\/\//, '')}

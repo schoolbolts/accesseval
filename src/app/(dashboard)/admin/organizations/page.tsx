@@ -113,13 +113,13 @@ export default function AdminOrganizationsPage() {
                       onClick={() => setExpanded(expanded === org.id ? null : org.id)}
                     >
                       <td className="py-2.5 px-4 font-medium text-ink">{org.name}</td>
-                      <td className="py-2.5 px-3 text-slate-500 truncate max-w-[180px]">{org.ownerEmail || '—'}</td>
+                      <td className="py-2.5 px-3 text-slate-600 truncate max-w-[180px]">{org.ownerEmail || '—'}</td>
                       <td className="py-2.5 px-3">
                         <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${planColors[org.plan] || ''}`}>
                           {org.plan}
                         </span>
                       </td>
-                      <td className={`py-2.5 px-3 text-xs font-semibold capitalize ${statusColors[org.planStatus] || 'text-slate-500'}`}>
+                      <td className={`py-2.5 px-3 text-xs font-semibold capitalize ${statusColors[org.planStatus] || 'text-slate-600'}`}>
                         {org.planStatus}
                       </td>
                       <td className="py-2.5 px-3 text-center text-slate-600">{org.siteCount}</td>

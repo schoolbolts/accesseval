@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-slate-500';
+  if (!grade) return 'text-slate-600';
   if (grade.startsWith('A')) return 'text-emerald-600';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
@@ -71,7 +71,7 @@ export default async function SchoolsIndexPage({
         <h1 className="font-display text-display-lg text-ink mb-3">
           School District Accessibility Reports
         </h1>
-        <p className="font-body text-slate-500 max-w-lg mx-auto">
+        <p className="font-body text-slate-600 max-w-lg mx-auto">
           {total.toLocaleString()} school districts{state ? ` in ${state.toUpperCase()}` : ' across the US'}.
           {scannedCount > 0 && ` ${scannedCount.toLocaleString()} scanned so far.`}
         </p>
@@ -85,7 +85,7 @@ export default async function SchoolsIndexPage({
             className={`px-3 py-1.5 text-xs font-body font-medium rounded-full transition-all ${
               !state
                 ? 'bg-emerald-600 text-white'
-                : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300'
+                : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
             }`}
           >
             All
@@ -97,7 +97,7 @@ export default async function SchoolsIndexPage({
               className={`px-3 py-1.5 text-xs font-body font-medium rounded-full transition-all ${
                 state?.toUpperCase() === s.stateCode
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
               }`}
             >
               {s.stateCode}
@@ -123,13 +123,13 @@ export default async function SchoolsIndexPage({
               <p className="font-body text-sm font-semibold text-ink truncate group-hover:text-emerald-600 transition-colors">
                 {d.name}
               </p>
-              <p className="font-body text-xs text-slate-500">
+              <p className="font-body text-xs text-slate-600">
                 {[d.city, d.stateCode].filter(Boolean).join(', ')}
               </p>
               {d.score !== null ? (
-                <p className="font-body text-xs text-slate-500 mt-0.5">Score: {d.score}/100</p>
+                <p className="font-body text-xs text-slate-600 mt-0.5">Score: {d.score}/100</p>
               ) : (
-                <p className="font-body text-xs text-slate-500 mt-0.5">Not yet scanned</p>
+                <p className="font-body text-xs text-slate-600 mt-0.5">Not yet scanned</p>
               )}
             </div>
           </Link>
@@ -147,7 +147,7 @@ export default async function SchoolsIndexPage({
               Previous
             </Link>
           )}
-          <span className="text-sm font-body text-slate-500 px-3">
+          <span className="text-sm font-body text-slate-600 px-3">
             Page {page} of {totalPages}
           </span>
           {page < totalPages && (

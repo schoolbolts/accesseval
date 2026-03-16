@@ -30,7 +30,7 @@ export default async function PagesPage() {
       <div className="p-8 max-w-5xl">
         <h1 className="page-title mb-1">Pages</h1>
         <div className="card p-8 text-center mt-6">
-          <p className="text-slate-500 text-sm">No site configured yet.</p>
+          <p className="text-slate-600 text-sm">No site configured yet.</p>
         </div>
       </div>
     );
@@ -47,7 +47,7 @@ export default async function PagesPage() {
       <div className="p-8 max-w-5xl">
         <h1 className="page-title mb-1">Pages</h1>
         <div className="card p-8 text-center mt-6">
-          <p className="text-slate-500 text-sm">No completed scans yet.</p>
+          <p className="text-slate-600 text-sm">No completed scans yet.</p>
         </div>
       </div>
     );

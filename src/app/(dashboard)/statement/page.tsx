@@ -28,7 +28,7 @@ export default async function StatementPage() {
             </svg>
           </div>
           <h2 className="font-display text-display-sm text-ink mb-2">Available on Comply</h2>
-          <p className="font-body text-sm text-slate-500 max-w-md mx-auto mb-6 leading-relaxed">
+          <p className="font-body text-sm text-slate-600 max-w-md mx-auto mb-6 leading-relaxed">
             Accessibility statements show your community that you take web accessibility seriously.
             Upgrade to the Comply plan to generate a public-facing statement that stays up to date with your latest scan results.
           </p>

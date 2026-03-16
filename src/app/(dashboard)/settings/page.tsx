@@ -93,7 +93,7 @@ export default function SettingsPage() {
       {/* Sites card */}
       <div className="card p-6 mb-5 animate-fade-up">
         <h2 className="font-body font-semibold text-ink mb-1">Your websites</h2>
-        <p className="text-sm font-body text-slate-500 mb-5">
+        <p className="text-sm font-body text-slate-600 mb-5">
           Set your CMS platform so we can generate platform-specific fix instructions.
         </p>
 
@@ -142,7 +142,7 @@ export default function SettingsPage() {
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-body font-semibold text-ink mb-1">Billing</h2>
-            <p className="text-sm font-body text-slate-500">
+            <p className="text-sm font-body text-slate-600">
               Manage your subscription, invoices, and payment method.
             </p>
           </div>
@@ -159,7 +159,7 @@ export default function SettingsPage() {
       {/* Team card */}
       <div className="card p-6 animate-fade-up stagger-2">
         <h2 className="font-body font-semibold text-ink mb-1">Team Members</h2>
-        <p className="text-sm font-body text-slate-500 mb-5">
+        <p className="text-sm font-body text-slate-600 mb-5">
           Invite colleagues to access this organization&apos;s dashboard.
         </p>
 
