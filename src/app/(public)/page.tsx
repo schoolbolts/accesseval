@@ -250,7 +250,7 @@ export default function LandingPage() {
         className="py-24 px-4 bg-surface bg-dot-pattern"
         aria-labelledby="pricing-heading"
       >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <p className="section-title mb-3">Transparent pricing</p>
             <h2
@@ -264,7 +264,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             {/* Scan tier */}
             <div className="card p-8 flex flex-col">
               <h3 className="font-display text-display-sm text-ink mb-1">Scan</h3>
@@ -282,21 +282,10 @@ export default function LandingPage() {
                   '2 on-demand scans/month',
                   'Letter grade + issue counts',
                   'WCAG 2.2 AA coverage',
-                  'PDF reports',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                        clipRule="evenodd"
-                      />
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                     </svg>
                     {feat}
                   </li>
@@ -327,27 +316,18 @@ export default function LandingPage() {
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
-                  'Up to 5 websites, 500 pages each',
+                  'Unlimited websites, up to 500 pages',
                   'Weekly automated scans',
                   '5 on-demand scans/month',
                   'Fix tracking dashboard',
                   'Accessibility statement generator',
                   'Team access (3 seats)',
                   'Email digest reports',
+                  'PO / invoice available',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                        clipRule="evenodd"
-                      />
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                     </svg>
                     {feat}
                   </li>
@@ -366,31 +346,22 @@ export default function LandingPage() {
                 <span className="font-body text-slate-600 text-sm">/yr</span>
               </div>
               <p className="font-body text-slate-600 text-sm mb-6">
-                Unlimited scanning with CMS-specific fix instructions.
+                AI-powered fix suggestions with CMS-specific instructions.
               </p>
               <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
                 {[
-                  'Up to 10 websites, 2,000 pages each',
+                  'Unlimited websites, up to 2,000 pages',
                   'Weekly automated scans',
                   'Unlimited on-demand scans',
+                  'AI-powered fix suggestions',
                   'CMS-specific fix instructions',
                   'Shared reports for IT vendors',
                   'Priority support + 10 team seats',
-                  'All Comply features',
+                  'PO / invoice available',
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2.5 text-slate-600">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                        clipRule="evenodd"
-                      />
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                     </svg>
                     {feat}
                   </li>
@@ -401,6 +372,41 @@ export default function LandingPage() {
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-sm text-emerald-700 border border-emerald-300 rounded-xl hover:bg-emerald-50 transition-colors"
               >
                 Get started
+              </a>
+            </div>
+
+            {/* Manage tier — Contact us placeholder */}
+            <div className="card p-8 flex flex-col border-2 border-dashed border-slate-200">
+              <h3 className="font-display text-display-sm text-ink mb-1">Manage</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="font-body text-slate-600 text-sm font-semibold">Contact us for pricing</span>
+              </div>
+              <p className="font-body text-slate-600 text-sm mb-6">
+                Hands-on remediation — we fix your site for you.
+              </p>
+              <ul className="space-y-3 mb-8 flex-1 text-sm font-body">
+                {[
+                  'Everything in Fix, plus:',
+                  '30-day remediation engagement',
+                  'CMS access + direct fixes',
+                  'PO / invoicing',
+                  'Dedicated support',
+                ].map((feat, i) => (
+                  <li key={feat} className={`flex items-start gap-2.5 ${i === 0 ? 'text-ink font-medium' : 'text-slate-600'}`}>
+                    {i > 0 && (
+                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5">
+                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="mailto:hello@accesseval.com?subject=Manage%20tier%20inquiry"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-sm text-slate-700 border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors"
+              >
+                Contact us
               </a>
             </div>
           </div>
