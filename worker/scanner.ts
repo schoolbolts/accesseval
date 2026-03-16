@@ -141,7 +141,14 @@ export async function scanPage(
       }
     }
 
+    // Detect if we're stuck on a bot protection page
     const title = await page.title();
+    const bodyText = await page.locator('body').innerText({ timeout: 3000 }).catch(() => '');
+    const botProtectionError = detectBotProtection(title, bodyText, url);
+    if (botProtectionError) {
+      await context.close();
+      return { url, title: '', issues: [], screenshotBuffer: null, detectedCms: cmsType, error: botProtectionError };
+    }
 
     // Auto-detect CMS if not specified
     let effectiveCms = cmsType;
@@ -255,4 +262,53 @@ function extractWcagCriteria(violation: { tags?: string[] }): string | null {
   const wcagTags = violation.tags.filter((t) => /^wcag\d/.test(t));
   if (wcagTags.length === 0) return null;
   return wcagTags.join(', ');
+}
+
+// ─── Bot protection detection ────────────────────────────────────────────────
+
+function detectBotProtection(title: string, bodyText: string, url: string): string | null {
+  const t = title.toLowerCase();
+  const b = bodyText.toLowerCase();
+
+  // Cloudflare
+  if (
+    t.includes('just a moment') ||
+    t.includes('attention required') ||
+    t.includes('checking your browser') ||
+    b.includes('verify you are human') ||
+    b.includes('enable javascript and cookies to continue') ||
+    (b.includes('cloudflare') && b.includes('ray id'))
+  ) {
+    console.warn(`[scanner] Bot protection blocked scan: Cloudflare on ${url}`);
+    return 'This website is protected by Cloudflare bot detection and blocked our scanner. This is common for sites with strict security settings.';
+  }
+
+  // Sucuri
+  if (b.includes('sucuri website firewall') || b.includes('access denied - sucuri')) {
+    console.warn(`[scanner] Bot protection blocked scan: Sucuri on ${url}`);
+    return 'This website is protected by Sucuri firewall and blocked our scanner.';
+  }
+
+  // Imperva / Incapsula
+  if (b.includes('incapsula') || b.includes('imperva') || t.includes('request unsuccessful')) {
+    console.warn(`[scanner] Bot protection blocked scan: Imperva on ${url}`);
+    return 'This website is protected by Imperva/Incapsula and blocked our scanner.';
+  }
+
+  // Akamai Bot Manager
+  if (b.includes('akamai') && (b.includes('access denied') || b.includes('reference#'))) {
+    console.warn(`[scanner] Bot protection blocked scan: Akamai on ${url}`);
+    return 'This website is protected by Akamai bot detection and blocked our scanner.';
+  }
+
+  // Generic access denied / 403-style pages
+  if (
+    (t.includes('access denied') || t.includes('403 forbidden')) &&
+    bodyText.length < 2000
+  ) {
+    console.warn(`[scanner] Bot protection blocked scan: Access denied on ${url}`);
+    return 'This website blocked our scanner. The site may have bot protection or IP-based restrictions.';
+  }
+
+  return null;
 }

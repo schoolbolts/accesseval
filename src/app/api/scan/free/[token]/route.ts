@@ -29,6 +29,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
   const issueLimit = hasEmail ? 5 : 3;
 
   const resultsJson = freeScan.resultsJson as {
+    error?: string;
     issues?: Array<{
       severity: string;
       description: string;
@@ -57,6 +58,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
     issues,
     totalIssues: allIssues.length,
     hasEmail,
+    scanError: resultsJson?.error ?? null,
     screenshotUrl: resultsJson?.screenshotUrl ?? null,
     narrative: resultsJson?.narrative ?? null,
     detectedCms: resultsJson?.detectedCms ?? null,

@@ -42,6 +42,7 @@ interface ScanResult {
   issues?: ScanIssue[];
   totalIssues?: number;
   hasEmail?: boolean;
+  scanError?: string | null;
   screenshotUrl?: string | null;
   narrative?: string | null;
   detectedCms?: string | null;
@@ -401,12 +402,35 @@ export function ScanProgress({ token }: { token: string }) {
     return <ScanProcessingAnimation />;
   }
 
-  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, screenshotUrl, narrative, detectedCms } =
+  const { url: scannedUrl, score, grade, criticalCount, majorCount, minorCount, issues, totalIssues, hasEmail, scanError, screenshotUrl, narrative, detectedCms } =
     result;
 
   const hasUnlockedEmail = hasEmail || emailSubmitted;
   const remainingIssues = (totalIssues ?? 0) - (issues?.length ?? 0);
   const displayUrl = scannedUrl?.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+  // Show friendly error when scan was blocked by bot protection
+  if (scanError) {
+    return (
+      <div className="max-w-2xl mx-auto py-20 px-4 text-center">
+        <div className="card-padded">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-amber-50 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-amber-500">
+              <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <h1 className="font-display text-display-sm text-ink mb-3">Scan couldn&apos;t complete</h1>
+          {displayUrl && (
+            <p className="font-body text-base text-slate-600 mb-4">{displayUrl}</p>
+          )}
+          <p className="font-body text-base text-slate-600 mb-6 leading-relaxed">{scanError}</p>
+          <a href="/" className="btn-primary inline-flex">
+            Try a different site
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6">
