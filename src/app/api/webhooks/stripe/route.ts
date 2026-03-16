@@ -127,6 +127,20 @@ export async function POST(req: NextRequest) {
         break;
       }
 
+      case 'invoice.paid': {
+        const invoice = event.data.object as import('stripe').Stripe.Invoice;
+        const customerId =
+          typeof invoice.customer === 'string' ? invoice.customer : invoice.customer?.id;
+        if (customerId) {
+          // Activate account when invoice is paid (PO/invoice payment path)
+          await prisma.organization.updateMany({
+            where: { stripeCustomerId: customerId, billingType: 'invoice' },
+            data: { planStatus: 'active' },
+          });
+        }
+        break;
+      }
+
       default:
         // Unhandled event type — ignore
         break;
