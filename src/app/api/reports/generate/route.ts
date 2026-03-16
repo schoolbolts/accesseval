@@ -64,6 +64,18 @@ export async function POST(_request: NextRequest) {
 
   const pdfCount = await prisma.pdfAsset.count({ where: { scanId: latestScan.id } });
 
+  // Collect unique WCAG criteria that have violations
+  const wcagSet = new Set<string>();
+  for (const issue of allIssues) {
+    if (issue.wcagCriteria && /^\d/.test(issue.wcagCriteria)) {
+      wcagSet.add(issue.wcagCriteria);
+    }
+  }
+  const wcagCriteriaWithIssues = Array.from(wcagSet);
+
+  // Entity type from accessibility statement (if exists)
+  const entityType = org.statement?.entityType as string | null;
+
   const scanDate = latestScan.completedAt
     ? latestScan.completedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     : null;
@@ -90,6 +102,8 @@ export async function POST(_request: NextRequest) {
       })),
       pdfCount,
       hasStatement: !!org.statement,
+      wcagCriteriaWithIssues,
+      entityType,
     })
   );
 
