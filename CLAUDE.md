@@ -53,14 +53,38 @@ npm run worker       # Start scan worker (separate process)
 
 Manage tier: "Contact us" placeholder (no self-serve yet).
 
+## Database & Migrations
+
+Prisma ORM manages the schema and migrations. The Dockerfile does NOT run migrations automatically.
+
+**When you change `prisma/schema.prisma`:**
+
+1. Generate a migration locally: `npx prisma migrate dev --name describe_change`
+2. Regenerate the client: `npx prisma generate`
+3. Commit the migration file in `prisma/migrations/`
+4. Deploy to production from local machine:
+   ```bash
+   source .env && DATABASE_URL="$PROD_DATABASE_URL" npx prisma migrate deploy
+   ```
+5. Push code and redeploy via Coolify
+
+**Local `.env`** has `DATABASE_URL` pointing to localhost and `PROD_DATABASE_URL` pointing to Neon.
+
+**Useful commands:**
+- `npx prisma studio` — browse data in a web UI
+- `npx prisma migrate status` — check which migrations have been applied
+- `npx prisma db pull` — pull schema from an existing database
+
 ## Deployment
 
 - **Hosting**: Coolify (self-hosted, NOT Vercel)
 - **Domain**: accesseval.com
+- **Database**: Neon (PostgreSQL), connection string in Coolify env vars as `DATABASE_URL`
+- **Reverse proxy**: Cloudflare DNS (proxy can be on or off; NextAuth cookies are configured to handle either)
 
 ## Environment Variables
 
-See `.env.example` for all required variables.
+See `.env.example` for all required variables. Local `.env` has both `DATABASE_URL` (localhost) and `PROD_DATABASE_URL` (Neon).
 
 ## Testing
 
