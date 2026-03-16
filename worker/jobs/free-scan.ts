@@ -56,7 +56,29 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
   const sortedIssues = [...scanResult.issues].sort(
     (a, b) => (severityOrder[a.severity] ?? 3) - (severityOrder[b.severity] ?? 3)
   );
-  const topIssues = sortedIssues.slice(0, MAX_ISSUES_IN_RESULTS).map((issue) => ({
+  const topIssuesRaw = sortedIssues.slice(0, MAX_ISSUES_IN_RESULTS);
+
+  // Upload element screenshots to R2
+  const elementScreenshotUrls: (string | null)[] = [];
+  for (let i = 0; i < topIssuesRaw.length; i++) {
+    const issue = topIssuesRaw[i];
+    if (issue.elementScreenshotBuffer) {
+      try {
+        const elUrl = await uploadScreenshot(
+          `free-scans/${freeScanId}/issue-${i}.webp`,
+          issue.elementScreenshotBuffer,
+        );
+        elementScreenshotUrls.push(elUrl);
+      } catch (err) {
+        console.warn(`[free-scan] ${freeScanId} element screenshot ${i} upload failed:`, err);
+        elementScreenshotUrls.push(null);
+      }
+    } else {
+      elementScreenshotUrls.push(null);
+    }
+  }
+
+  const topIssues = topIssuesRaw.map((issue, i) => ({
     axeRuleId: issue.axeRuleId,
     severity: issue.severity,
     description: issue.description,
@@ -64,7 +86,9 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
     fixInstructionsGeneric: issue.fixInstructions,
     fixInstructionsCms: issue.fixInstructionsCms,
     elementSelector: issue.elementSelector,
+    elementHtml: issue.elementHtml,
     wcagCriteria: issue.wcagCriteria,
+    elementScreenshotUrl: elementScreenshotUrls[i] ?? null,
   }));
 
   // Upload screenshot to R2 if available

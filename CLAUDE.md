@@ -48,6 +48,11 @@ npm run worker       # Start scan worker (separate process)
 | Frequency | Monthly | Weekly | Weekly |
 | On-demand | 2/mo | 5/mo | Unlimited |
 
+## Deployment
+
+- **Hosting**: Coolify (self-hosted, NOT Vercel)
+- **Domain**: accesseval.com
+
 ## Environment Variables
 
 See `.env.example` for all required variables.

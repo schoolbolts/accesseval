@@ -35,6 +35,8 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
       fixInstructions: string;
       fixInstructionsCms?: string | null;
       wcagCriteria?: string;
+      elementHtml?: string;
+      elementScreenshotUrl?: string | null;
     }>;
     screenshotUrl?: string | null;
     narrative?: string;

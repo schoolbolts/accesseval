@@ -19,6 +19,7 @@ export interface ScannedIssue {
   elementHtml: string;
   wcagCriteria: string | null;
   fingerprint: string;
+  elementScreenshotBuffer: Buffer | null;
 }
 
 export interface ScanPageResult {
@@ -143,7 +144,34 @@ export async function scanPage(
           elementHtml,
           wcagCriteria,
           fingerprint,
+          elementScreenshotBuffer: null,
         });
+      }
+    }
+
+    // Capture element-level screenshots for top issues (most severe first)
+    const severityRank: Record<string, number> = { critical: 0, major: 1, minor: 2 };
+    const sortedForScreenshots = [...issues].sort(
+      (a, b) => (severityRank[a.severity] ?? 3) - (severityRank[b.severity] ?? 3)
+    );
+    const screenshotTargets = sortedForScreenshots.slice(0, 5);
+
+    for (const issue of screenshotTargets) {
+      try {
+        const el = page.locator(issue.elementSelector).first();
+        const isVisible = await el.isVisible().catch(() => false);
+        if (isVisible) {
+          // Scroll into view and capture with padding
+          await el.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+          const shotData = await el.screenshot({
+            type: 'jpeg',
+            quality: 85,
+            timeout: 5000,
+          });
+          issue.elementScreenshotBuffer = Buffer.from(shotData);
+        }
+      } catch {
+        // Element may not be screenshottable — skip silently
       }
     }
 

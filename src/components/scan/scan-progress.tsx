@@ -27,6 +27,8 @@ interface ScanIssue {
   fixInstructions: string;
   fixInstructionsCms?: string | null;
   wcagCriteria?: string;
+  elementHtml?: string;
+  elementScreenshotUrl?: string | null;
 }
 
 interface ScanResult {
@@ -500,6 +502,27 @@ export function ScanProgress({ token }: { token: string }) {
                   </p>
                   <SeverityBadge severity={issue.severity} />
                 </div>
+
+                {/* Element screenshot */}
+                {issue.elementScreenshotUrl && (
+                  <div className="mb-4 rounded-lg overflow-hidden border border-slate-200 bg-slate-50 inline-block max-w-full">
+                    <img
+                      src={issue.elementScreenshotUrl}
+                      alt={`Problem element: ${issue.description}`}
+                      className="max-w-full h-auto max-h-48 object-contain"
+                    />
+                  </div>
+                )}
+
+                {/* Element HTML context */}
+                {issue.elementHtml && (
+                  <div className="mb-4 rounded-lg bg-slate-900 p-3 overflow-x-auto">
+                    <code className="font-mono text-sm text-slate-300 whitespace-pre-wrap break-all">
+                      {issue.elementHtml}
+                    </code>
+                  </div>
+                )}
+
                 <p className="font-body text-base text-slate-600 leading-relaxed">{issue.fixInstructions}</p>
                 {issue.wcagCriteria && (
                   <p className="font-mono text-sm text-slate-500 mt-3">
