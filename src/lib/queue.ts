@@ -29,6 +29,15 @@ export const freeScanQueue = new Queue('free-scans', {
   },
 });
 
+export const aiEnrichmentQueue = new Queue('ai-enrichment', {
+  connection: connectionOptions,
+  defaultJobOptions: {
+    attempts: 1,
+    removeOnComplete: 100,
+    removeOnFail: 50,
+  },
+});
+
 export function createWorker<T>(
   queueName: string,
   processor: Processor<T>,
