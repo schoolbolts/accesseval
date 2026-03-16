@@ -22,7 +22,7 @@ interface ScoreTrendProps {
 export default function ScoreTrend({ data }: ScoreTrendProps) {
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-48 text-slate-400 text-sm font-body">
+      <div className="flex items-center justify-center h-48 text-slate-600 text-sm font-body">
         No score history yet.
       </div>
     );

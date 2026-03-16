@@ -17,7 +17,7 @@ export default async function PublicStatementPage({ params }: { params: { slug: 
             className="prose-ae"
             dangerouslySetInnerHTML={{ __html: org.statement.statementHtml }}
           />
-          <p className="font-body text-xs text-slate-400 mt-8 pt-6 border-t border-slate-100">
+          <p className="font-body text-xs text-slate-600 mt-8 pt-6 border-t border-slate-100">
             Last updated:{' '}
             {org.statement.lastGeneratedAt.toLocaleDateString('en-US', {
               year: 'numeric',

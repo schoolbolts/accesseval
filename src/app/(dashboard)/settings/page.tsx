@@ -98,7 +98,7 @@ export default function SettingsPage() {
         </p>
 
         {sites.length === 0 ? (
-          <p className="text-sm font-body text-slate-400">No sites configured.</p>
+          <p className="text-sm font-body text-slate-600">No sites configured.</p>
         ) : (
           <div className="space-y-3">
             {sites.map((site) => (
@@ -110,7 +110,7 @@ export default function SettingsPage() {
                   <p className="text-sm font-body font-medium text-ink truncate">
                     {site.url.replace(/^https?:\/\//, '')}
                   </p>
-                  <p className="text-xs font-body text-slate-400">
+                  <p className="text-xs font-body text-slate-600">
                     Up to {site.maxPages.toLocaleString()} pages
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export default function SettingsPage() {
                     ))}
                   </select>
                   {savingCms === site.id && (
-                    <span className="text-xs font-body text-slate-400">Saving...</span>
+                    <span className="text-xs font-body text-slate-600">Saving...</span>
                   )}
                 </div>
               </div>

@@ -23,7 +23,7 @@ export default function AdminFunnelPage() {
   }, [days]);
 
   if (loading || !data) {
-    return <p className="text-sm font-body text-slate-400">Loading funnel data...</p>;
+    return <p className="text-sm font-body text-slate-600">Loading funnel data...</p>;
   }
 
   const { totals, rates, recent } = data;
@@ -81,7 +81,7 @@ export default function AdminFunnelPage() {
       <div className="card p-6 mb-6">
         <h2 className="font-display text-display-sm text-ink mb-6">
           Free Scan Funnel
-          <span className="font-body text-sm text-slate-400 font-normal ml-2">
+          <span className="font-body text-sm text-slate-600 font-normal ml-2">
             Last {days} days
           </span>
         </h2>
@@ -93,7 +93,7 @@ export default function AdminFunnelPage() {
                 <span className="font-body text-sm font-medium text-ink">{step.label}</span>
                 <span className="font-body text-sm text-slate-600">
                   {step.count}{' '}
-                  <span className="text-slate-400 text-xs">({step.pct}%)</span>
+                  <span className="text-slate-600 text-xs">({step.pct}%)</span>
                 </span>
               </div>
               <div className="h-8 bg-slate-100 rounded-lg overflow-hidden">
@@ -112,19 +112,19 @@ export default function AdminFunnelPage() {
             <div className="font-display text-2xl font-bold text-emerald-600">
               {rates.emailRate}%
             </div>
-            <div className="font-body text-xs text-slate-400 mt-1">View → Email</div>
+            <div className="font-body text-xs text-slate-600 mt-1">View → Email</div>
           </div>
           <div className="text-center">
             <div className="font-display text-2xl font-bold text-amber-600">
               {rates.signupRate}%
             </div>
-            <div className="font-body text-xs text-slate-400 mt-1">Email → Signup</div>
+            <div className="font-body text-xs text-slate-600 mt-1">Email → Signup</div>
           </div>
           <div className="text-center">
             <div className="font-display text-2xl font-bold text-red-600">
               {rates.overallRate}%
             </div>
-            <div className="font-body text-xs text-slate-400 mt-1">View → Signup</div>
+            <div className="font-body text-xs text-slate-600 mt-1">View → Signup</div>
           </div>
         </div>
       </div>
@@ -138,13 +138,13 @@ export default function AdminFunnelPage() {
           <table className="w-full text-sm font-body">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50/50">
-                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-600 uppercase tracking-widest">
                   Event
                 </th>
-                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-600 uppercase tracking-widest">
                   Token
                 </th>
-                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-600 uppercase tracking-widest">
                   Time
                 </th>
               </tr>
@@ -171,7 +171,7 @@ export default function AdminFunnelPage() {
                       {ev.token.slice(0, 20)}...
                     </a>
                   </td>
-                  <td className="py-2.5 px-4 text-slate-400 text-xs whitespace-nowrap">
+                  <td className="py-2.5 px-4 text-slate-600 text-xs whitespace-nowrap">
                     {new Date(ev.createdAt).toLocaleDateString()}{' '}
                     {new Date(ev.createdAt).toLocaleTimeString([], {
                       hour: '2-digit',
@@ -182,7 +182,7 @@ export default function AdminFunnelPage() {
               ))}
               {recent.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="py-8 text-center text-slate-400">
+                  <td colSpan={3} className="py-8 text-center text-slate-600">
                     No funnel events yet. Events will appear as users view scan results.
                   </td>
                 </tr>

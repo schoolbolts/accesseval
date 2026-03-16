@@ -41,9 +41,9 @@ interface Stats {
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
     <div className="card p-5">
-      <p className="text-xs font-body font-semibold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+      <p className="text-xs font-body font-semibold text-slate-600 uppercase tracking-widest mb-1">{label}</p>
       <p className="text-2xl font-display font-bold text-ink">{value}</p>
-      {sub && <p className="text-xs font-body text-slate-400 mt-1">{sub}</p>}
+      {sub && <p className="text-xs font-body text-slate-600 mt-1">{sub}</p>}
     </div>
   );
 }
@@ -117,7 +117,7 @@ export default function AdminPage() {
           </div>
           {stats.utmSources.length > 0 && (
             <>
-              <h3 className="font-body font-semibold text-slate-400 text-xs uppercase tracking-widest mt-6 mb-3">
+              <h3 className="font-body font-semibold text-slate-600 text-xs uppercase tracking-widest mt-6 mb-3">
                 Top UTM Sources
               </h3>
               <div className="space-y-2 font-body text-sm">
@@ -140,11 +140,11 @@ export default function AdminPage() {
           <table className="w-full text-sm font-body">
             <thead>
               <tr className="border-b border-slate-100">
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Org</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Email</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Plan</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">UTM</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Date</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Org</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Email</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Plan</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">UTM</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Date</th>
               </tr>
             </thead>
             <tbody>
@@ -157,8 +157,8 @@ export default function AdminPage() {
                       {s.plan}
                     </span>
                   </td>
-                  <td className="py-2.5 px-3 text-slate-400 text-xs">{s.utm || '—'}</td>
-                  <td className="py-2.5 px-3 text-slate-400">{new Date(s.date).toLocaleDateString()}</td>
+                  <td className="py-2.5 px-3 text-slate-600 text-xs">{s.utm || '—'}</td>
+                  <td className="py-2.5 px-3 text-slate-600">{new Date(s.date).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -173,11 +173,11 @@ export default function AdminPage() {
           <table className="w-full text-sm font-body">
             <thead>
               <tr className="border-b border-slate-100">
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">URL</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Email</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Grade</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Score</th>
-                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Date</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">URL</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Email</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Grade</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Score</th>
+                <th className="text-left py-2 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Date</th>
               </tr>
             </thead>
             <tbody>
@@ -187,7 +187,7 @@ export default function AdminPage() {
                   <td className="py-2.5 px-3 text-slate-600">{f.email || '—'}</td>
                   <td className="py-2.5 px-3 font-semibold">{f.grade || '—'}</td>
                   <td className="py-2.5 px-3 text-slate-600">{f.score ?? '—'}</td>
-                  <td className="py-2.5 px-3 text-slate-400">{new Date(f.date).toLocaleDateString()}</td>
+                  <td className="py-2.5 px-3 text-slate-600">{new Date(f.date).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>

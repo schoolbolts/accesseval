@@ -98,7 +98,7 @@ export default function StatementForm() {
           </div>
           <div>
             <label className="label">
-              Contact phone <span className="text-slate-400 font-normal">(optional)</span>
+              Contact phone <span className="text-slate-600 font-normal">(optional)</span>
             </label>
             <input
               type="tel"
@@ -149,7 +149,7 @@ export default function StatementForm() {
                 <line x1="7" y1="13" x2="11" y2="13" />
               </svg>
             </div>
-            <p className="text-sm font-body text-slate-400">Fill in the form and click Generate to preview.</p>
+            <p className="text-sm font-body text-slate-600">Fill in the form and click Generate to preview.</p>
           </div>
         )}
       </div>

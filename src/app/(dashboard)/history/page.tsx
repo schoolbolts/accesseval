@@ -6,7 +6,7 @@ import { getActiveSite } from '@/lib/active-site';
 import TriggerScanButton from '@/components/history/trigger-scan-button';
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-slate-400';
+  if (!grade) return 'text-slate-600';
   if (grade === 'A') return 'text-emerald-600';
   if (grade === 'B') return 'text-blue-600';
   if (grade === 'C') return 'text-amber-600';
@@ -129,7 +129,7 @@ export default async function HistoryPage() {
           </tbody>
         </table>
         {scans.length === 0 && (
-          <div className="p-8 text-center text-slate-400 text-sm font-body">No scans yet.</div>
+          <div className="p-8 text-center text-slate-600 text-sm font-body">No scans yet.</div>
         )}
       </div>
     </div>

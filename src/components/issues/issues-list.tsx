@@ -78,7 +78,7 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
             {f.label}
           </button>
         ))}
-        <label className="ml-auto flex items-center gap-1.5 text-sm font-body text-slate-400 self-center cursor-pointer">
+        <label className="ml-auto flex items-center gap-1.5 text-sm font-body text-slate-600 self-center cursor-pointer">
           <input
             type="checkbox"
             checked={showResolved}
@@ -87,12 +87,12 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
           />
           Show resolved
         </label>
-        <span className="text-sm font-body text-slate-400 self-center">{visible.length} shown</span>
+        <span className="text-sm font-body text-slate-600 self-center">{visible.length} shown</span>
       </div>
 
       {visible.length === 0 ? (
         <div className="card p-8 text-center">
-          <p className="text-slate-400 text-sm font-body">No issues to display.</p>
+          <p className="text-slate-600 text-sm font-body">No issues to display.</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -112,7 +112,7 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                     <p className="text-sm font-body font-medium text-ink leading-snug">
                       {issue.description}
                     </p>
-                    <p className="text-xs font-body text-slate-400 mt-0.5 truncate">
+                    <p className="text-xs font-body text-slate-600 mt-0.5 truncate">
                       {issue.page.title || issue.page.url}
                     </p>
                     {issue.wcagCriteria && (
@@ -124,12 +124,12 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                   <div className="flex items-center gap-2 shrink-0">
                     {(statusMap[issue.id] === 'fixed' || statusMap[issue.id] === 'ignored') ? (
                       <>
-                        <span className={`text-xs font-body font-medium ${statusMap[issue.id] === 'fixed' ? 'text-emerald-600' : 'text-slate-400'}`}>
+                        <span className={`text-xs font-body font-medium ${statusMap[issue.id] === 'fixed' ? 'text-emerald-600' : 'text-slate-600'}`}>
                           {statusMap[issue.id] === 'fixed' ? 'Fixed' : 'Ignored'}
                         </span>
                         <button
                           onClick={() => updateIssueStatus(issue.id, 'open')}
-                          className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
+                          className="text-xs font-body text-slate-600 hover:text-slate-600 transition-colors"
                         >
                           Reopen
                         </button>
@@ -144,7 +144,7 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                         </button>
                         <button
                           onClick={() => updateIssueStatus(issue.id, 'ignored')}
-                          className="text-xs font-body text-slate-400 hover:text-slate-600 transition-colors"
+                          className="text-xs font-body text-slate-600 hover:text-slate-600 transition-colors"
                         >
                           Ignore
                         </button>
@@ -202,7 +202,7 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                       </a>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs font-body text-slate-400">
+                    <div className="flex items-center gap-4 text-xs font-body text-slate-600">
                       <span>Rule: <span className="font-mono">{issue.axeRuleId}</span></span>
                     </div>
                   </div>

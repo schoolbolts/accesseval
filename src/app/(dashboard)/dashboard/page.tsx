@@ -12,7 +12,7 @@ const TriggerScanButton = dynamic(() => import('@/components/history/trigger-sca
 const ActiveScanBanner = dynamic(() => import('@/components/dashboard/active-scan-banner'), { ssr: false });
 
 function gradeColor(grade: string | null) {
-  if (!grade) return 'text-slate-400';
+  if (!grade) return 'text-slate-600';
   if (grade.startsWith('A')) return 'text-emerald-600';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
@@ -46,7 +46,7 @@ export default async function DashboardPage() {
         <h1 className="page-title mb-1">Dashboard</h1>
         <div className="card p-10 text-center mt-6">
           <p className="text-slate-600 mb-2">No site configured yet.</p>
-          <p className="text-sm text-slate-400">Set up your site in Settings to start scanning.</p>
+          <p className="text-sm text-slate-600">Set up your site in Settings to start scanning.</p>
         </div>
       </div>
     );
@@ -149,7 +149,7 @@ export default async function DashboardPage() {
                 </span>
               </div>
               {latestScan.score != null && (
-                <p className="font-display text-display-sm text-ink">{latestScan.score}<span className="text-slate-400">/100</span></p>
+                <p className="font-display text-display-sm text-ink">{latestScan.score}<span className="text-slate-600">/100</span></p>
               )}
               <p className="font-body text-xs text-slate-600 mt-1 uppercase tracking-wider font-medium">Accessibility Score</p>
             </div>
@@ -226,21 +226,21 @@ export default async function DashboardPage() {
             <h2 className="section-title mb-4">Last Scan</h2>
             <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
-                <dt className="text-xs font-body text-slate-400 mb-1">Status</dt>
+                <dt className="text-xs font-body text-slate-600 mb-1">Status</dt>
                 <dd className="text-sm font-body font-medium text-ink capitalize">{latestScan.status}</dd>
               </div>
               <div>
-                <dt className="text-xs font-body text-slate-400 mb-1">Pages scanned</dt>
+                <dt className="text-xs font-body text-slate-600 mb-1">Pages scanned</dt>
                 <dd className="text-sm font-body font-medium text-ink">
                   {latestScan.pagesScanned ?? 0} / {latestScan.pagesFound ?? 0}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs font-body text-slate-400 mb-1">Trigger</dt>
+                <dt className="text-xs font-body text-slate-600 mb-1">Trigger</dt>
                 <dd className="text-sm font-body font-medium text-ink capitalize">{latestScan.triggeredBy}</dd>
               </div>
               <div>
-                <dt className="text-xs font-body text-slate-400 mb-1">Completed</dt>
+                <dt className="text-xs font-body text-slate-600 mb-1">Completed</dt>
                 <dd className="text-sm font-body font-medium text-ink">
                   {latestScan.completedAt
                     ? new Date(latestScan.completedAt).toLocaleDateString('en-US', {

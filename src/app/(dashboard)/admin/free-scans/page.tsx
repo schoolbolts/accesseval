@@ -51,11 +51,11 @@ export default function AdminFreeScansPage() {
           />
           With email only
         </label>
-        <span className="text-sm font-body text-slate-400 ml-auto">{total} free scans</span>
+        <span className="text-sm font-body text-slate-600 ml-auto">{total} free scans</span>
       </div>
 
       {loading ? (
-        <p className="text-sm font-body text-slate-400">Loading...</p>
+        <p className="text-sm font-body text-slate-600">Loading...</p>
       ) : (
         <>
           <div className="card overflow-hidden">
@@ -63,15 +63,15 @@ export default function AdminFreeScansPage() {
               <table className="w-full text-sm font-body">
                 <thead>
                   <tr className="border-b border-slate-100 bg-slate-50/50">
-                    <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">URL</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Email</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Converted</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Grade</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Score</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Issues</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">IP</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Date</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Link</th>
+                    <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-600 uppercase tracking-widest">URL</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Email</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Converted</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Grade</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Score</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Issues</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">IP</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Date</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Link</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -95,10 +95,10 @@ export default function AdminFreeScansPage() {
                         {' / '}
                         <span className="text-amber-500">{scan.issues.major}</span>
                         {' / '}
-                        <span className="text-slate-400">{scan.issues.minor}</span>
+                        <span className="text-slate-600">{scan.issues.minor}</span>
                       </td>
-                      <td className="py-2.5 px-3 text-slate-400 text-xs font-mono">{scan.ipAddress}</td>
-                      <td className="py-2.5 px-3 text-slate-400 text-xs whitespace-nowrap">
+                      <td className="py-2.5 px-3 text-slate-600 text-xs font-mono">{scan.ipAddress}</td>
+                      <td className="py-2.5 px-3 text-slate-600 text-xs whitespace-nowrap">
                         {new Date(scan.createdAt).toLocaleDateString()}{' '}
                         {new Date(scan.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </td>
@@ -122,7 +122,7 @@ export default function AdminFreeScansPage() {
           {pages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-4">
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-secondary py-1.5 px-3 text-xs disabled:opacity-30">Prev</button>
-              <span className="text-sm font-body text-slate-400">Page {page} of {pages}</span>
+              <span className="text-sm font-body text-slate-600">Page {page} of {pages}</span>
               <button onClick={() => setPage((p) => Math.min(pages, p + 1))} disabled={page === pages} className="btn-secondary py-1.5 px-3 text-xs disabled:opacity-30">Next</button>
             </div>
           )}

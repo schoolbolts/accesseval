@@ -135,7 +135,7 @@ export default async function PdfsPage() {
           </tbody>
         </table>
         {pdfs.length === 0 && (
-          <div className="p-8 text-center text-slate-400 text-sm font-body">No PDFs found in this scan.</div>
+          <div className="p-8 text-center text-slate-600 text-sm font-body">No PDFs found in this scan.</div>
         )}
       </div>
     </div>

@@ -1282,7 +1282,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Back link */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 font-body text-sm text-slate-400 hover:text-emerald-600 transition-colors mb-10"
+            className="inline-flex items-center gap-1.5 font-body text-sm text-slate-600 hover:text-emerald-600 transition-colors mb-10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -1315,7 +1315,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             <h1 className="font-display text-display-lg text-ink mb-4">{post.title}</h1>
 
-            <div className="flex items-center gap-3 font-body text-sm text-slate-400">
+            <div className="flex items-center gap-3 font-body text-sm text-slate-600">
               <span>{post.author}</span>
               <span aria-hidden="true">&middot;</span>
               <time dateTime={post.date}>{formattedDate}</time>

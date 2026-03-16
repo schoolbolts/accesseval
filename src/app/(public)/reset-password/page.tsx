@@ -113,7 +113,7 @@ function ResetPasswordContent() {
                   {PASSWORD_RULES.map((rule) => {
                     const pass = password.length > 0 && rule.test(password);
                     return (
-                      <li key={rule.label} className={`text-xs font-body flex items-center gap-1.5 ${pass ? 'text-emerald-600' : 'text-slate-400'}`}>
+                      <li key={rule.label} className={`text-xs font-body flex items-center gap-1.5 ${pass ? 'text-emerald-600' : 'text-slate-600'}`}>
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
                           {pass ? <polyline points="2 6 5 9 10 3" strokeLinecap="round" strokeLinejoin="round" /> : <circle cx="6" cy="6" r="1" fill="currentColor" stroke="none" />}
                         </svg>

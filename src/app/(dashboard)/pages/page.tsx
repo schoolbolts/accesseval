@@ -6,7 +6,7 @@ import { prisma } from '@/lib/db';
 import { getActiveSite } from '@/lib/active-site';
 
 function scoreColor(score: number | null) {
-  if (score == null) return 'text-slate-400';
+  if (score == null) return 'text-slate-600';
   if (score >= 90) return 'text-emerald-600';
   if (score >= 70) return 'text-blue-600';
   if (score >= 50) return 'text-amber-600';
@@ -101,7 +101,7 @@ export default async function PagesPage() {
                     <div className="font-body font-medium text-ink truncate max-w-sm group-hover:text-emerald-600 transition-colors">
                       {page.title || new URL(page.url).pathname || '/'}
                     </div>
-                    <div className="text-xs font-body text-slate-400 truncate max-w-sm mt-0.5">{page.url}</div>
+                    <div className="text-xs font-body text-slate-600 truncate max-w-sm mt-0.5">{page.url}</div>
                   </Link>
                 </td>
                 <td className="px-5 py-3.5 text-center">
@@ -124,7 +124,7 @@ export default async function PagesPage() {
           </tbody>
         </table>
         {pages.length === 0 && (
-          <div className="p-8 text-center text-slate-400 text-sm font-body">No pages found.</div>
+          <div className="p-8 text-center text-slate-600 text-sm font-body">No pages found.</div>
         )}
       </div>
     </div>

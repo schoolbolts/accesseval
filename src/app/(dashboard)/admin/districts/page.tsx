@@ -70,23 +70,23 @@ export default function AdminDistrictsPage() {
       {summary && (
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-6">
           <div className="card p-3 text-center">
-            <p className="text-[10px] font-body font-semibold text-slate-400 uppercase tracking-widest">Scanned</p>
+            <p className="text-[10px] font-body font-semibold text-slate-600 uppercase tracking-widest">Scanned</p>
             <p className="text-lg font-display font-bold text-ink">{summary.totalScanned.toLocaleString()}</p>
           </div>
           <div className="card p-3 text-center">
-            <p className="text-[10px] font-body font-semibold text-slate-400 uppercase tracking-widest">Unscanned</p>
-            <p className="text-lg font-display font-bold text-slate-400">{summary.totalUnscanned.toLocaleString()}</p>
+            <p className="text-[10px] font-body font-semibold text-slate-600 uppercase tracking-widest">Unscanned</p>
+            <p className="text-lg font-display font-bold text-slate-600">{summary.totalUnscanned.toLocaleString()}</p>
           </div>
           {['A', 'B', 'C', 'D', 'F'].map((g) => (
             <div key={g} className="card p-3 text-center">
-              <p className="text-[10px] font-body font-semibold text-slate-400 uppercase tracking-widest">Grade {g}</p>
+              <p className="text-[10px] font-body font-semibold text-slate-600 uppercase tracking-widest">Grade {g}</p>
               <p className={`text-lg font-display font-bold ${gradeColors[g] || 'text-ink'}`}>
                 {summary.grades[g]?.toLocaleString() || 0}
               </p>
             </div>
           ))}
           <div className="card p-3 text-center">
-            <p className="text-[10px] font-body font-semibold text-slate-400 uppercase tracking-widest">Total</p>
+            <p className="text-[10px] font-body font-semibold text-slate-600 uppercase tracking-widest">Total</p>
             <p className="text-lg font-display font-bold text-ink">{total.toLocaleString()}</p>
           </div>
         </div>
@@ -121,11 +121,11 @@ export default function AdminDistrictsPage() {
             <option key={g} value={g}>Grade {g}</option>
           ))}
         </select>
-        <span className="text-sm font-body text-slate-400 ml-auto">{total.toLocaleString()} districts</span>
+        <span className="text-sm font-body text-slate-600 ml-auto">{total.toLocaleString()} districts</span>
       </div>
 
       {loading ? (
-        <p className="text-sm font-body text-slate-400">Loading...</p>
+        <p className="text-sm font-body text-slate-600">Loading...</p>
       ) : (
         <>
           <div className="card overflow-hidden">
@@ -133,14 +133,14 @@ export default function AdminDistrictsPage() {
               <table className="w-full text-sm font-body">
                 <thead>
                   <tr className="border-b border-slate-100 bg-slate-50/50">
-                    <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">District</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Location</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Website</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Grade</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Score</th>
-                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Issues</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Scanned</th>
-                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">Page</th>
+                    <th className="text-left py-2.5 px-4 text-xs font-semibold text-slate-600 uppercase tracking-widest">District</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Location</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Website</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Grade</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Score</th>
+                    <th className="text-center py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Issues</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Scanned</th>
+                    <th className="text-left py-2.5 px-3 text-xs font-semibold text-slate-600 uppercase tracking-widest">Page</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -168,11 +168,11 @@ export default function AdminDistrictsPage() {
                             {' / '}
                             <span className="text-amber-500">{d.majorCount}</span>
                             {' / '}
-                            <span className="text-slate-400">{d.minorCount}</span>
+                            <span className="text-slate-600">{d.minorCount}</span>
                           </>
                         ) : '—'}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-400 text-xs">
+                      <td className="py-2.5 px-3 text-slate-600 text-xs">
                         {d.lastScannedAt ? new Date(d.lastScannedAt).toLocaleDateString() : 'Not scanned'}
                       </td>
                       <td className="py-2.5 px-3">
@@ -195,7 +195,7 @@ export default function AdminDistrictsPage() {
           {pages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-4">
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-secondary py-1.5 px-3 text-xs disabled:opacity-30">Prev</button>
-              <span className="text-sm font-body text-slate-400">Page {page} of {pages}</span>
+              <span className="text-sm font-body text-slate-600">Page {page} of {pages}</span>
               <button onClick={() => setPage((p) => Math.min(pages, p + 1))} disabled={page === pages} className="btn-secondary py-1.5 px-3 text-xs disabled:opacity-30">Next</button>
             </div>
           )}

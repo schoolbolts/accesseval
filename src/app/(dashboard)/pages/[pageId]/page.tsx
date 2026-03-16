@@ -16,7 +16,7 @@ function severityBadge(severity: string) {
 }
 
 function scoreColor(score: number | null) {
-  if (score == null) return 'text-slate-400';
+  if (score == null) return 'text-slate-600';
   if (score >= 90) return 'text-emerald-600';
   if (score >= 70) return 'text-blue-600';
   if (score >= 50) return 'text-amber-600';
@@ -143,7 +143,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
             href={page.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-body text-slate-400 hover:text-emerald-600 transition-colors truncate block mt-1"
+            className="text-sm font-body text-slate-600 hover:text-emerald-600 transition-colors truncate block mt-1"
           >
             {page.url}
           </a>
@@ -151,7 +151,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
             <span className={`font-display font-bold text-lg ${scoreColor(page.pageScore)}`}>
               {score}/100
             </span>
-            <span className="text-sm font-body text-slate-400">
+            <span className="text-sm font-body text-slate-600">
               {issues.length} issue{issues.length !== 1 ? 's' : ''} across {groups.length} type{groups.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -199,13 +199,13 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                       {group.description}
                     </p>
                     <div className="flex items-center gap-3 mt-1.5">
-                      <span className="text-xs font-mono text-slate-400">{ruleId}</span>
+                      <span className="text-xs font-mono text-slate-600">{ruleId}</span>
                       {group.wcagCriteria && (
                         <span className="text-xs font-body text-slate-600 bg-slate-100 rounded-lg px-2 py-0.5">
                           WCAG {group.wcagCriteria}
                         </span>
                       )}
-                      <span className="text-xs font-body text-slate-400">
+                      <span className="text-xs font-body text-slate-600">
                         {group.instances.length} instance{group.instances.length !== 1 ? 's' : ''}
                       </span>
                     </div>
@@ -233,14 +233,14 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
 
                     <div className="space-y-2">
                       <div>
-                        <h4 className="text-xs font-body font-medium text-slate-400 mb-1">Element</h4>
+                        <h4 className="text-xs font-body font-medium text-slate-600 mb-1">Element</h4>
                         <code className="block text-xs font-mono bg-white border border-slate-200 rounded-lg px-3 py-2 text-slate-600 overflow-x-auto">
                           {issue.elementSelector}
                         </code>
                       </div>
                       {issue.elementHtml && (
                         <div>
-                          <h4 className="text-xs font-body font-medium text-slate-400 mb-1">HTML</h4>
+                          <h4 className="text-xs font-body font-medium text-slate-600 mb-1">HTML</h4>
                           <code className="block text-xs font-mono bg-white border border-slate-200 rounded-lg px-3 py-2 text-slate-600 overflow-x-auto whitespace-pre-wrap break-all">
                             {issue.elementHtml}
                           </code>
