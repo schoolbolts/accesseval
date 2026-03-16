@@ -88,7 +88,7 @@ export async function processAiEnrichment(data: AiEnrichmentJobData): Promise<vo
               elementHtml: representative.elementHtml,
               wcagCriteria: representative.wcagCriteria,
               pageUrl: representative.page.url,
-              cmsType: representative.scan.site.cmsType,
+              cmsType: String(representative.scan.site.cmsType),
             });
 
             if (suggestion) {
