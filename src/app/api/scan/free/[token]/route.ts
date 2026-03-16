@@ -38,6 +38,7 @@ export async function GET(_req: NextRequest, { params }: RouteContext) {
       wcagCriteria?: string;
       elementHtml?: string;
       elementScreenshotUrl?: string | null;
+      aiFixSuggestion?: string | null;
     }>;
     screenshotUrl?: string | null;
     narrative?: string;

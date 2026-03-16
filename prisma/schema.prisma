@@ -235,11 +235,15 @@ model Issue {
   screenshotPath     String?       @map("screenshot_path")
   wcagCriteria       String?       @map("wcag_criteria")
   fingerprint        String
+  aiFixSuggestion    String?   @map("ai_fix_suggestion")
+  aiFixModel         String?   @map("ai_fix_model")
+  aiFixGeneratedAt   DateTime? @map("ai_fix_generated_at")
   createdAt          DateTime      @default(now()) @map("created_at")
 
   scan Scan @relation(fields: [scanId], references: [id])
   page Page @relation(fields: [pageId], references: [id])
 
+  @@index([fingerprint])
   @@map("issues")
 }
 

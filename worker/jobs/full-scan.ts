@@ -7,6 +7,9 @@ import { scoreScanResults } from '../scorer';
 import { computeIssueDiff } from '../differ';
 import { notifyScanComplete } from '../notifier';
 import { generateScanSummary } from '../../src/lib/ai-summary';
+import { aiEnrichmentQueue } from '../../src/lib/queue';
+import { canUseFeature } from '../../src/lib/plan-limits';
+import type { PlanName } from '../../src/lib/plan-limits';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -383,6 +386,15 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
     }
   } catch (err) {
     console.warn(`[full-scan] ${scanId} AI summary failed:`, err);
+  }
+
+  // ─── Phase 5c: Queue AI fix suggestion enrichment (Fix tier only) ────────
+
+  if (canUseFeature(completedScan.site.organization.plan as PlanName, 'aiFixSuggestions')) {
+    console.log(`[full-scan] ${scanId} queuing AI fix enrichment`);
+    await aiEnrichmentQueue.add('ai-enrichment', { scanId }, {
+      jobId: `ai-enrichment-${scanId}`,
+    });
   }
 
   // ─── Phase 6: Screenshot cleanup ─────────────────────────────────────────

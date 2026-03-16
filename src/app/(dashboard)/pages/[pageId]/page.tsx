@@ -50,6 +50,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
 
   const plan = session.user.plan as PlanName;
   const showCms = canUseFeature(plan, 'cmsFixInstructions');
+  const showAiSuggestions = canUseFeature(plan, 'aiFixSuggestions');
 
   const page = await prisma.page.findUnique({
     where: { id: pageId },
@@ -77,6 +78,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       elementSelector: true,
       elementHtml: true,
       wcagCriteria: true,
+      aiFixSuggestion: true,
     },
   });
 
@@ -228,6 +230,14 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                       <div className="mb-4">
                         <h4 className="text-xs font-body font-medium text-slate-600 uppercase tracking-wider mb-1.5">CMS instructions</h4>
                         <p className="text-sm font-body text-slate-700 leading-relaxed">{issue.fixInstructionsCms}</p>
+                      </div>
+                    )}
+                    {idx === 0 && showAiSuggestions && issue.aiFixSuggestion && (
+                      <div className="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl px-4 py-3 mb-4">
+                        <h4 className="text-xs font-body font-medium text-emerald-800 uppercase tracking-wider mb-1.5">Suggested fix</h4>
+                        <p className="text-sm font-body text-emerald-900 leading-relaxed">
+                          {issue.aiFixSuggestion}
+                        </p>
                       </div>
                     )}
 

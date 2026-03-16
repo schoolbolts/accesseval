@@ -3,6 +3,7 @@ import { createBrowser, scanPage } from '../scanner';
 import { scoreScanResults } from '../scorer';
 import { uploadScreenshot } from '../../src/lib/r2';
 import { generateFreeScanSummary } from '../../src/lib/ai-summary';
+import { generateFixSuggestion } from '../../src/lib/ai-fix';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -118,6 +119,27 @@ export async function processFreeScan(data: FreeScanJobData): Promise<void> {
     });
   } catch (err) {
     console.warn(`[free-scan] ${freeScanId} narrative generation failed:`, err);
+  }
+
+  // Generate AI fix suggestions for each top issue (inline, not queued)
+  const cmsType = scanResult.detectedCms ?? 'unknown';
+  for (let i = 0; i < topIssues.length; i++) {
+    try {
+      const issue = topIssues[i];
+      const { suggestion } = await generateFixSuggestion({
+        axeRuleId: issue.axeRuleId,
+        description: issue.description,
+        elementHtml: issue.elementHtml,
+        wcagCriteria: issue.wcagCriteria ?? null,
+        pageUrl: url,
+        cmsType,
+      });
+      if (suggestion) {
+        (topIssues[i] as Record<string, unknown>).aiFixSuggestion = suggestion;
+      }
+    } catch (err) {
+      console.warn(`[free-scan] ${freeScanId} AI fix suggestion ${i} failed:`, err);
+    }
   }
 
   await prisma.freeScan.update({
