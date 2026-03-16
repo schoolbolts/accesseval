@@ -35,6 +35,14 @@ export function contrastRatioFromHex(hex1: string, hex2: string): number {
   return Math.round(contrastRatio(l1, l2) * 100) / 100;
 }
 
+export function hexToHsl(hex: string): [number, number, number] {
+  return rgbToHsl(...hexToRgb(hex));
+}
+
+export function hslToHex(h: number, s: number, l: number): string {
+  return rgbToHex(...hslToRgb(h, s, l));
+}
+
 function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
