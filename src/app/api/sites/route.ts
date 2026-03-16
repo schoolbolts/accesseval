@@ -22,13 +22,29 @@ export async function GET() {
       scanFrequency: true,
       maxPages: true,
       createdAt: true,
+      scans: {
+        where: { status: 'completed' },
+        orderBy: { completedAt: 'desc' },
+        take: 1,
+        select: { pagesScanned: true },
+      },
     },
   });
 
-  const cookieStore = await cookies();
-  const activeSiteId = cookieStore.get(ACTIVE_SITE_COOKIE)?.value ?? sites[0]?.id ?? null;
+  const sitesWithUsage = sites.map((s) => ({
+    id: s.id,
+    url: s.url,
+    cmsType: s.cmsType,
+    scanFrequency: s.scanFrequency,
+    maxPages: s.maxPages,
+    createdAt: s.createdAt,
+    pagesUsed: s.scans[0]?.pagesScanned ?? 0,
+  }));
 
-  return NextResponse.json({ sites, activeSiteId });
+  const cookieStore = await cookies();
+  const activeSiteId = cookieStore.get(ACTIVE_SITE_COOKIE)?.value ?? sitesWithUsage[0]?.id ?? null;
+
+  return NextResponse.json({ sites: sitesWithUsage, activeSiteId });
 }
 
 /** PATCH /api/sites — update a site (e.g., CMS type) */

@@ -18,6 +18,7 @@ interface SiteInfo {
   url: string;
   cmsType: string;
   maxPages: number;
+  pagesUsed: number;
 }
 
 export default function SettingsPage() {
@@ -111,7 +112,7 @@ export default function SettingsPage() {
                     {site.url.replace(/^https?:\/\//, '')}
                   </p>
                   <p className="text-xs font-body text-slate-600">
-                    Up to {site.maxPages.toLocaleString()} pages
+                    {site.pagesUsed.toLocaleString()} / {site.maxPages.toLocaleString()} pages used
                   </p>
                 </div>
                 <div className="shrink-0 flex items-center gap-2">
