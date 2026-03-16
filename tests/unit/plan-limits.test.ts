@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { canUseFeature, getMaxPages, getOnDemandLimit, getTeamMemberLimit } from '../../src/lib/plan-limits';
+import { canUseFeature, getMaxPages, getOnDemandLimit, getTeamMemberLimit, getMaxSites } from '../../src/lib/plan-limits';
 
 describe('canUseFeature', () => {
   it('scan tier cannot use issue tracking', () => {
@@ -25,6 +25,31 @@ describe('canUseFeature', () => {
   it('fix tier can use CMS fix instructions', () => {
     expect(canUseFeature('fix', 'cmsFixInstructions')).toBe(true);
   });
+
+  // New feature flag tests
+  it('scan tier cannot use AI fix suggestions', () => {
+    expect(canUseFeature('scan', 'aiFixSuggestions')).toBe(false);
+  });
+
+  it('comply tier cannot use AI fix suggestions', () => {
+    expect(canUseFeature('comply', 'aiFixSuggestions')).toBe(false);
+  });
+
+  it('fix tier can use AI fix suggestions', () => {
+    expect(canUseFeature('fix', 'aiFixSuggestions')).toBe(true);
+  });
+
+  it('scan tier cannot use invoice payment', () => {
+    expect(canUseFeature('scan', 'invoicePayment')).toBe(false);
+  });
+
+  it('comply tier can use invoice payment', () => {
+    expect(canUseFeature('comply', 'invoicePayment')).toBe(true);
+  });
+
+  it('fix tier can use invoice payment', () => {
+    expect(canUseFeature('fix', 'invoicePayment')).toBe(true);
+  });
 });
 
 describe('getMaxPages', () => {
@@ -43,4 +68,10 @@ describe('getTeamMemberLimit', () => {
   it('scan = 1', () => expect(getTeamMemberLimit('scan')).toBe(1));
   it('comply = 3', () => expect(getTeamMemberLimit('comply')).toBe(3));
   it('fix = 10', () => expect(getTeamMemberLimit('fix')).toBe(10));
+});
+
+describe('getMaxSites', () => {
+  it('scan = 1', () => expect(getMaxSites('scan')).toBe(1));
+  it('comply = Infinity', () => expect(getMaxSites('comply')).toBe(Infinity));
+  it('fix = Infinity', () => expect(getMaxSites('fix')).toBe(Infinity));
 });
