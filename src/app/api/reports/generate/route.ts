@@ -31,12 +31,30 @@ export async function POST(_request: NextRequest) {
   });
   if (!latestScan) return NextResponse.json({ error: 'No scans available' }, { status: 404 });
 
-  const topIssues = await prisma.issue.findMany({
+  // Group issues by axeRuleId to show unique issue types with counts
+  const allIssues = await prisma.issue.findMany({
     where: { scanId: latestScan.id },
-    orderBy: [{ severity: 'asc' }],
-    take: 10,
-    select: { description: true, severity: true, wcagCriteria: true },
+    select: { axeRuleId: true, description: true, severity: true, wcagCriteria: true },
   });
+
+  const issueGroups = new Map<string, { description: string; severity: string; wcag: string | null; count: number }>();
+  for (const issue of allIssues) {
+    const key = issue.axeRuleId ?? issue.description;
+    if (!issueGroups.has(key)) {
+      issueGroups.set(key, {
+        description: issue.description,
+        severity: issue.severity,
+        wcag: issue.wcagCriteria,
+        count: 0,
+      });
+    }
+    issueGroups.get(key)!.count++;
+  }
+
+  const sevOrder: Record<string, number> = { critical: 0, major: 1, minor: 2 };
+  const topIssues = Array.from(issueGroups.values())
+    .sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3) || b.count - a.count)
+    .slice(0, 12);
 
   const monthAgo = new Date();
   monthAgo.setMonth(monthAgo.getMonth() - 1);
@@ -46,21 +64,29 @@ export async function POST(_request: NextRequest) {
 
   const pdfCount = await prisma.pdfAsset.count({ where: { scanId: latestScan.id } });
 
+  const scanDate = latestScan.completedAt
+    ? latestScan.completedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : null;
+
   const pdfBuffer = await renderToBuffer(
     BoardReport({
       orgName: org.name,
       siteUrl: site.url,
       reportDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      scanDate,
       grade: latestScan.grade || 'N/A',
       score: latestScan.score || 0,
+      pagesScanned: latestScan.pagesScanned,
       criticalCount: latestScan.criticalCount,
       majorCount: latestScan.majorCount,
       minorCount: latestScan.minorCount,
       issuesFixed,
+      summary: latestScan.summary,
       topIssues: topIssues.map((i) => ({
         description: i.description,
         severity: i.severity,
-        wcag: i.wcagCriteria,
+        wcag: i.wcag,
+        count: i.count,
       })),
       pdfCount,
       hasStatement: !!org.statement,
