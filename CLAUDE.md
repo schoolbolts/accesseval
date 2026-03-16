@@ -45,8 +45,13 @@ npm run worker       # Start scan worker (separate process)
 | | Scan ($99/yr) | Comply ($299/yr) | Fix ($599/yr) |
 |---|---|---|---|
 | Pages | 100 | 500 | 2,000 |
+| Sites | 1 | Unlimited | Unlimited |
 | Frequency | Monthly | Weekly | Weekly |
 | On-demand | 2/mo | 5/mo | Unlimited |
+| AI fix suggestions | No | No | Yes |
+| PO / invoice | No | Yes | Yes |
+
+Manage tier: "Contact us" placeholder (no self-serve yet).
 
 ## Deployment
 
