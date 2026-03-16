@@ -29,6 +29,7 @@ interface ScanIssue {
   wcagCriteria?: string;
   elementHtml?: string;
   elementScreenshotUrl?: string | null;
+  aiFixSuggestion?: string | null;
 }
 
 interface ScanResult {
@@ -548,6 +549,14 @@ export function ScanProgress({ token }: { token: string }) {
                 )}
 
                 <p className="font-body text-base text-slate-600 leading-relaxed">{issue.fixInstructions}</p>
+                {issue.aiFixSuggestion && (
+                  <div className="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl px-3 py-2.5 mt-3">
+                    <p className="text-xs font-body font-semibold text-emerald-800 mb-1">Suggested fix</p>
+                    <p className="text-sm font-body text-emerald-900 leading-relaxed">
+                      {issue.aiFixSuggestion}
+                    </p>
+                  </div>
+                )}
                 {issue.wcagCriteria && (
                   <p className="font-mono text-sm text-slate-600 mt-3">
                     WCAG: {issue.wcagCriteria}
