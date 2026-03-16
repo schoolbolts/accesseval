@@ -107,7 +107,7 @@ export default function AdminFreeScansPage() {
                           href={`/scan/${scan.token}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
+                          className="text-xs text-emerald-700 hover:text-emerald-800 font-medium"
                         >
                           View
                         </a>

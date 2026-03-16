@@ -17,7 +17,7 @@ function severityBadge(severity: string) {
 
 function scoreColor(score: number | null) {
   if (score == null) return 'text-slate-600';
-  if (score >= 90) return 'text-emerald-600';
+  if (score >= 90) return 'text-emerald-700';
   if (score >= 70) return 'text-blue-600';
   if (score >= 50) return 'text-amber-600';
   return 'text-red-600';
@@ -32,7 +32,7 @@ function gradeRingColor(grade: string) {
 }
 
 function gradeColor(grade: string) {
-  if (grade.startsWith('A')) return 'text-emerald-600';
+  if (grade.startsWith('A')) return 'text-emerald-700';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
   if (grade.startsWith('D')) return 'text-orange-600';
@@ -124,7 +124,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       <div className="mb-6 animate-fade-up">
         <Link
           href="/pages"
-          className="text-sm font-body text-slate-600 hover:text-emerald-600 transition-colors inline-flex items-center gap-1.5"
+          className="text-sm font-body text-slate-600 hover:text-emerald-700 transition-colors inline-flex items-center gap-1.5"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
             <path fillRule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clipRule="evenodd" />
@@ -146,7 +146,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
             href={page.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-body text-slate-600 hover:text-emerald-600 transition-colors truncate block mt-1"
+            className="text-sm font-body text-slate-600 hover:text-emerald-700 transition-colors truncate block mt-1"
           >
             {page.url}
           </a>
@@ -181,7 +181,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       {groups.length === 0 ? (
         <div className="card p-10 text-center animate-fade-up stagger-3">
           <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-emerald-50 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6 text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6 text-emerald-700">
               <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
             </svg>
           </div>

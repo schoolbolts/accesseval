@@ -31,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               className={[
                 'px-4 py-2.5 text-sm font-body font-medium transition-colors relative',
                 isActive
-                  ? 'text-emerald-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-emerald-600 after:rounded-full'
+                  ? 'text-emerald-700 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-emerald-600 after:rounded-full'
                   : 'text-slate-600 hover:text-ink',
               ].join(' ')}
             >

@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
           {sent ? (
             <div className="text-center space-y-4">
               <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-700">
                   <path d="M22 2L11 13" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M22 2L15 22L11 13L2 9L22 2Z" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
               <p className="font-body text-sm text-slate-600">
                 If an account exists for <strong>{email}</strong>, you&apos;ll receive a password reset link shortly. Check your inbox.
               </p>
-              <Link href="/login" className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">
+              <Link href="/login" className="text-emerald-700 hover:text-emerald-800 font-semibold text-sm">
                 Back to sign in
               </Link>
             </div>
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
 
               <p className="text-center font-body text-sm text-slate-600">
                 Remember your password?{' '}
-                <Link href="/login" className="text-emerald-600 hover:text-emerald-700 font-semibold">
+                <Link href="/login" className="text-emerald-700 hover:text-emerald-800 font-semibold">
                   Sign in
                 </Link>
               </p>

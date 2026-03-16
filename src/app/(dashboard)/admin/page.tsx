@@ -100,7 +100,7 @@ export default function AdminPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-slate-600">Email capture rate</span>
-              <span className="font-semibold text-emerald-600">{stats.funnel.emailCaptureRate}%</span>
+              <span className="font-semibold text-emerald-700">{stats.funnel.emailCaptureRate}%</span>
             </div>
           </div>
         </div>

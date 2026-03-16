@@ -1282,7 +1282,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Back link */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 font-body text-sm text-slate-600 hover:text-emerald-600 transition-colors mb-10"
+            className="inline-flex items-center gap-1.5 font-body text-sm text-slate-600 hover:text-emerald-700 transition-colors mb-10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -1331,7 +1331,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               '[&_p]:font-body [&_p]:text-slate-700 [&_p]:leading-relaxed [&_p]:mb-4',
               '[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ul]:space-y-2',
               '[&_li]:font-body [&_li]:text-slate-700',
-              '[&_a]:text-emerald-600 [&_a]:underline hover:[&_a]:text-emerald-700',
+              '[&_a]:text-emerald-700 [&_a]:underline hover:[&_a]:text-emerald-700',
               '[&_strong]:font-semibold [&_strong]:text-ink',
             ].join(' ')}
           >

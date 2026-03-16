@@ -7,7 +7,7 @@ import { prisma } from '@/lib/db';
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-600';
-  if (grade.startsWith('A')) return 'text-emerald-600';
+  if (grade.startsWith('A')) return 'text-emerald-700';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
   if (grade.startsWith('D')) return 'text-orange-600';
@@ -99,7 +99,7 @@ export default async function SchoolReportPage({
     return (
       <div className="max-w-3xl mx-auto py-20 px-6 text-center">
         <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-emerald-50 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-emerald-600">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-emerald-700">
             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
         </div>
@@ -136,7 +136,7 @@ export default async function SchoolReportPage({
             {district.website && (
               <p>
                 The district website at{' '}
-                <a href={district.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                <a href={district.website} target="_blank" rel="noopener noreferrer" className="text-emerald-700 hover:text-emerald-800 font-medium">
                   {district.website.replace(/^https?:\/\//, '')}
                 </a>{' '}
                 can be scanned for free using AccessEval to identify accessibility barriers.
@@ -237,7 +237,7 @@ export default async function SchoolReportPage({
           {issues.length > 5 && (
             <p className="font-body text-sm text-slate-600 mt-3 text-center">
               + {issues.length - 5} more issues.{' '}
-              <Link href="/signup" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <Link href="/signup" className="text-emerald-700 hover:text-emerald-800 font-medium">
                 Sign up for the full report
               </Link>
             </p>
@@ -264,7 +264,7 @@ export default async function SchoolReportPage({
           <p>
             This is an automated accessibility scan of the {district.name} website using WCAG 2.2
             Level AA standards, powered by{' '}
-            <a href="https://www.deque.com/axe/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
+            <a href="https://www.deque.com/axe/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 hover:text-emerald-800 font-medium">
               axe-core
             </a>
             , the industry-standard accessibility testing engine.

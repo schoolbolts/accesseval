@@ -54,7 +54,7 @@ export default function BlogIndexPage() {
                     </span>
                   </div>
 
-                  <h2 className="font-display text-display-sm text-ink mb-2 group-hover:text-emerald-600 transition-colors">
+                  <h2 className="font-display text-display-sm text-ink mb-2 group-hover:text-emerald-700 transition-colors">
                     {post.title}
                   </h2>
 

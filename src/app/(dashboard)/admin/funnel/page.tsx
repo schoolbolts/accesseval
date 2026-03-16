@@ -109,7 +109,7 @@ export default function AdminFunnelPage() {
         {/* Conversion rates */}
         <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-100">
           <div className="text-center">
-            <div className="font-display text-2xl font-bold text-emerald-600">
+            <div className="font-display text-2xl font-bold text-emerald-700">
               {rates.emailRate}%
             </div>
             <div className="font-body text-xs text-slate-600 mt-1">View → Email</div>
@@ -166,7 +166,7 @@ export default function AdminFunnelPage() {
                       href={`/scan/${ev.token}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-emerald-600 hover:text-emerald-700"
+                      className="text-emerald-700 hover:text-emerald-800"
                     >
                       {ev.token.slice(0, 20)}...
                     </a>

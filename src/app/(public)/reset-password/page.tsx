@@ -64,7 +64,7 @@ function ResetPasswordContent() {
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 bg-surface bg-dot-pattern">
         <div className="w-full max-w-md card p-8 text-center">
           <p className="font-body text-slate-600">Invalid reset link. Please request a new one.</p>
-          <Link href="/forgot-password" className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm mt-4 inline-block">
+          <Link href="/forgot-password" className="text-emerald-700 hover:text-emerald-800 font-semibold text-sm mt-4 inline-block">
             Reset password
           </Link>
         </div>
@@ -83,7 +83,7 @@ function ResetPasswordContent() {
           {success ? (
             <div className="text-center space-y-4">
               <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-700">
                   <polyline points="20 6 9 17 4 12" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
@@ -113,7 +113,7 @@ function ResetPasswordContent() {
                   {PASSWORD_RULES.map((rule) => {
                     const pass = password.length > 0 && rule.test(password);
                     return (
-                      <li key={rule.label} className={`text-xs font-body flex items-center gap-1.5 ${pass ? 'text-emerald-600' : 'text-slate-600'}`}>
+                      <li key={rule.label} className={`text-xs font-body flex items-center gap-1.5 ${pass ? 'text-emerald-700' : 'text-slate-600'}`}>
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
                           {pass ? <polyline points="2 6 5 9 10 3" strokeLinecap="round" strokeLinejoin="round" /> : <circle cx="6" cy="6" r="1" fill="currentColor" stroke="none" />}
                         </svg>

@@ -227,7 +227,7 @@ function SignupPage() {
                 <button
                   type="button"
                   onClick={() => setShowCompare(true)}
-                  className="font-body text-xs text-emerald-600 hover:text-emerald-700 font-semibold underline underline-offset-2"
+                  className="font-body text-xs text-emerald-700 hover:text-emerald-800 font-semibold underline underline-offset-2"
                 >
                   Compare plans in detail
                 </button>
@@ -263,7 +263,7 @@ function SignupPage() {
                           </span>
                           <span
                             className={`font-display text-base font-bold ${
-                              plan === p.id ? 'text-emerald-600' : 'text-ink'
+                              plan === p.id ? 'text-emerald-700' : 'text-ink'
                             }`}
                           >
                             {p.price}<span className="font-body text-xs font-normal text-slate-600">{p.period}</span>
@@ -280,7 +280,7 @@ function SignupPage() {
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
-                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-500' : 'text-slate-600'}`}
+                                className={`w-3 h-3 shrink-0 ${plan === p.id ? 'text-emerald-700' : 'text-slate-600'}`}
                               >
                                 <path
                                   fillRule="evenodd"
@@ -364,7 +364,7 @@ function SignupPage() {
               <p className="text-center font-body text-xs text-slate-600">
                 <a
                   href={`/invoice-request?plan=${plan}`}
-                  className="text-emerald-600 hover:text-emerald-700 font-semibold underline underline-offset-2"
+                  className="text-emerald-700 hover:text-emerald-800 font-semibold underline underline-offset-2"
                 >
                   Need a PO or invoice?
                 </a>
@@ -374,7 +374,7 @@ function SignupPage() {
 
           <p className="mt-6 text-center font-body text-sm text-slate-600">
             Already have an account?{' '}
-            <Link href="/login" className="text-emerald-600 hover:text-emerald-700 font-semibold">
+            <Link href="/login" className="text-emerald-700 hover:text-emerald-800 font-semibold">
               Log in
             </Link>
           </p>
@@ -413,9 +413,9 @@ function SignupPage() {
                       <div>Scan</div>
                       <div className="text-xs font-normal text-slate-600">$99/yr</div>
                     </th>
-                    <th className="text-center py-3 px-3 font-semibold text-emerald-600">
+                    <th className="text-center py-3 px-3 font-semibold text-emerald-700">
                       <div>Comply</div>
-                      <div className="text-xs font-normal text-emerald-500">$299/yr</div>
+                      <div className="text-xs font-normal text-emerald-700">$299/yr</div>
                     </th>
                     <th className="text-center py-3 px-3 font-semibold text-ink">
                       <div>Fix</div>
@@ -439,7 +439,7 @@ function SignupPage() {
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
-                                className="w-4 h-4 text-emerald-500 mx-auto"
+                                className="w-4 h-4 text-emerald-700 mx-auto"
                               >
                                 <path
                                   fillRule="evenodd"
@@ -466,7 +466,7 @@ function SignupPage() {
               <button
                 type="button"
                 onClick={() => setShowCompare(false)}
-                className="font-body text-sm font-semibold text-emerald-600 hover:text-emerald-700"
+                className="font-body text-sm font-semibold text-emerald-700 hover:text-emerald-800"
               >
                 Close
               </button>

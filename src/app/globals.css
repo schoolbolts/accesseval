@@ -16,8 +16,8 @@
     --ae-border: #e2e8f0;
     --ae-surface: #f1f5f9;
     --ae-page: #ffffff;
-    --ae-emerald: #059669;
-    --ae-emerald-hover: #047857;
+    --ae-emerald: #047857;
+    --ae-emerald-hover: #065f46;
     --ae-amber: #d97706;
     --ae-red: #dc2626;
     --ae-orange: #ea580c;
@@ -268,7 +268,7 @@
   }
 
   .prose-ae a {
-    @apply text-emerald-600 underline underline-offset-2 hover:text-emerald-700;
+    @apply text-emerald-700 underline underline-offset-2 hover:text-emerald-800;
   }
 
   /* ── Legal prose (privacy, terms) ──────────────────────── */
@@ -297,7 +297,7 @@
   }
 
   .prose-legal a {
-    @apply text-emerald-600 underline underline-offset-2 hover:text-emerald-700;
+    @apply text-emerald-700 underline underline-offset-2 hover:text-emerald-800;
   }
 
   .prose-legal strong {

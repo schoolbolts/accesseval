@@ -127,7 +127,7 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                   <div className="flex items-center gap-2 shrink-0">
                     {(statusMap[issue.id] === 'fixed' || statusMap[issue.id] === 'ignored') ? (
                       <>
-                        <span className={`text-xs font-body font-medium ${statusMap[issue.id] === 'fixed' ? 'text-emerald-600' : 'text-slate-600'}`}>
+                        <span className={`text-xs font-body font-medium ${statusMap[issue.id] === 'fixed' ? 'text-emerald-700' : 'text-slate-600'}`}>
                           {statusMap[issue.id] === 'fixed' ? 'Fixed' : 'Ignored'}
                         </span>
                         <button
@@ -141,7 +141,7 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                       <>
                         <button
                           onClick={() => updateIssueStatus(issue.id, 'fixed')}
-                          className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+                          className="text-xs font-body text-emerald-700 hover:text-emerald-800 font-medium transition-colors"
                         >
                           Fixed
                         </button>
@@ -155,7 +155,7 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                     )}
                     <button
                       onClick={() => setExpanded(isExpanded ? null : issue.id)}
-                      className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+                      className="text-xs font-body text-emerald-700 hover:text-emerald-800 font-medium transition-colors"
                     >
                       {isExpanded ? 'Collapse' : 'Details'}
                     </button>
@@ -186,7 +186,7 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                           <button
                             type="button"
                             onClick={() => navigator.clipboard.writeText(issue.aiFixSuggestion!)}
-                            className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium"
+                            className="text-xs font-body text-emerald-700 hover:text-emerald-800 font-medium"
                           >
                             Copy
                           </button>
@@ -229,7 +229,7 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                         href={issue.page.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-mono text-emerald-600 hover:text-emerald-700 hover:underline break-all"
+                        className="text-xs font-mono text-emerald-700 hover:text-emerald-800 hover:underline break-all"
                       >
                         {issue.page.url}
                       </a>

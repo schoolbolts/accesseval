@@ -7,7 +7,7 @@ import TriggerScanButton from '@/components/history/trigger-scan-button';
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-600';
-  if (grade === 'A') return 'text-emerald-600';
+  if (grade === 'A') return 'text-emerald-700';
   if (grade === 'B') return 'text-blue-600';
   if (grade === 'C') return 'text-amber-600';
   if (grade === 'D') return 'text-orange-600';

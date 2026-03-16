@@ -7,7 +7,7 @@ import { getActiveSite } from '@/lib/active-site';
 
 function scoreColor(score: number | null) {
   if (score == null) return 'text-slate-600';
-  if (score >= 90) return 'text-emerald-600';
+  if (score >= 90) return 'text-emerald-700';
   if (score >= 70) return 'text-blue-600';
   if (score >= 50) return 'text-amber-600';
   return 'text-red-600';
@@ -98,7 +98,7 @@ export default async function PagesPage() {
               <tr key={page.id} className="hover:bg-slate-50/50 transition-colors group">
                 <td className="px-5 py-3.5">
                   <Link href={`/pages/${page.id}`} className="block">
-                    <div className="font-body font-medium text-ink truncate max-w-sm group-hover:text-emerald-600 transition-colors">
+                    <div className="font-body font-medium text-ink truncate max-w-sm group-hover:text-emerald-700 transition-colors">
                       {page.title || new URL(page.url).pathname || '/'}
                     </div>
                     <div className="text-xs font-body text-slate-600 truncate max-w-sm mt-0.5">{page.url}</div>

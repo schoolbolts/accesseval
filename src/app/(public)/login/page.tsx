@@ -120,7 +120,7 @@ function LoginContent() {
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="label">Password</label>
-                  <Link href="/forgot-password" className="text-xs text-emerald-600 hover:text-emerald-700 font-medium">
+                  <Link href="/forgot-password" className="text-xs text-emerald-700 hover:text-emerald-800 font-medium">
                     Forgot password?
                   </Link>
                 </div>
@@ -153,7 +153,7 @@ function LoginContent() {
           ) : magicSent ? (
             <div className="text-center space-y-4 py-2">
               <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-700">
                   <path d="M22 2L11 13" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M22 2L15 22L11 13L2 9L22 2Z" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -161,7 +161,7 @@ function LoginContent() {
               <p className="font-body text-sm text-slate-600">
                 Check your inbox for a sign-in link. It expires in 15 minutes.
               </p>
-              <button onClick={() => setMagicSent(false)} className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">
+              <button onClick={() => setMagicSent(false)} className="text-emerald-700 hover:text-emerald-800 font-semibold text-sm">
                 Send again
               </button>
             </div>
@@ -193,7 +193,7 @@ function LoginContent() {
 
           <p className="mt-6 text-center font-body text-sm text-slate-600">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-emerald-600 hover:text-emerald-700 font-semibold">
+            <Link href="/signup" className="text-emerald-700 hover:text-emerald-800 font-semibold">
               Get started
             </Link>
           </p>

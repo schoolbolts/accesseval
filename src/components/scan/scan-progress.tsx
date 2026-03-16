@@ -65,7 +65,7 @@ function SeverityBadge({ severity }: { severity: string }) {
 function GradeCircle({ grade, score }: { grade: string; score: number }) {
   const { ringColor, textColor, label } =
     score >= 90
-      ? { ringColor: 'ring-emerald-400', textColor: 'text-emerald-500', label: 'Excellent' }
+      ? { ringColor: 'ring-emerald-400', textColor: 'text-emerald-700', label: 'Excellent' }
       : score >= 80
         ? { ringColor: 'ring-lime-400', textColor: 'text-lime-500', label: 'Good' }
         : score >= 70
@@ -225,7 +225,7 @@ function ScanProcessingAnimation() {
             <span className="font-body text-sm font-medium text-slate-600">
               Progress
             </span>
-            <span className="font-mono text-sm font-semibold text-emerald-600">
+            <span className="font-mono text-sm font-semibold text-emerald-700">
               {Math.round(progress)}%
             </span>
           </div>
@@ -246,7 +246,7 @@ function ScanProcessingAnimation() {
                 <div className="absolute inset-0 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
               </div>
               <div className="min-w-0">
-                <p className="font-mono text-xs text-emerald-600 font-semibold">
+                <p className="font-mono text-xs text-emerald-700 font-semibold">
                   WCAG {currentCheck.id}
                 </p>
                 <p className="font-body text-sm text-ink font-medium truncate">
@@ -274,7 +274,7 @@ function ScanProcessingAnimation() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  className="w-3.5 h-3.5 text-emerald-500 shrink-0"
+                  className="w-3.5 h-3.5 text-emerald-700 shrink-0"
                 >
                   <path
                     fillRule="evenodd"
@@ -444,7 +444,7 @@ export function ScanProgress({ token }: { token: string }) {
             href={scannedUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-base text-emerald-600 hover:text-emerald-700 font-medium"
+            className="font-body text-base text-emerald-700 hover:text-emerald-800 font-medium"
           >
             {displayUrl}
           </a>

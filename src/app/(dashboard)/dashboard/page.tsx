@@ -13,7 +13,7 @@ const ActiveScanBanner = dynamic(() => import('@/components/dashboard/active-sca
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-600';
-  if (grade.startsWith('A')) return 'text-emerald-600';
+  if (grade.startsWith('A')) return 'text-emerald-700';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
   if (grade.startsWith('D')) return 'text-orange-600';
@@ -130,7 +130,7 @@ export default async function DashboardPage() {
         <div className="animate-fade-up stagger-1">
           <div className="card p-12 text-center">
             <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-emerald-50 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-emerald-600">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-emerald-700">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
             </div>
@@ -208,7 +208,7 @@ export default async function DashboardPage() {
                 <div className="text-sm font-body text-slate-600 mt-1">Open issues</div>
               </div>
               <div className="card-padded animate-fade-up stagger-6">
-                <div className="text-2xl font-display font-bold text-emerald-600">{fixedThisMonth}</div>
+                <div className="text-2xl font-display font-bold text-emerald-700">{fixedThisMonth}</div>
                 <div className="text-sm font-body text-slate-600 mt-1">Fixed this month</div>
               </div>
             </div>

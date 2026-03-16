@@ -70,7 +70,7 @@ function InvoiceRequestPage() {
         <div className="w-full max-w-md animate-fade-up text-center">
           <div className="card p-8">
             <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-8 h-8 text-emerald-500">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-8 h-8 text-emerald-700">
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
               </svg>
             </div>
@@ -202,7 +202,7 @@ function InvoiceRequestPage() {
                     <span className="font-body text-sm font-semibold text-ink block">
                       {p === 'comply' ? 'Comply' : 'Fix'}
                     </span>
-                    <span className={`font-display text-lg font-bold ${plan === p ? 'text-emerald-600' : 'text-ink'}`}>
+                    <span className={`font-display text-lg font-bold ${plan === p ? 'text-emerald-700' : 'text-ink'}`}>
                       {p === 'comply' ? '$299' : '$599'}
                     </span>
                     <span className="font-body text-xs text-slate-600 block">/year</span>
@@ -262,7 +262,7 @@ function InvoiceRequestPage() {
 
           <p className="mt-6 text-center font-body text-sm text-slate-600">
             Prefer to pay by card?{' '}
-            <Link href={`/signup?plan=${plan}`} className="text-emerald-600 hover:text-emerald-700 font-semibold">
+            <Link href={`/signup?plan=${plan}`} className="text-emerald-700 hover:text-emerald-800 font-semibold">
               Sign up with card payment
             </Link>
           </p>

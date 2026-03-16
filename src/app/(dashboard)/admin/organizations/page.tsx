@@ -25,7 +25,7 @@ const planColors: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  active: 'text-emerald-600',
+  active: 'text-emerald-700',
   trialing: 'text-blue-600',
   past_due: 'text-amber-600',
   canceled: 'text-red-500',

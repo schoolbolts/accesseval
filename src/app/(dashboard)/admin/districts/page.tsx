@@ -27,8 +27,8 @@ interface Summary {
 }
 
 const gradeColors: Record<string, string> = {
-  A: 'text-emerald-600',
-  B: 'text-emerald-500',
+  A: 'text-emerald-700',
+  B: 'text-emerald-700',
   C: 'text-amber-500',
   D: 'text-orange-500',
   F: 'text-red-500',
@@ -152,7 +152,7 @@ export default function AdminDistrictsPage() {
                       </td>
                       <td className="py-2.5 px-3 text-slate-600 truncate max-w-[180px] text-xs">
                         {d.website ? (
-                          <a href={d.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
+                          <a href={d.website} target="_blank" rel="noopener noreferrer" className="text-emerald-700 hover:underline">
                             {d.website.replace(/^https?:\/\//, '')}
                           </a>
                         ) : '—'}
@@ -180,7 +180,7 @@ export default function AdminDistrictsPage() {
                           href={`/schools/${d.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
+                          className="text-xs text-emerald-700 hover:text-emerald-800 font-medium"
                         >
                           View
                         </a>

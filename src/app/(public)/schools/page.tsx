@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-600';
-  if (grade.startsWith('A')) return 'text-emerald-600';
+  if (grade.startsWith('A')) return 'text-emerald-700';
   if (grade.startsWith('B')) return 'text-blue-600';
   if (grade.startsWith('C')) return 'text-amber-600';
   if (grade.startsWith('D')) return 'text-orange-600';
@@ -120,7 +120,7 @@ export default async function SchoolsIndexPage({
               </span>
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-body text-sm font-semibold text-ink truncate group-hover:text-emerald-600 transition-colors">
+              <p className="font-body text-sm font-semibold text-ink truncate group-hover:text-emerald-700 transition-colors">
                 {d.name}
               </p>
               <p className="font-body text-xs text-slate-600">
