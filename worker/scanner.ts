@@ -103,7 +103,7 @@ export async function scanPage(
       Object.defineProperty(navigator, 'languages', {
         get: () => ['en-US', 'en'],
       });
-      (window as Record<string, unknown>).chrome = { runtime: {}, csi: () => ({}), loadTimes: () => ({}) };
+      (window as unknown as Record<string, unknown>).chrome = { runtime: {}, csi: () => ({}), loadTimes: () => ({}) };
     });
 
     // Use domcontentloaded — networkidle hangs on sites with persistent
