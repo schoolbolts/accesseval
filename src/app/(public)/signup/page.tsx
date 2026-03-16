@@ -21,7 +21,7 @@ const PLANS = [
     period: '/yr',
     tagline: 'Stay compliant year-round',
     features: [
-      'Up to 5 websites, 500 pages each',
+      'Unlimited websites, up to 500 pages',
       'Weekly scans + fix tracking',
       'Compliance docs + accessibility statement',
       'Team member access (3 seats)',
@@ -33,10 +33,10 @@ const PLANS = [
     label: 'Fix',
     price: '$599',
     period: '/yr',
-    tagline: 'Full remediation support',
+    tagline: 'AI-powered fix suggestions',
     features: [
-      'Up to 10 websites, 2,000 pages each',
-      'CMS-specific fix instructions',
+      'Unlimited websites, up to 2,000 pages',
+      'AI fix suggestions + CMS-specific instructions',
       'Shareable reports for IT vendors',
       'Priority support + all Comply features',
     ],
@@ -45,7 +45,7 @@ const PLANS = [
 ] as const;
 
 const COMPARE_ROWS = [
-  { label: 'Websites', scan: '1', comply: 'Up to 5', fix: 'Up to 10' },
+  { label: 'Websites', scan: '1', comply: 'Unlimited', fix: 'Unlimited' },
   { label: 'Pages per site', scan: '100', comply: '500', fix: '2,000' },
   { label: 'Scan frequency', scan: 'Monthly', comply: 'Weekly', fix: 'Weekly' },
   { label: 'On-demand scans', scan: '2/month', comply: '5/month', fix: 'Unlimited' },
@@ -56,9 +56,11 @@ const COMPARE_ROWS = [
   { label: 'Accessibility statement generator', scan: false, comply: true, fix: true },
   { label: 'Team member access', scan: false, comply: true, fix: true },
   { label: 'Email digest reports', scan: false, comply: true, fix: true },
+  { label: 'AI-powered fix suggestions', scan: false, comply: false, fix: true },
   { label: 'CMS-specific fix instructions', scan: false, comply: false, fix: true },
   { label: 'Shared reports for IT vendors', scan: false, comply: false, fix: true },
   { label: 'Priority email support', scan: false, comply: false, fix: true },
+  { label: 'PO / invoice payment', scan: false, comply: true, fix: true },
 ];
 
 export default function SignupPageWrapper() {
@@ -357,6 +359,17 @@ function SignupPage() {
             <p className="text-center font-body text-xs text-slate-600">
               You&apos;ll complete payment on the next screen via Stripe. Cancel anytime.
             </p>
+
+            {(plan === 'comply' || plan === 'fix') && (
+              <p className="text-center font-body text-xs text-slate-600">
+                <a
+                  href={`/invoice-request?plan=${plan}`}
+                  className="text-emerald-600 hover:text-emerald-700 font-semibold underline underline-offset-2"
+                >
+                  Need a PO or invoice?
+                </a>
+              </p>
+            )}
           </form>
 
           <p className="mt-6 text-center font-body text-sm text-slate-600">
