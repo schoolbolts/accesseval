@@ -15,12 +15,14 @@ interface IssueItem {
   elementHtml: string;
   wcagCriteria: string | null;
   fingerprint: string;
+  aiFixSuggestion: string | null;
   page: { url: string; title: string | null };
 }
 
 interface IssuesListProps {
   issues: IssueItem[];
   showCmsInstructions: boolean;
+  showAiSuggestions: boolean;
 }
 
 const severityBadge: Record<IssueSeverity, string> = {
@@ -36,7 +38,7 @@ const filters: { label: string; value: IssueSeverity | 'all' }[] = [
   { label: 'Minor', value: 'minor' },
 ];
 
-export default function IssuesList({ issues, showCmsInstructions }: IssuesListProps) {
+export default function IssuesList({ issues, showCmsInstructions, showAiSuggestions }: IssuesListProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filter, setFilter] = useState<IssueSeverity | 'all'>('all');
   const [statusMap, setStatusMap] = useState<Record<string, 'open' | 'fixed' | 'ignored'>>({});
@@ -172,6 +174,24 @@ export default function IssuesList({ issues, showCmsInstructions }: IssuesListPr
                         <h4 className="section-title mb-2">CMS fix instructions</h4>
                         <p className="text-sm font-body text-slate-700 leading-relaxed">
                           {issue.fixInstructionsCms}
+                        </p>
+                      </div>
+                    )}
+
+                    {showAiSuggestions && issue.aiFixSuggestion && (
+                      <div className="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl px-4 py-3">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <h4 className="section-title text-emerald-800">Suggested fix</h4>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard.writeText(issue.aiFixSuggestion!)}
+                            className="text-xs font-body text-emerald-600 hover:text-emerald-700 font-medium"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <p className="text-sm font-body text-emerald-900 leading-relaxed">
+                          {issue.aiFixSuggestion}
                         </p>
                       </div>
                     )}

@@ -13,6 +13,7 @@ export default async function IssuesPage() {
 
   const plan = session.user.plan as PlanName;
   const hasCmsFixInstructions = canUseFeature(plan, 'cmsFixInstructions');
+  const hasAiSuggestions = canUseFeature(plan, 'aiFixSuggestions');
 
   const site = await getActiveSite(session.user.organizationId);
 
@@ -59,6 +60,7 @@ export default async function IssuesPage() {
       elementHtml: true,
       wcagCriteria: true,
       fingerprint: true,
+      aiFixSuggestion: true,
       page: { select: { url: true, title: true } },
     },
   });
@@ -81,7 +83,7 @@ export default async function IssuesPage() {
         </div>
       </div>
 
-      <IssuesList issues={issues} showCmsInstructions={hasCmsFixInstructions} />
+      <IssuesList issues={issues} showCmsInstructions={hasCmsFixInstructions} showAiSuggestions={hasAiSuggestions} />
     </div>
   );
 }
