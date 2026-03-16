@@ -63,6 +63,15 @@ export default async function DashboardPage() {
     orderBy: { completedAt: 'desc' },
   });
 
+  // Get homepage screenshot from latest scan (first page scanned = homepage)
+  const homepageScreenshot = latestScan
+    ? await prisma.page.findFirst({
+        where: { scanId: latestScan.id, status: 'scanned', screenshotPath: { not: null } },
+        orderBy: { scannedAt: 'asc' },
+        select: { screenshotPath: true, url: true },
+      })
+    : null;
+
   const trendScans = hasProgressChart
     ? await prisma.scan.findMany({
         where: { siteId: site.id, status: { in: ['completed', 'partial'] }, score: { not: null } },
@@ -170,6 +179,26 @@ export default async function DashboardPage() {
               </div>
             </div>
           </div>
+
+          {/* Site screenshot — confirms the scanner captured the page */}
+          {homepageScreenshot?.screenshotPath && (
+            <div className="card overflow-hidden mb-6 animate-fade-up stagger-2">
+              <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+                <h2 className="section-title">Site Preview</h2>
+                <span className="text-xs font-body text-slate-500 truncate ml-4">
+                  {homepageScreenshot.url}
+                </span>
+              </div>
+              <div className="bg-slate-50 p-2">
+                <img
+                  src={homepageScreenshot.screenshotPath}
+                  alt={`Screenshot of ${site.url}`}
+                  className="w-full rounded-lg border border-slate-200"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Issue tracking row */}
           {hasIssueTracking && (

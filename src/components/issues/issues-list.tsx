@@ -16,6 +16,7 @@ interface IssueItem {
   wcagCriteria: string | null;
   fingerprint: string;
   aiFixSuggestion: string | null;
+  screenshotPath: string | null;
   page: { url: string; title: string | null };
 }
 
@@ -193,6 +194,18 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                         <p className="text-sm font-body text-emerald-900 leading-relaxed">
                           {issue.aiFixSuggestion}
                         </p>
+                      </div>
+                    )}
+
+                    {issue.screenshotPath && (
+                      <div>
+                        <h4 className="section-title mb-2">Element screenshot</h4>
+                        <img
+                          src={issue.screenshotPath}
+                          alt="Highlighted accessibility issue on page"
+                          className="rounded-xl border border-slate-200 max-w-full max-h-64 object-contain bg-white"
+                          loading="lazy"
+                        />
                       </div>
                     )}
 

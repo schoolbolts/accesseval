@@ -209,9 +209,10 @@ model Page {
   url        String
   title      String?
   status     PageStatus @default(scanned)
-  issueCount Int        @default(0) @map("issue_count")
-  pageScore  Int?       @map("page_score")
-  scannedAt  DateTime   @default(now()) @map("scanned_at")
+  issueCount     Int        @default(0) @map("issue_count")
+  pageScore      Int?       @map("page_score")
+  screenshotPath String?    @map("screenshot_path")
+  scannedAt      DateTime   @default(now()) @map("scanned_at")
 
   scan      Scan       @relation(fields: [scanId], references: [id])
   issues    Issue[]

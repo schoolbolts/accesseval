@@ -61,6 +61,7 @@ export default async function IssuesPage() {
       wcagCriteria: true,
       fingerprint: true,
       aiFixSuggestion: true,
+      screenshotPath: true,
       page: { select: { url: true, title: true } },
     },
   });

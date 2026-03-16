@@ -1,12 +1,12 @@
-import * as fs from 'fs/promises';
-import * as path from 'path';
 import { prisma } from '../../src/lib/db';
 import { crawlSite } from '../crawler';
 import { createBrowser, scanPage } from '../scanner';
+import type { ScannedIssue } from '../scanner';
 import { scoreScanResults } from '../scorer';
 import { computeIssueDiff } from '../differ';
 import { notifyScanComplete } from '../notifier';
 import { generateScanSummary } from '../../src/lib/ai-summary';
+import { uploadScreenshot } from '../../src/lib/r2';
 import { aiEnrichmentQueue } from '../../src/lib/queue';
 import { canUseFeature } from '../../src/lib/plan-limits';
 import type { PlanName } from '../../src/lib/plan-limits';
@@ -23,8 +23,6 @@ export interface ScanJobData {
 const JOB_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 hours
 const PAGE_RETRY_DELAY_MS = 2_000;
 const RATE_LIMIT_DELAY_MS = 1_000;
-const SCREENSHOTS_TO_KEEP = 2;
-const SCREENSHOT_DIR = process.env.SCREENSHOT_DIR || '/data/screenshots';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -164,6 +162,17 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
       const { calculatePageScore } = await import('../../src/lib/scoring');
       const pageScore = calculatePageScore(issuesBySeverity);
 
+      // Upload full-page screenshot to R2
+      let pageScreenshotUrl: string | null = null;
+      if (scanResult.screenshotBuffer) {
+        try {
+          const key = `scans/${scanId}/pages/${encodeURIComponent(pageUrl)}.jpg`;
+          pageScreenshotUrl = await uploadScreenshot(key, scanResult.screenshotBuffer);
+        } catch {
+          // Page screenshot upload failed — continue without it
+        }
+      }
+
       const page = await prisma.page.create({
         data: {
           scanId,
@@ -172,14 +181,29 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
           status: 'scanned',
           issueCount: scanResult.issues.length,
           pageScore,
+          screenshotPath: pageScreenshotUrl,
         },
       });
       pageIdMap.set(pageUrl, page.id);
 
-      // Persist issues
+      // Upload element screenshots to R2 and persist issues
       if (scanResult.issues.length > 0) {
+        const screenshotUrls = new Map<number, string>();
+        for (let i = 0; i < scanResult.issues.length; i++) {
+          const issue = scanResult.issues[i];
+          if (issue.elementScreenshotBuffer) {
+            try {
+              const key = `scans/${scanId}/${page.id}/issue-${i}.webp`;
+              const url = await uploadScreenshot(key, issue.elementScreenshotBuffer);
+              screenshotUrls.set(i, url);
+            } catch {
+              // Screenshot upload failed — continue without it
+            }
+          }
+        }
+
         await prisma.issue.createMany({
-          data: scanResult.issues.map((issue) => ({
+          data: scanResult.issues.map((issue, i) => ({
             scanId,
             pageId: page.id,
             axeRuleId: issue.axeRuleId,
@@ -192,6 +216,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
             elementHtml: issue.elementHtml,
             wcagCriteria: issue.wcagCriteria,
             fingerprint: issue.fingerprint,
+            screenshotPath: screenshotUrls.get(i) ?? null,
           })),
         });
       }
@@ -397,25 +422,7 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
     });
   }
 
-  // ─── Phase 6: Screenshot cleanup ─────────────────────────────────────────
-
-  try {
-    const oldScans = await prisma.scan.findMany({
-      where: {
-        siteId,
-        status: { in: ['completed', 'partial'] },
-      },
-      orderBy: { createdAt: 'desc' },
-      skip: SCREENSHOTS_TO_KEEP,
-      select: { id: true },
-    });
-
-    for (const oldScan of oldScans) {
-      await fs.rm(path.join(SCREENSHOT_DIR, oldScan.id), { recursive: true, force: true }).catch(() => {});
-    }
-  } catch (err) {
-    console.warn(`[full-scan] ${scanId} screenshot cleanup failed:`, err);
-  }
+  // ─── Phase 6: (screenshots now stored in R2, no local cleanup needed) ────
 
   // ─── Phase 7: Notify ──────────────────────────────────────────────────────
 

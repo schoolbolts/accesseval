@@ -79,6 +79,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       elementHtml: true,
       wcagCriteria: true,
       aiFixSuggestion: true,
+      screenshotPath: true,
     },
   });
 
@@ -238,6 +239,18 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                         <p className="text-sm font-body text-emerald-900 leading-relaxed">
                           {issue.aiFixSuggestion}
                         </p>
+                      </div>
+                    )}
+
+                    {issue.screenshotPath && (
+                      <div className="mb-3">
+                        <h4 className="text-xs font-body font-medium text-slate-600 mb-1">Screenshot</h4>
+                        <img
+                          src={issue.screenshotPath}
+                          alt="Highlighted accessibility issue on page"
+                          className="rounded-lg border border-slate-200 max-w-full max-h-64 object-contain bg-white"
+                          loading="lazy"
+                        />
                       </div>
                     )}
 
