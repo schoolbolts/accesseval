@@ -243,6 +243,7 @@ model Issue {
   scan Scan @relation(fields: [scanId], references: [id])
   page Page @relation(fields: [pageId], references: [id])
 
+  @@index([fingerprint])
   @@map("issues")
 }
 

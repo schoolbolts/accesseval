@@ -27,7 +27,7 @@ export function buildTextFixPrompt(params: {
   pageUrl: string;
   cmsType: string;
 }): string {
-  const truncatedHtml = params.elementHtml.slice(0, 505);
+  const truncatedHtml = params.elementHtml.slice(0, 500);
   return `You are an accessibility remediation assistant for a ${params.cmsType} website.
 
 Issue: ${params.description}
@@ -180,6 +180,9 @@ export async function generateImageAltText(
     });
 
     if (!res.ok) {
+      if (res.status === 429) {
+        throw new Error(`Rate limited: ${res.status}`);
+      }
       console.error(`[ai-fix] vision model error: ${res.status}`);
       return null;
     }
@@ -187,13 +190,17 @@ export async function generateImageAltText(
     const data = await res.json();
     const text = data.choices?.[0]?.message?.content?.trim() ?? '';
 
+    // Strip <think> tags from Qwen3-VL reasoning output
+    const cleaned = text.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+
     // Handle decorative images
-    if (text.toLowerCase() === 'decorative') {
+    if (cleaned.toLowerCase() === 'decorative') {
       return 'alt=""';
     }
 
-    return text || null;
+    return cleaned || null;
   } catch (err) {
+    if (err instanceof Error && err.message.includes('Rate limited')) throw err;
     console.error('[ai-fix] vision model call failed:', err);
     return null;
   }
@@ -225,6 +232,9 @@ export async function generateTextFix(params: {
     });
 
     if (!res.ok) {
+      if (res.status === 429) {
+        throw new Error(`Rate limited: ${res.status}`);
+      }
       console.error(`[ai-fix] text model error: ${res.status}`);
       return null;
     }
@@ -232,6 +242,7 @@ export async function generateTextFix(params: {
     const data = await res.json();
     return data.choices?.[0]?.message?.content?.trim() || null;
   } catch (err) {
+    if (err instanceof Error && err.message.includes('Rate limited')) throw err;
     console.error('[ai-fix] text model call failed:', err);
     return null;
   }

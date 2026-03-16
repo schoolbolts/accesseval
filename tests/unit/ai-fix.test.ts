@@ -84,7 +84,7 @@ describe('buildTextFixPrompt', () => {
   });
 
   it('truncates elementHtml to 500 chars', () => {
-    const longHtml = '<div>' + 'x'.repeat(600) + '</div>';
+    const longHtml = 'x'.repeat(700);
     const prompt = buildTextFixPrompt({
       description: 'Test',
       wcagCriteria: null,
@@ -92,8 +92,8 @@ describe('buildTextFixPrompt', () => {
       pageUrl: 'https://example.com',
       cmsType: 'unknown',
     });
-    expect(prompt).not.toContain('x'.repeat(501));
     expect(prompt).toContain('x'.repeat(500));
+    expect(prompt).not.toContain('x'.repeat(501));
   });
 });
 
