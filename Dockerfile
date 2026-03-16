@@ -23,8 +23,8 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/pg ./node_modules/pg
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/prisma/migrations ./prisma/migrations
+RUN npm install -g prisma
 
 EXPOSE 3000
-CMD node node_modules/prisma/build/index.js migrate deploy; node server.js
+CMD prisma migrate deploy; node server.js

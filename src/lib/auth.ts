@@ -20,8 +20,39 @@ interface JWTWithCustom {
   [key: string]: unknown;
 }
 
+const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+const cookiePrefix = useSecureCookies ? '__Secure-' : '';
+
 export const authOptions: NextAuthOptions = {
-  debug: true,
+  cookies: {
+    csrfToken: {
+      name: `${cookiePrefix}next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: useSecureCookies,
+      },
+    },
+    callbackUrl: {
+      name: `${cookiePrefix}next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: useSecureCookies,
+      },
+    },
+    sessionToken: {
+      name: `${cookiePrefix}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: useSecureCookies,
+      },
+    },
+  },
   providers: [
     CredentialsProvider({
       name: 'credentials',
