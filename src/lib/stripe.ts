@@ -23,6 +23,11 @@ export const PRICE_IDS: Record<string, string> = {
   fix: process.env.STRIPE_PRICE_FIX || '',
 };
 
+export const INVOICE_AMOUNTS: Record<string, number> = {
+  comply: 29900,  // $299.00
+  fix: 59900,     // $599.00
+};
+
 export async function createCheckoutSession(params: {
   customerId: string; priceId: string; successUrl: string; cancelUrl: string;
 }) {
@@ -38,4 +43,40 @@ export async function createCheckoutSession(params: {
 
 export async function createCustomerPortalSession(customerId: string, returnUrl: string) {
   return getStripe().billingPortal.sessions.create({ customer: customerId, return_url: returnUrl });
+}
+
+export async function createInvoice(params: {
+  customerId: string;
+  priceAmount: number;
+  description: string;
+  poNumber?: string;
+  daysUntilDue?: number;
+}) {
+  const stripe = getStripe();
+
+  // Create a one-off invoice item
+  await stripe.invoiceItems.create({
+    customer: params.customerId,
+    amount: params.priceAmount,
+    currency: 'usd',
+    description: params.description,
+  });
+
+  // Create and finalize the invoice
+  const invoice = await stripe.invoices.create({
+    customer: params.customerId,
+    collection_method: 'send_invoice',
+    days_until_due: params.daysUntilDue ?? 30,
+    metadata: params.poNumber ? { po_number: params.poNumber } : {},
+    auto_advance: true,
+    payment_settings: {
+      payment_method_types: ['us_bank_account'],
+    },
+  });
+
+  // Finalize and send
+  await stripe.invoices.finalizeInvoice(invoice.id);
+  await stripe.invoices.sendInvoice(invoice.id);
+
+  return invoice;
 }
