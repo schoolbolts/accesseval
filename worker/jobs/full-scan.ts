@@ -10,6 +10,7 @@ import { uploadScreenshot } from '../../src/lib/r2';
 import { aiEnrichmentQueue } from '../../src/lib/queue';
 import { canUseFeature } from '../../src/lib/plan-limits';
 import type { PlanName } from '../../src/lib/plan-limits';
+import type { Prisma } from '@prisma/client';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -217,6 +218,9 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
             elementSelector: issue.elementSelector,
             elementHtml: issue.elementHtml,
             wcagCriteria: issue.wcagCriteria,
+            helpUrl: issue.helpUrl,
+            failureSummary: issue.failureSummary,
+            checkData: (issue.checkData ?? undefined) as Prisma.InputJsonValue | undefined,
             fingerprint: issue.fingerprint,
             screenshotPath: screenshotUrls.get(i) ?? null,
           })),

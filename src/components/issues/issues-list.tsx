@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { parseContrastCheckData } from '@/lib/color-contrast';
+import ContrastPanel from './contrast-panel';
 
 type IssueSeverity = 'critical' | 'major' | 'minor';
 
@@ -17,6 +19,9 @@ interface IssueItem {
   fingerprint: string;
   aiFixSuggestion: string | null;
   screenshotPath: string | null;
+  helpUrl: string | null;
+  failureSummary: string | null;
+  checkData: unknown;
   page: { url: string; title: string | null };
 }
 
@@ -163,8 +168,25 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
                 </div>
 
                 {/* Expanded details */}
-                {isExpanded && (
+                {isExpanded && (() => {
+                  const contrastInfo = issue.axeRuleId === 'color-contrast'
+                    ? parseContrastCheckData(issue.checkData)
+                    : null;
+                  return (
                   <div className="border-t border-slate-100 px-4 py-4 bg-surface space-y-4">
+                    {/* Color contrast panel */}
+                    {contrastInfo && <ContrastPanel contrast={contrastInfo} />}
+
+                    {/* Failure summary — specific to this element */}
+                    {issue.failureSummary && (
+                      <div>
+                        <h4 className="section-title mb-2">What&apos;s wrong</h4>
+                        <p className="text-sm font-body text-slate-700 leading-relaxed whitespace-pre-line">
+                          {issue.failureSummary}
+                        </p>
+                      </div>
+                    )}
+
                     <div>
                       <h4 className="section-title mb-2">How to fix</h4>
                       <p className="text-sm font-body text-slate-700 leading-relaxed">{issue.fixInstructions}</p>
@@ -237,9 +259,20 @@ export default function IssuesList({ issues, showCmsInstructions, showAiSuggesti
 
                     <div className="flex items-center gap-4 text-xs font-body text-slate-600">
                       <span>Rule: <span className="font-mono">{issue.axeRuleId}</span></span>
+                      {issue.helpUrl && (
+                        <a
+                          href={issue.helpUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-700 hover:text-emerald-800 hover:underline font-medium"
+                        >
+                          Learn more
+                        </a>
+                      )}
                     </div>
                   </div>
-                )}
+                  );
+                })()}
               </div>
             );
           })}

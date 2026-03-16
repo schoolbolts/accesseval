@@ -6,6 +6,8 @@ import { prisma } from '@/lib/db';
 import { mapScoreToGrade } from '@/lib/scoring';
 import { canUseFeature } from '@/lib/plan-limits';
 import type { PlanName } from '@/lib/plan-limits';
+import { parseContrastCheckData } from '@/lib/color-contrast';
+import ContrastPanel from '@/components/issues/contrast-panel';
 
 type IssueSeverity = 'critical' | 'major' | 'minor';
 
@@ -80,6 +82,9 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
       wcagCriteria: true,
       aiFixSuggestion: true,
       screenshotPath: true,
+      helpUrl: true,
+      failureSummary: true,
+      checkData: true,
     },
   });
 
@@ -88,6 +93,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
     severity: string;
     description: string;
     wcagCriteria: string | null;
+    helpUrl: string | null;
     instances: typeof issues;
   }>();
 
@@ -98,6 +104,7 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
         severity: issue.severity,
         description: issue.description,
         wcagCriteria: issue.wcagCriteria,
+        helpUrl: issue.helpUrl,
         instances: [],
       });
     }
@@ -211,6 +218,16 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                       <span className="text-xs font-body text-slate-600">
                         {group.instances.length} instance{group.instances.length !== 1 ? 's' : ''}
                       </span>
+                      {group.helpUrl && (
+                        <a
+                          href={group.helpUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-body text-emerald-700 hover:text-emerald-800 hover:underline font-medium"
+                        >
+                          Learn more
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -218,8 +235,29 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
 
               {/* Instances */}
               <div className="divide-y divide-slate-50">
-                {group.instances.map((issue, idx) => (
+                {group.instances.map((issue, idx) => {
+                  const contrastInfo = idx === 0 && issue.axeRuleId === 'color-contrast'
+                    ? parseContrastCheckData(issue.checkData)
+                    : null;
+                  return (
                   <div key={issue.id} className="px-5 py-4 hover:bg-slate-50/50 transition-colors">
+                    {/* Color contrast panel (show once on first instance) */}
+                    {contrastInfo && (
+                      <div className="mb-4">
+                        <ContrastPanel contrast={contrastInfo} />
+                      </div>
+                    )}
+
+                    {/* Failure summary (show once on first instance) */}
+                    {idx === 0 && issue.failureSummary && (
+                      <div className="mb-4">
+                        <h4 className="text-xs font-body font-medium text-slate-600 uppercase tracking-wider mb-1.5">What&apos;s wrong</h4>
+                        <p className="text-sm font-body text-slate-700 leading-relaxed whitespace-pre-line">
+                          {issue.failureSummary}
+                        </p>
+                      </div>
+                    )}
+
                     {/* Fix instructions (show once on first instance) */}
                     {idx === 0 && issue.fixInstructions && (
                       <div className="mb-4">
@@ -271,7 +309,8 @@ export default async function PageDetailPage({ params }: PageDetailProps) {
                       )}
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}

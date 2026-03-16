@@ -62,6 +62,9 @@ export default async function IssuesPage() {
       fingerprint: true,
       aiFixSuggestion: true,
       screenshotPath: true,
+      helpUrl: true,
+      failureSummary: true,
+      checkData: true,
       page: { select: { url: true, title: true } },
     },
   });

@@ -18,6 +18,9 @@ export interface ScannedIssue {
   elementSelector: string;
   elementHtml: string;
   wcagCriteria: string | null;
+  helpUrl: string | null;
+  failureSummary: string | null;
+  checkData: Record<string, unknown> | null;
   fingerprint: string;
   elementScreenshotBuffer: Buffer | null;
 }
@@ -182,6 +185,12 @@ export async function scanPage(
 
         const fingerprint = computeFingerprint(url, violation.id, selector);
 
+        // Extract check data from the first failing check
+        const firstCheck = node.any?.[0] ?? node.all?.[0] ?? node.none?.[0];
+        const checkData = firstCheck?.data != null
+          ? (firstCheck.data as Record<string, unknown>)
+          : null;
+
         issues.push({
           axeRuleId: violation.id,
           severity,
@@ -192,6 +201,9 @@ export async function scanPage(
           elementSelector: selector,
           elementHtml,
           wcagCriteria,
+          helpUrl: violation.helpUrl ?? null,
+          failureSummary: node.failureSummary ?? null,
+          checkData,
           fingerprint,
           elementScreenshotBuffer: null,
         });
