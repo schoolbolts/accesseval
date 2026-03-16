@@ -162,17 +162,6 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
       const { calculatePageScore } = await import('../../src/lib/scoring');
       const pageScore = calculatePageScore(issuesBySeverity);
 
-      // Upload full-page screenshot to R2
-      let pageScreenshotUrl: string | null = null;
-      if (scanResult.screenshotBuffer) {
-        try {
-          const key = `scans/${scanId}/pages/${encodeURIComponent(pageUrl)}.jpg`;
-          pageScreenshotUrl = await uploadScreenshot(key, scanResult.screenshotBuffer);
-        } catch {
-          // Page screenshot upload failed — continue without it
-        }
-      }
-
       const page = await prisma.page.create({
         data: {
           scanId,
@@ -181,10 +170,23 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
           status: 'scanned',
           issueCount: scanResult.issues.length,
           pageScore,
-          screenshotPath: pageScreenshotUrl,
         },
       });
       pageIdMap.set(pageUrl, page.id);
+
+      // Upload full-page screenshot to R2
+      if (scanResult.screenshotBuffer) {
+        try {
+          const key = `scans/${scanId}/${page.id}/page.jpg`;
+          const pageScreenshotUrl = await uploadScreenshot(key, scanResult.screenshotBuffer, 'image/jpeg');
+          await prisma.page.update({
+            where: { id: page.id },
+            data: { screenshotPath: pageScreenshotUrl },
+          });
+        } catch {
+          // Page screenshot upload failed — continue without it
+        }
+      }
 
       // Upload element screenshots to R2 and persist issues
       if (scanResult.issues.length > 0) {
@@ -193,8 +195,8 @@ export async function processFullScan(data: ScanJobData): Promise<void> {
           const issue = scanResult.issues[i];
           if (issue.elementScreenshotBuffer) {
             try {
-              const key = `scans/${scanId}/${page.id}/issue-${i}.webp`;
-              const url = await uploadScreenshot(key, issue.elementScreenshotBuffer);
+              const key = `scans/${scanId}/${page.id}/issue-${i}.jpg`;
+              const url = await uploadScreenshot(key, issue.elementScreenshotBuffer, 'image/jpeg');
               screenshotUrls.set(i, url);
             } catch {
               // Screenshot upload failed — continue without it

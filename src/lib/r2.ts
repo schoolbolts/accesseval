@@ -15,13 +15,14 @@ const PUBLIC_URL = process.env.R2_PUBLIC_URL || '';
 export async function uploadScreenshot(
   key: string,
   buffer: Buffer,
+  contentType: string = 'image/webp',
 ): Promise<string> {
   await r2.send(
     new PutObjectCommand({
       Bucket: BUCKET,
       Key: key,
       Body: buffer,
-      ContentType: 'image/webp',
+      ContentType: contentType,
       CacheControl: 'public, max-age=2592000', // 30 days
     }),
   );
