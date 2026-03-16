@@ -17,7 +17,7 @@ export default function TriggerScanButton() {
       if (!res.ok) {
         setError(data.error ?? 'Failed to trigger scan');
       } else {
-        router.refresh();
+        window.location.reload();
       }
     } catch {
       setError('Network error — please try again');
