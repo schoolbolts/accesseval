@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Svg, Path, Circle } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Svg, Path } from '@react-pdf/renderer';
 
 // ─── Brand colors ───────────────────────────────────────────────────────────
 
@@ -52,23 +52,67 @@ function severityBg(severity: string): string {
   return C.amberLight;
 }
 
+// ─── Logo SVG path (shared) ─────────────────────────────────────────────────
+
+const LOGO_PATH =
+  'M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0Zm-.39,74.18L52.1,98.91a4.94,4.94,0,0,1-2.58,2.83A5,5,0,0,1,42.7,95.5l6.24-17.28a26.3,26.3,0,0,0,1.17-4,40.64,40.64,0,0,0,.54-4.18c.24-2.53.41-5.27.54-7.9s.22-5.18.29-7.29c.09-2.63-.62-2.8-2.73-3.3l-.44-.1-18-3.39A5,5,0,0,1,27.08,46a5,5,0,0,1,5.05-7.74l19.34,3.63c.77.07,1.52.16,2.31.25a57.64,57.64,0,0,0,7.18.53A81.13,81.13,0,0,0,69.9,42c.9-.1,1.75-.21,2.6-.29l18.25-3.42A5,5,0,0,1,94.5,39a5,5,0,0,1,1.3,7,5,5,0,0,1-3.21,2.09L75.15,51.37c-.58.13-1.1.22-1.56.29-1.82.31-2.72.47-2.61,3.06.08,1.89.31,4.15.61,6.51.35,2.77.81,5.71,1.29,8.4.31,1.77.6,3.19,1,4.55s.79,2.75,1.39,4.42l6.11,16.9a5,5,0,0,1-6.82,6.24,4.94,4.94,0,0,1-2.58-2.83L63,74.23,62,72.4l-1,1.78Zm.39-53.52a8.83,8.83,0,1,1-6.24,2.59,8.79,8.79,0,0,1,6.24-2.59Zm36.35,4.43a51.42,51.42,0,1,0,15,36.35,51.27,51.27,0,0,0-15-36.35Z';
+
 // ─── Styles ─────────────────────────────────────────────────────────────────
 
 const s = StyleSheet.create({
-  // Page layouts
-  page: {
+  // Cover page — has its own padding since no fixed header
+  coverPage: {
     fontFamily: 'Helvetica',
     fontSize: 10,
     color: C.slate700,
     backgroundColor: C.white,
-  },
-  pageInner: {
     paddingHorizontal: 48,
-    paddingTop: 32,
-    paddingBottom: 64,
+    paddingTop: 40,
+    paddingBottom: 60,
   },
 
-  // Cover page
+  // Detail pages — extra paddingTop to clear fixed header, extra bottom for footer
+  detailPage: {
+    fontFamily: 'Helvetica',
+    fontSize: 10,
+    color: C.slate700,
+    backgroundColor: C.white,
+    paddingHorizontal: 48,
+    paddingTop: 72,
+    paddingBottom: 60,
+  },
+
+  // Fixed mini-header for detail pages
+  miniHeader: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 48,
+    paddingTop: 24,
+    paddingBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottom: `1 solid ${C.slate200}`,
+    backgroundColor: C.white,
+  },
+  miniHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  miniHeaderBrand: {
+    fontSize: 10,
+    fontFamily: 'Helvetica-Bold',
+    color: C.navy,
+  },
+  miniHeaderRight: {
+    fontSize: 8,
+    color: C.slate400,
+  },
+
+  // Cover page elements
   coverHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -317,10 +361,10 @@ const s = StyleSheet.create({
     lineHeight: 1.4,
   },
 
-  // Footer
+  // Footer (fixed, repeats on wrapped pages)
   footer: {
     position: 'absolute',
-    bottom: 24,
+    bottom: 20,
     left: 48,
     right: 48,
     flexDirection: 'row',
@@ -335,10 +379,6 @@ const s = StyleSheet.create({
     gap: 6,
   },
   footerText: {
-    fontSize: 8,
-    color: C.slate400,
-  },
-  footerPage: {
     fontSize: 8,
     color: C.slate400,
   },
@@ -363,26 +403,20 @@ const s = StyleSheet.create({
   },
 });
 
-// ─── Logo component (inline SVG) ────────────────────────────────────────────
+// ─── Logo components ────────────────────────────────────────────────────────
 
 function Logo({ size: sz }: { size: number }) {
   return (
     <Svg width={sz} height={sz} viewBox="0 0 122.88 122.88">
-      <Path
-        fill={C.white}
-        d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0Zm-.39,74.18L52.1,98.91a4.94,4.94,0,0,1-2.58,2.83A5,5,0,0,1,42.7,95.5l6.24-17.28a26.3,26.3,0,0,0,1.17-4,40.64,40.64,0,0,0,.54-4.18c.24-2.53.41-5.27.54-7.9s.22-5.18.29-7.29c.09-2.63-.62-2.8-2.73-3.3l-.44-.1-18-3.39A5,5,0,0,1,27.08,46a5,5,0,0,1,5.05-7.74l19.34,3.63c.77.07,1.52.16,2.31.25a57.64,57.64,0,0,0,7.18.53A81.13,81.13,0,0,0,69.9,42c.9-.1,1.75-.21,2.6-.29l18.25-3.42A5,5,0,0,1,94.5,39a5,5,0,0,1,1.3,7,5,5,0,0,1-3.21,2.09L75.15,51.37c-.58.13-1.1.22-1.56.29-1.82.31-2.72.47-2.61,3.06.08,1.89.31,4.15.61,6.51.35,2.77.81,5.71,1.29,8.4.31,1.77.6,3.19,1,4.55s.79,2.75,1.39,4.42l6.11,16.9a5,5,0,0,1-6.82,6.24,4.94,4.94,0,0,1-2.58-2.83L63,74.23,62,72.4l-1,1.78Zm.39-53.52a8.83,8.83,0,1,1-6.24,2.59,8.79,8.79,0,0,1,6.24-2.59Zm36.35,4.43a51.42,51.42,0,1,0,15,36.35,51.27,51.27,0,0,0-15-36.35Z"
-      />
+      <Path fill={C.white} d={LOGO_PATH} />
     </Svg>
   );
 }
 
-function SmallLogo() {
+function SmallLogo({ color }: { color?: string }) {
   return (
     <Svg width={12} height={12} viewBox="0 0 122.88 122.88">
-      <Path
-        fill={C.emerald}
-        d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0Zm-.39,74.18L52.1,98.91a4.94,4.94,0,0,1-2.58,2.83A5,5,0,0,1,42.7,95.5l6.24-17.28a26.3,26.3,0,0,0,1.17-4,40.64,40.64,0,0,0,.54-4.18c.24-2.53.41-5.27.54-7.9s.22-5.18.29-7.29c.09-2.63-.62-2.8-2.73-3.3l-.44-.1-18-3.39A5,5,0,0,1,27.08,46a5,5,0,0,1,5.05-7.74l19.34,3.63c.77.07,1.52.16,2.31.25a57.64,57.64,0,0,0,7.18.53A81.13,81.13,0,0,0,69.9,42c.9-.1,1.75-.21,2.6-.29l18.25-3.42A5,5,0,0,1,94.5,39a5,5,0,0,1,1.3,7,5,5,0,0,1-3.21,2.09L75.15,51.37c-.58.13-1.1.22-1.56.29-1.82.31-2.72.47-2.61,3.06.08,1.89.31,4.15.61,6.51.35,2.77.81,5.71,1.29,8.4.31,1.77.6,3.19,1,4.55s.79,2.75,1.39,4.42l6.11,16.9a5,5,0,0,1-6.82,6.24,4.94,4.94,0,0,1-2.58-2.83L63,74.23,62,72.4l-1,1.78Zm.39-53.52a8.83,8.83,0,1,1-6.24,2.59,8.79,8.79,0,0,1,6.24-2.59Zm36.35,4.43a51.42,51.42,0,1,0,15,36.35,51.27,51.27,0,0,0-15-36.35Z"
-      />
+      <Path fill={color ?? C.emerald} d={LOGO_PATH} />
     </Svg>
   );
 }
@@ -419,26 +453,43 @@ function XIcon() {
 
 function SectionHeader({ title }: { title: string }) {
   return (
-    <>
+    <View wrap={false}>
       <View style={s.sectionHeader}>
         <View style={s.sectionDot} />
         <Text style={s.sectionTitle}>{title}</Text>
       </View>
       <View style={s.sectionDivider} />
-    </>
+    </View>
   );
 }
 
-// ─── Footer ─────────────────────────────────────────────────────────────────
+// ─── Fixed mini-header for detail pages ─────────────────────────────────────
 
-function PageFooter({ pageNum, totalPages }: { pageNum: number; totalPages: number }) {
+function DetailPageHeader({ orgName }: { orgName: string }) {
+  return (
+    <View style={s.miniHeader} fixed>
+      <View style={s.miniHeaderLeft}>
+        <SmallLogo />
+        <Text style={s.miniHeaderBrand}>AccessEval</Text>
+      </View>
+      <Text style={s.miniHeaderRight}>{orgName} — Accessibility Compliance Report</Text>
+    </View>
+  );
+}
+
+// ─── Fixed footer with dynamic page numbers ─────────────────────────────────
+
+function ReportFooter() {
   return (
     <View style={s.footer} fixed>
       <View style={s.footerLeft}>
         <SmallLogo />
         <Text style={s.footerText}>Generated by AccessEval  |  accesseval.com</Text>
       </View>
-      <Text style={s.footerPage}>Page {pageNum} of {totalPages}</Text>
+      <Text
+        style={{ fontSize: 8, color: C.slate400 }}
+        render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`}
+      />
     </View>
   );
 }
@@ -469,222 +520,208 @@ export function BoardReport(props: BoardReportProps) {
   const totalIssues = props.criticalCount + props.majorCount + props.minorCount;
   const gc = gradeColor(props.grade);
   const grc = gradeRingColor(props.grade);
-  const totalPages = 2;
+
+  // Build recommendations list
+  const recos: { title: string; text: string }[] = [];
+  let recoNum = 1;
+  if (props.criticalCount > 0) {
+    recos.push({
+      title: `${recoNum++}. Address critical barriers first`,
+      text: `${props.criticalCount} critical issue${props.criticalCount !== 1 ? 's' : ''} prevent${props.criticalCount === 1 ? 's' : ''} some users from accessing your website at all. These typically affect screen reader users, keyboard-only users, and people with motor disabilities. Resolving these should be the highest priority.`,
+    });
+  }
+  if (props.majorCount > 0) {
+    recos.push({
+      title: `${recoNum++}. Resolve major issues for compliance`,
+      text: `${props.majorCount} major issue${props.majorCount !== 1 ? 's' : ''} create significant difficulty for users with disabilities. Under ADA Title II, public entities must ensure their websites are accessible. Addressing these issues moves you toward compliance.`,
+    });
+  }
+  if (!props.hasStatement) {
+    recos.push({
+      title: `${recoNum++}. Publish an accessibility statement`,
+      text: 'An accessibility statement demonstrates your commitment to digital inclusion and provides users with a way to report barriers. This is a best practice recommended by WCAG and required by many compliance frameworks.',
+    });
+  }
+  if (recos.length === 0) {
+    recos.push({
+      title: 'Looking good!',
+      text: 'Your website has no critical or major accessibility barriers, and your accessibility statement is published. Continue monitoring with regular scans to maintain compliance as your website content changes.',
+    });
+  }
 
   return (
     <Document>
-      {/* ──────────────────── PAGE 1: Cover & Executive Summary ──────────────────── */}
-      <Page size="LETTER" style={s.page}>
-        <View style={s.pageInner}>
-          {/* Brand header */}
-          <View style={s.coverHeader}>
-            <View style={s.coverLogoCircle}>
-              <Logo size={22} />
-            </View>
-            <Text style={s.coverBrandName}>AccessEval</Text>
+      {/* ═══════════════════ PAGE 1: Cover & Executive Summary ═══════════════════ */}
+      <Page size="LETTER" style={s.coverPage}>
+        {/* Brand header */}
+        <View style={s.coverHeader}>
+          <View style={s.coverLogoCircle}>
+            <Logo size={22} />
           </View>
-          <View style={s.coverDivider} />
+          <Text style={s.coverBrandName}>AccessEval</Text>
+        </View>
+        <View style={s.coverDivider} />
 
-          {/* Report title block */}
-          <Text style={s.coverOrgName}>{props.orgName}</Text>
-          <Text style={s.coverReportTitle}>Website Accessibility Compliance Report</Text>
-          <Text style={s.coverMeta}>
-            {props.siteUrl}  |  {props.reportDate}
-            {props.scanDate ? `  |  Last scan: ${props.scanDate}` : ''}
+        {/* Report title block */}
+        <Text style={s.coverOrgName}>{props.orgName}</Text>
+        <Text style={s.coverReportTitle}>Website Accessibility Compliance Report</Text>
+        <Text style={s.coverMeta}>
+          {props.siteUrl}  |  {props.reportDate}
+          {props.scanDate ? `  |  Last scan: ${props.scanDate}` : ''}
+        </Text>
+
+        {/* Grade display */}
+        <View style={s.gradeContainer}>
+          <View style={[s.gradeRing, { borderColor: grc }]}>
+            <Text style={[s.gradeText, { color: gc }]}>{props.grade}</Text>
+          </View>
+          <Text style={s.scoreLabel}>
+            Accessibility Score: <Text style={[s.scoreBold, { color: gc }]}>{props.score}</Text>/100
           </Text>
-
-          {/* Grade display */}
-          <View style={s.gradeContainer}>
-            <View style={[s.gradeRing, { borderColor: grc }]}>
-              <Text style={[s.gradeText, { color: gc }]}>{props.grade}</Text>
-            </View>
-            <Text style={s.scoreLabel}>
-              Accessibility Score: <Text style={[s.scoreBold, { color: gc }]}>{props.score}</Text>/100
-            </Text>
-          </View>
-
-          {/* Stat cards */}
-          <View style={s.statsRow}>
-            <View style={[s.statCard, { backgroundColor: C.redLight }]}>
-              <Text style={[s.statNumber, { color: C.red }]}>{props.criticalCount}</Text>
-              <Text style={s.statLabel}>Critical</Text>
-            </View>
-            <View style={[s.statCard, { backgroundColor: C.orangeLight }]}>
-              <Text style={[s.statNumber, { color: C.orange }]}>{props.majorCount}</Text>
-              <Text style={s.statLabel}>Major</Text>
-            </View>
-            <View style={[s.statCard, { backgroundColor: C.amberLight }]}>
-              <Text style={[s.statNumber, { color: C.amber }]}>{props.minorCount}</Text>
-              <Text style={s.statLabel}>Minor</Text>
-            </View>
-            <View style={[s.statCard, { backgroundColor: C.emeraldLight }]}>
-              <Text style={[s.statNumber, { color: C.emerald }]}>{props.pagesScanned}</Text>
-              <Text style={s.statLabel}>Pages</Text>
-            </View>
-          </View>
-
-          {/* AI narrative summary */}
-          {props.summary && (
-            <View style={s.narrativeBox}>
-              <Text style={s.narrativeTitle}>Executive Summary</Text>
-              <Text style={s.narrativeText}>{props.summary}</Text>
-            </View>
-          )}
-
-          {/* Progress callout */}
-          {props.issuesFixed > 0 && (
-            <View style={s.progressBox}>
-              <Text style={s.progressNumber}>{props.issuesFixed}</Text>
-              <View>
-                <Text style={[s.progressLabel, { fontFamily: 'Helvetica-Bold' }]}>
-                  Issues resolved
-                </Text>
-                <Text style={s.progressLabel}>since last report period</Text>
-              </View>
-            </View>
-          )}
         </View>
 
-        <PageFooter pageNum={1} totalPages={totalPages} />
+        {/* Stat cards */}
+        <View style={s.statsRow}>
+          <View style={[s.statCard, { backgroundColor: C.redLight }]}>
+            <Text style={[s.statNumber, { color: C.red }]}>{props.criticalCount}</Text>
+            <Text style={s.statLabel}>Critical</Text>
+          </View>
+          <View style={[s.statCard, { backgroundColor: C.orangeLight }]}>
+            <Text style={[s.statNumber, { color: C.orange }]}>{props.majorCount}</Text>
+            <Text style={s.statLabel}>Major</Text>
+          </View>
+          <View style={[s.statCard, { backgroundColor: C.amberLight }]}>
+            <Text style={[s.statNumber, { color: C.amber }]}>{props.minorCount}</Text>
+            <Text style={s.statLabel}>Minor</Text>
+          </View>
+          <View style={[s.statCard, { backgroundColor: C.emeraldLight }]}>
+            <Text style={[s.statNumber, { color: C.emerald }]}>{props.pagesScanned}</Text>
+            <Text style={s.statLabel}>Pages</Text>
+          </View>
+        </View>
+
+        {/* AI narrative summary */}
+        {props.summary && (
+          <View style={s.narrativeBox}>
+            <Text style={s.narrativeTitle}>Executive Summary</Text>
+            <Text style={s.narrativeText}>{props.summary}</Text>
+          </View>
+        )}
+
+        {/* Progress callout */}
+        {props.issuesFixed > 0 && (
+          <View style={s.progressBox}>
+            <Text style={s.progressNumber}>{props.issuesFixed}</Text>
+            <View>
+              <Text style={[s.progressLabel, { fontFamily: 'Helvetica-Bold' }]}>
+                Issues resolved
+              </Text>
+              <Text style={s.progressLabel}>since last report period</Text>
+            </View>
+          </View>
+        )}
+
+        <ReportFooter />
       </Page>
 
-      {/* ──────────────────── PAGE 2: Detailed Findings & Status ─────────────────── */}
-      <Page size="LETTER" style={s.page}>
-        <View style={s.pageInner}>
-          {/* Top issues */}
-          <SectionHeader title="Top Remaining Issues" />
-          {props.topIssues.length === 0 ? (
-            <View style={{ padding: 16, alignItems: 'center' }}>
-              <Text style={{ fontSize: 10, color: C.slate400 }}>
-                No outstanding issues found.
-              </Text>
-            </View>
-          ) : (
-            <View style={{ marginBottom: 24 }}>
-              {props.topIssues.map((issue, i) => (
-                <View key={i} style={s.issueRow} wrap={false}>
-                  <View style={[s.issueSeverityBadge, { backgroundColor: severityBg(issue.severity) }]}>
-                    <Text style={[s.issueSeverityText, { color: severityColor(issue.severity) }]}>
-                      {issue.severity}
-                    </Text>
-                  </View>
-                  <View style={s.issueContent}>
-                    <Text style={s.issueDescription}>{issue.description}</Text>
-                    <Text style={s.issueWcag}>
-                      {issue.wcag ? `WCAG ${issue.wcag}` : ''}
-                      {issue.wcag && issue.count > 1 ? '  |  ' : ''}
-                      {issue.count > 1 ? `${issue.count} instances` : ''}
-                    </Text>
-                  </View>
+      {/* ═══════════════════ PAGES 2+: Details (auto-wraps) ═══════════════════ */}
+      <Page size="LETTER" style={s.detailPage} wrap>
+        <DetailPageHeader orgName={props.orgName} />
+
+        {/* ── Top issues ── */}
+        <SectionHeader title="Top Remaining Issues" />
+        {props.topIssues.length === 0 ? (
+          <View style={{ padding: 16, alignItems: 'center', marginBottom: 24 }}>
+            <Text style={{ fontSize: 10, color: C.slate400 }}>
+              No outstanding issues found.
+            </Text>
+          </View>
+        ) : (
+          <View style={{ marginBottom: 24 }}>
+            {props.topIssues.map((issue, i) => (
+              <View key={i} style={s.issueRow} wrap={false}>
+                <View style={[s.issueSeverityBadge, { backgroundColor: severityBg(issue.severity) }]}>
+                  <Text style={[s.issueSeverityText, { color: severityColor(issue.severity) }]}>
+                    {issue.severity}
+                  </Text>
                 </View>
-              ))}
-            </View>
-          )}
-
-          {/* Scan overview */}
-          <SectionHeader title="Scan Overview" />
-          <View style={{ borderRadius: 8, border: `1 solid ${C.slate200}`, marginBottom: 24, overflow: 'hidden' }}>
-            <View style={s.summaryRow}>
-              <Text style={s.summaryLabel}>Total issues found</Text>
-              <Text style={s.summaryValue}>{totalIssues}</Text>
-            </View>
-            <View style={s.summaryRow}>
-              <Text style={s.summaryLabel}>Pages scanned</Text>
-              <Text style={s.summaryValue}>{props.pagesScanned}</Text>
-            </View>
-            <View style={s.summaryRow}>
-              <Text style={s.summaryLabel}>Issues resolved since last report</Text>
-              <Text style={[s.summaryValue, { color: C.emerald }]}>{props.issuesFixed}</Text>
-            </View>
-            <View style={[s.summaryRow, { borderBottom: 'none' }]}>
-              <Text style={s.summaryLabel}>Accessibility grade</Text>
-              <Text style={[s.summaryValue, { color: gc }]}>{props.grade} ({props.score}/100)</Text>
-            </View>
+                <View style={s.issueContent}>
+                  <Text style={s.issueDescription}>{issue.description}</Text>
+                  <Text style={s.issueWcag}>
+                    {issue.wcag ? `WCAG ${issue.wcag}` : ''}
+                    {issue.wcag && issue.count > 1 ? '  |  ' : ''}
+                    {issue.count > 1 ? `${issue.count} instances` : ''}
+                  </Text>
+                </View>
+              </View>
+            ))}
           </View>
+        )}
 
-          {/* Compliance checklist */}
-          <SectionHeader title="Compliance Status" />
-          <View style={{ borderRadius: 8, border: `1 solid ${C.slate200}`, marginBottom: 24, overflow: 'hidden' }}>
-            <View style={s.checkRow}>
-              {props.hasStatement ? <CheckIcon /> : <XIcon />}
-              <Text style={s.checkLabel}>Accessibility statement published</Text>
-              <Text style={[s.checkStatus, { color: props.hasStatement ? C.emerald : C.red }]}>
-                {props.hasStatement ? 'Complete' : 'Missing'}
-              </Text>
-            </View>
-            <View style={s.checkRow}>
-              {props.criticalCount === 0 ? <CheckIcon /> : <XIcon />}
-              <Text style={s.checkLabel}>Zero critical accessibility barriers</Text>
-              <Text style={[s.checkStatus, { color: props.criticalCount === 0 ? C.emerald : C.red }]}>
-                {props.criticalCount === 0 ? 'Passed' : `${props.criticalCount} remaining`}
-              </Text>
-            </View>
-            <View style={s.checkRow}>
-              {props.pdfCount === 0 ? <CheckIcon /> : <XIcon />}
-              <Text style={s.checkLabel}>PDF documents reviewed for accessibility</Text>
-              <Text style={[s.checkStatus, { color: props.pdfCount === 0 ? C.emerald : C.amber }]}>
-                {props.pdfCount === 0 ? 'Complete' : `${props.pdfCount} to review`}
-              </Text>
-            </View>
-            <View style={[s.checkRow, { borderBottom: 'none' }]}>
-              {props.score >= 90 ? <CheckIcon /> : <XIcon />}
-              <Text style={s.checkLabel}>WCAG 2.1 Level AA target score (90+)</Text>
-              <Text style={[s.checkStatus, { color: props.score >= 90 ? C.emerald : C.amber }]}>
-                {props.score >= 90 ? 'Met' : `Current: ${props.score}`}
-              </Text>
-            </View>
+        {/* ── Scan overview ── */}
+        <SectionHeader title="Scan Overview" />
+        <View style={{ borderRadius: 8, border: `1 solid ${C.slate200}`, marginBottom: 24, overflow: 'hidden' }} wrap={false}>
+          <View style={s.summaryRow}>
+            <Text style={s.summaryLabel}>Total issues found</Text>
+            <Text style={s.summaryValue}>{totalIssues}</Text>
           </View>
-
-          {/* Recommendations */}
-          <SectionHeader title="Recommendations" />
-          {props.criticalCount > 0 && (
-            <View style={s.recoBox}>
-              <Text style={s.recoTitle}>1. Address critical barriers first</Text>
-              <Text style={s.recoText}>
-                {props.criticalCount} critical issue{props.criticalCount !== 1 ? 's' : ''} prevent{props.criticalCount === 1 ? 's' : ''} some
-                users from accessing your website at all. These typically affect screen reader users, keyboard-only
-                users, and people with motor disabilities. Resolving these should be the highest priority.
-              </Text>
-            </View>
-          )}
-          {props.majorCount > 0 && (
-            <View style={s.recoBox}>
-              <Text style={s.recoTitle}>
-                {props.criticalCount > 0 ? '2' : '1'}. Resolve major issues for compliance
-              </Text>
-              <Text style={s.recoText}>
-                {props.majorCount} major issue{props.majorCount !== 1 ? 's' : ''} create significant
-                difficulty for users with disabilities. Under ADA Title II, public entities must ensure
-                their websites are accessible. Addressing these issues moves you toward compliance.
-              </Text>
-            </View>
-          )}
-          {!props.hasStatement && (
-            <View style={s.recoBox}>
-              <Text style={s.recoTitle}>
-                {props.criticalCount > 0 && props.majorCount > 0 ? '3' : props.criticalCount > 0 || props.majorCount > 0 ? '2' : '1'}.
-                Publish an accessibility statement
-              </Text>
-              <Text style={s.recoText}>
-                An accessibility statement demonstrates your commitment to digital inclusion and provides
-                users with a way to report barriers. This is a best practice recommended by WCAG and
-                required by many compliance frameworks.
-              </Text>
-            </View>
-          )}
-          {props.criticalCount === 0 && props.majorCount === 0 && props.hasStatement && (
-            <View style={s.recoBox}>
-              <Text style={s.recoTitle}>Looking good!</Text>
-              <Text style={s.recoText}>
-                Your website has no critical or major accessibility barriers, and your accessibility
-                statement is published. Continue monitoring with regular scans to maintain compliance
-                as your website content changes.
-              </Text>
-            </View>
-          )}
+          <View style={s.summaryRow}>
+            <Text style={s.summaryLabel}>Pages scanned</Text>
+            <Text style={s.summaryValue}>{props.pagesScanned}</Text>
+          </View>
+          <View style={s.summaryRow}>
+            <Text style={s.summaryLabel}>Issues resolved since last report</Text>
+            <Text style={[s.summaryValue, { color: C.emerald }]}>{props.issuesFixed}</Text>
+          </View>
+          <View style={[s.summaryRow, { borderBottom: 'none' }]}>
+            <Text style={s.summaryLabel}>Accessibility grade</Text>
+            <Text style={[s.summaryValue, { color: gc }]}>{props.grade} ({props.score}/100)</Text>
+          </View>
         </View>
 
-        <PageFooter pageNum={2} totalPages={totalPages} />
+        {/* ── Compliance checklist ── */}
+        <SectionHeader title="Compliance Status" />
+        <View style={{ borderRadius: 8, border: `1 solid ${C.slate200}`, marginBottom: 24, overflow: 'hidden' }} wrap={false}>
+          <View style={s.checkRow}>
+            {props.hasStatement ? <CheckIcon /> : <XIcon />}
+            <Text style={s.checkLabel}>Accessibility statement published</Text>
+            <Text style={[s.checkStatus, { color: props.hasStatement ? C.emerald : C.red }]}>
+              {props.hasStatement ? 'Complete' : 'Missing'}
+            </Text>
+          </View>
+          <View style={s.checkRow}>
+            {props.criticalCount === 0 ? <CheckIcon /> : <XIcon />}
+            <Text style={s.checkLabel}>Zero critical accessibility barriers</Text>
+            <Text style={[s.checkStatus, { color: props.criticalCount === 0 ? C.emerald : C.red }]}>
+              {props.criticalCount === 0 ? 'Passed' : `${props.criticalCount} remaining`}
+            </Text>
+          </View>
+          <View style={s.checkRow}>
+            {props.pdfCount === 0 ? <CheckIcon /> : <XIcon />}
+            <Text style={s.checkLabel}>PDF documents reviewed for accessibility</Text>
+            <Text style={[s.checkStatus, { color: props.pdfCount === 0 ? C.emerald : C.amber }]}>
+              {props.pdfCount === 0 ? 'Complete' : `${props.pdfCount} to review`}
+            </Text>
+          </View>
+          <View style={[s.checkRow, { borderBottom: 'none' }]}>
+            {props.score >= 90 ? <CheckIcon /> : <XIcon />}
+            <Text style={s.checkLabel}>WCAG 2.1 Level AA target score (90+)</Text>
+            <Text style={[s.checkStatus, { color: props.score >= 90 ? C.emerald : C.amber }]}>
+              {props.score >= 90 ? 'Met' : `Current: ${props.score}`}
+            </Text>
+          </View>
+        </View>
+
+        {/* ── Recommendations ── */}
+        <SectionHeader title="Recommendations" />
+        {recos.map((reco, i) => (
+          <View key={i} style={s.recoBox} wrap={false}>
+            <Text style={s.recoTitle}>{reco.title}</Text>
+            <Text style={s.recoText}>{reco.text}</Text>
+          </View>
+        ))}
+
+        <ReportFooter />
       </Page>
     </Document>
   );
