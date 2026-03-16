@@ -66,6 +66,7 @@ export async function createBrowser(): Promise<Browser> {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-gpu',
+      '--disable-blink-features=AutomationControlled',
     ],
   });
 }
@@ -93,30 +94,47 @@ export async function scanPage(
     const page = await context.newPage();
     page.setDefaultTimeout(timeout);
 
+    // Stealth patches — mask automation signals that trigger Cloudflare Turnstile
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'webdriver', { get: () => false });
+      Object.defineProperty(navigator, 'plugins', {
+        get: () => [1, 2, 3, 4, 5],
+      });
+      Object.defineProperty(navigator, 'languages', {
+        get: () => ['en-US', 'en'],
+      });
+      (window as Record<string, unknown>).chrome = { runtime: {}, csi: () => ({}), loadTimes: () => ({}) };
+    });
+
     // Use domcontentloaded — networkidle hangs on sites with persistent
     // analytics/tracker connections (very common on school/gov sites).
     // After DOM is ready, give an extra 2s for JS to settle.
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
     await page.waitForTimeout(2000);
 
-    // Handle Cloudflare challenge — Playwright is a real browser so the
-    // JS challenge auto-resolves; we just need to wait for the redirect.
+    // Handle Cloudflare challenge — detect and attempt to resolve
     const pageTitle = await page.title();
     if (
       pageTitle.includes('Just a moment') ||
       pageTitle.includes('Attention Required') ||
       pageTitle.includes('Checking your browser')
     ) {
-      console.log(`[scanner] Cloudflare challenge detected on ${url}, waiting for resolution...`);
+      console.log(`[scanner] Cloudflare challenge detected on ${url}, attempting to resolve...`);
       try {
-        // Wait up to 15s for Cloudflare to finish its challenge and redirect
+        // Try clicking the Turnstile checkbox if present
+        const turnstileFrame = page.frameLocator('iframe[src*="challenges.cloudflare.com"]');
+        const checkbox = turnstileFrame.locator('input[type="checkbox"], .cb-i, #challenge-stage');
+        if (await checkbox.count().catch(() => 0) > 0) {
+          await checkbox.first().click({ timeout: 3000 }).catch(() => {});
+        }
+
+        // Wait for the challenge page to resolve and redirect
         await page.waitForFunction(
           () => !document.title.includes('Just a moment') &&
                 !document.title.includes('Attention Required') &&
                 !document.title.includes('Checking your browser'),
           { timeout: 15_000 }
         );
-        // Give the real page time to settle after redirect
         await page.waitForTimeout(2000);
       } catch {
         console.warn(`[scanner] Cloudflare challenge did not resolve for ${url}`);
