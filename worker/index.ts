@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { createWorker, scanQueue } from '../src/lib/queue';
 import { processFullScan, type ScanJobData } from './jobs/full-scan';
 import { processFreeScan, type FreeScanJobData } from './jobs/free-scan';
+import { processAiEnrichment, type AiEnrichmentJobData } from './jobs/ai-fix-suggestions';
 import { runScheduledScans, sendWeeklyDigests, cleanupFreescans } from './scheduler';
 import { Queue } from 'bullmq';
 
@@ -21,6 +22,10 @@ const scanWorker = createWorker<ScanJobData>('scans', async (job) => {
 
 const freeScanWorker = createWorker<FreeScanJobData>('free-scans', async (job) => {
   await processFreeScan(job.data);
+}, 2);
+
+const aiEnrichmentWorker = createWorker<AiEnrichmentJobData>('ai-enrichment', async (job) => {
+  await processAiEnrichment(job.data);
 }, 2);
 
 // --- Cron jobs via BullMQ repeatable jobs ---
@@ -57,6 +62,7 @@ setupCronJobs().catch(console.error);
 process.on('SIGTERM', async () => {
   await scanWorker.close();
   await freeScanWorker.close();
+  await aiEnrichmentWorker.close();
   await cronWorker.close();
   process.exit(0);
 });
