@@ -27,6 +27,9 @@ export default function SettingsPage() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [billingLoading, setBillingLoading] = useState(false);
   const [savingCms, setSavingCms] = useState<string | null>(null);
+  const [newSiteUrl, setNewSiteUrl] = useState('');
+  const [addingSite, setAddingSite] = useState(false);
+  const [addSiteError, setAddSiteError] = useState('');
 
   useEffect(() => {
     fetch('/api/invitations').then((r) => r.json()).then((data) => {
@@ -66,6 +69,28 @@ export default function SettingsPage() {
     setBillingLoading(false);
   }
 
+  async function handleAddSite(e: React.FormEvent) {
+    e.preventDefault();
+    setAddSiteError('');
+    setAddingSite(true);
+    try {
+      const res = await fetch('/api/sites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: newSiteUrl }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSites((prev) => [...prev, { ...data.site, pagesUsed: 0 }]);
+        setNewSiteUrl('');
+      } else {
+        setAddSiteError(data.error || 'Failed to add site');
+      }
+    } finally {
+      setAddingSite(false);
+    }
+  }
+
   async function updateCmsType(siteId: string, cmsType: string) {
     setSavingCms(siteId);
     try {
@@ -94,14 +119,13 @@ export default function SettingsPage() {
       {/* Sites card */}
       <div className="card p-6 mb-5 animate-fade-up">
         <h2 className="font-body font-semibold text-ink mb-1">Your websites</h2>
-        <p className="text-sm font-body text-slate-600 mb-5">
-          Set your CMS platform so we can generate platform-specific fix instructions.
+        <p className="text-sm font-body text-slate-600 mb-4">
+          Add websites owned by your organization. Page budgets are shared across all sites.
+          Set each site&apos;s CMS platform to get platform-specific fix instructions.
         </p>
 
-        {sites.length === 0 ? (
-          <p className="text-sm font-body text-slate-600">No sites configured.</p>
-        ) : (
-          <div className="space-y-3">
+        {sites.length > 0 && (
+          <div className="space-y-3 mb-5">
             {sites.map((site) => (
               <div
                 key={site.id}
@@ -136,6 +160,26 @@ export default function SettingsPage() {
             ))}
           </div>
         )}
+
+        <form onSubmit={handleAddSite} className="flex gap-2">
+          <input
+            type="text"
+            value={newSiteUrl}
+            onChange={(e) => { setNewSiteUrl(e.target.value); setAddSiteError(''); }}
+            placeholder="www.example.org"
+            className="input"
+            required
+          />
+          <button type="submit" disabled={addingSite} className="btn-primary shrink-0">
+            {addingSite ? 'Adding...' : 'Add Site'}
+          </button>
+        </form>
+        {addSiteError && (
+          <p className="text-sm font-body text-red-600 mt-2">{addSiteError}</p>
+        )}
+        <p className="text-xs font-body text-slate-500 mt-3">
+          All sites must be owned and operated by your organization. Adding third-party sites is a violation of our terms of service.
+        </p>
       </div>
 
       {/* Billing card */}
