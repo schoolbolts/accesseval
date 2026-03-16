@@ -1,3 +1,4 @@
+import React from 'react';
 import { Html, Head, Body, Container, Section, Text, Button, Hr } from '@react-email/components';
 
 interface WeeklyDigestEmailProps {
