@@ -109,6 +109,8 @@ model Organization {
   utmSource        String?    @map("utm_source")
   utmMedium        String?    @map("utm_medium")
   utmCampaign      String?    @map("utm_campaign")
+  poNumber         String?    @map("po_number")
+  billingType      String     @default("card") @map("billing_type")
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
 
