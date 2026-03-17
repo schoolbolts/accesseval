@@ -10,6 +10,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+# Dummy DATABASE_URL so Next.js build can compile Prisma client references.
+# The real connection string is provided at runtime via env vars.
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN npm run build
 
 FROM base AS runner
