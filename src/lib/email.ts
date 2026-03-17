@@ -3,7 +3,7 @@ import { render } from '@react-email/components';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'AccessEval <noreply@accesseval.com>';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'AccessEval <noreply@mail.accesseval.com>';
 
 export async function sendEmail(params: {
   to: string;
