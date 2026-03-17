@@ -198,10 +198,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Product Preview */}
+      {/* Feature Showcase */}
       <section className="py-24 px-4 bg-white" aria-labelledby="preview-heading">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-20">
             <p className="section-title mb-3">See what you get</p>
             <h2
               id="preview-heading"
@@ -215,30 +215,157 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <p className="font-body text-sm font-semibold text-slate-600 uppercase tracking-widest mb-3">
-                Compliance Dashboard
-              </p>
-              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
-                <img
-                  src="/screenshots/dashboard.png"
-                  alt="AccessEval dashboard showing site grade, score history chart, and top accessibility issues"
-                  className="w-full h-auto"
-                />
-              </div>
+          {/* Feature 1: Dashboard — image left, text right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+            <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+              <img
+                src="/screenshots/dashboard.png"
+                alt="AccessEval compliance dashboard showing letter grade B, score trend chart improving from 34 to 81, issue breakdown, and AI summary"
+                className="w-full h-auto"
+                loading="lazy"
+              />
             </div>
             <div>
-              <p className="font-body text-sm font-semibold text-slate-600 uppercase tracking-widest mb-3">
-                Site Report Card
+              <p className="section-title mb-3">Compliance Dashboard</p>
+              <h3 className="font-display text-display-sm text-ink mb-4">
+                Your grade at a glance
+              </h3>
+              <p className="font-body text-slate-600 leading-relaxed mb-4">
+                See your accessibility grade, issue breakdown by severity, and score trend over time.
+                The AI summary tells you exactly what the numbers mean and what to fix first.
               </p>
-              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
-                <img
-                  src="/screenshots/report.png"
-                  alt="AccessEval report card showing letter grade D, 38/100 score, and plain-English issue descriptions"
-                  className="w-full h-auto"
-                />
+              <ul className="space-y-2.5 text-sm font-body">
+                {['Letter grade A–F with 0–100 score', 'Score trend tracks your progress over months', 'AI summary explains what matters in plain English'].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-slate-600">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Feature 2: Issues — text left, image right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+            <div className="order-2 lg:order-1">
+              <p className="section-title mb-3">Issue Tracker</p>
+              <h3 className="font-display text-display-sm text-ink mb-4">
+                Every issue explained, with how to fix it
+              </h3>
+              <p className="font-body text-slate-600 leading-relaxed mb-4">
+                No accessibility expertise needed. Each issue comes with a plain-English description,
+                WCAG reference, and step-by-step fix instructions. Mark issues as fixed or ignored
+                to track your remediation progress.
+              </p>
+              <ul className="space-y-2.5 text-sm font-body">
+                {['Filter by severity — critical, major, minor', 'Fix instructions anyone on your team can follow', 'Track resolved vs. open issues across scans'].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-slate-600">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="order-1 lg:order-2 rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+              <img
+                src="/screenshots/issues.png"
+                alt="AccessEval issues list showing accessibility violations with severity badges, fix instructions, and AI-suggested WordPress fix"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Feature 3: AI Fix — image left, text right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+            <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+              <img
+                src="/screenshots/ai-fix.png"
+                alt="AccessEval AI fix suggestion showing CMS-specific WordPress instructions with copy button"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-body font-semibold mb-4">
+                Fix tier
               </div>
+              <p className="section-title mb-3">AI Fix Suggestions</p>
+              <h3 className="font-display text-display-sm text-ink mb-4">
+                Your CMS. Your exact fix. One click to copy.
+              </h3>
+              <p className="font-body text-slate-600 leading-relaxed mb-4">
+                AI analyzes each issue and generates fix instructions specific to your CMS — whether
+                that&apos;s WordPress, Finalsite, Squarespace, or Drupal. No more translating generic
+                WCAG guidance into &quot;where do I click?&quot;
+              </p>
+              <ul className="space-y-2.5 text-sm font-body">
+                {['CMS-specific instructions (WordPress, Finalsite, etc.)', 'Copy-paste code snippets when needed', 'Tells you exactly which menu, panel, or field to edit'].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-slate-600">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Feature 4: Pages — text left, image right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+            <div className="order-2 lg:order-1">
+              <p className="section-title mb-3">Page-by-Page Breakdown</p>
+              <h3 className="font-display text-display-sm text-ink mb-4">
+                Know which pages need attention first
+              </h3>
+              <p className="font-body text-slate-600 leading-relaxed mb-4">
+                Every page gets its own score. Sort by worst-performing to focus your team on the
+                pages that matter most — your homepage, contact page, and enrollment forms.
+              </p>
+              <ul className="space-y-2.5 text-sm font-body">
+                {['Individual score for every scanned page', 'Issue count per page for easy prioritization', 'Click into any page for detailed issue list'].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-slate-600">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="order-1 lg:order-2 rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+              <img
+                src="/screenshots/pages.png"
+                alt="AccessEval page breakdown showing individual scores and issue counts for each scanned page"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Feature 5: Report card — centered */}
+          <div className="text-center">
+            <p className="section-title mb-3">Board-Ready Reports</p>
+            <h3 className="font-display text-display-sm text-ink mb-4">
+              Share results with leadership in one click
+            </h3>
+            <p className="font-body text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
+              Generate a professional compliance report PDF with your grade, issue summary,
+              regulatory framework coverage, and actionable recommendations — ready for your
+              school board, city council, or IT director.
+            </p>
+            <div className="max-w-md mx-auto rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+              <img
+                src="/screenshots/report.png"
+                alt="AccessEval board report card showing grade, score, page count, and prioritized issues with severity badges"
+                className="w-full h-auto"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>

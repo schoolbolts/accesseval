@@ -10,6 +10,16 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'ada-title-ii-website-compliance-what-schools-and-governments-need-to-know',
+    title: 'ADA Title II and Your Website: What Schools and Governments Need to Know Before the Deadline',
+    description:
+      'The DOJ now requires all state and local government websites to meet WCAG 2.1 AA. Here is what the law says, what real enforcement looks like, and the steps to protect your organization.',
+    date: '2026-03-17',
+    author: 'AccessEval Team',
+    readTime: '12 min',
+    tags: ['ADA Title II', 'Compliance', 'Legal', 'Schools', 'Municipalities'],
+  },
+  {
     slug: 'accesseval-vs-wave-school-government-websites',
     title: 'AccessEval vs WAVE: Which Accessibility Tool Is Better for Schools and Governments?',
     description:

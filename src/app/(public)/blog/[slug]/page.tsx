@@ -8,6 +8,346 @@ import { posts, getPost } from '../posts';
 /* ------------------------------------------------------------------ */
 
 const content: Record<string, React.ReactNode> = {
+  'ada-title-ii-website-compliance-what-schools-and-governments-need-to-know': (
+    <>
+      <p>
+        On April 24, 2024, the Department of Justice published a{' '}
+        <a href="https://www.federalregister.gov/documents/2024/04/24/2024-07758/nondiscrimination-on-the-basis-of-disability-accessibility-of-web-information-and-services-of-state" target="_blank" rel="noopener noreferrer">
+          final rule
+        </a>{' '}
+        that, for the first time, sets specific technical standards for state and local government
+        websites and mobile apps under Title II of the Americans with Disabilities Act. If you run
+        a school district, city, county, library, or special district website, this rule applies
+        to you.
+      </p>
+      <p>
+        This is not a vague recommendation. It is a binding federal regulation with hard deadlines,
+        a specific technical standard (WCAG 2.1 Level AA), and a growing body of enforcement
+        actions behind it. Below is what the law actually says, what enforcement looks like in
+        practice, and what you need to do to comply.
+      </p>
+
+      <h2>What ADA Title II requires</h2>
+      <p>
+        Title II of the ADA prohibits state and local governments from discriminating against
+        people with disabilities in their programs, services, and activities. Courts and the DOJ
+        have interpreted this to include websites and digital services for over a decade. What
+        changed in 2024 is that the DOJ made it explicit and measurable.
+      </p>
+      <p>
+        The{' '}
+        <a href="https://www.ada.gov/resources/2024-03-08-web-rule/" target="_blank" rel="noopener noreferrer">
+          final rule
+        </a>{' '}
+        requires all web content and mobile apps provided by state and local governments to
+        conform to <strong>WCAG 2.1 Level AA</strong> — a set of 50 success criteria covering
+        things like text alternatives for images, keyboard navigation, color contrast, form labels,
+        and video captions. WCAG 2.1 AA is not new. It has been the recognized accessibility
+        standard since 2018. What is new is that compliance is now a legal obligation with a
+        deadline.
+      </p>
+
+      <img
+        src="/blog/title-ii-timeline.png"
+        alt="ADA Title II web accessibility timeline showing key dates: rule published April 2024, 50K+ deadline April 2026, under 50K deadline April 2027"
+        style={{ width: '100%', borderRadius: '12px', margin: '8px 0 24px' }}
+      />
+
+      <h2>The deadlines</h2>
+      <p>
+        The rule uses a two-phase timeline based on population size:
+      </p>
+      <ul>
+        <li>
+          <strong>April 24, 2026</strong> — Public entities (other than special districts) serving
+          a population of <strong>50,000 or more</strong>. This includes most mid-to-large school
+          districts, cities, and counties.
+        </li>
+        <li>
+          <strong>April 26, 2027</strong> — Public entities serving a population of{' '}
+          <strong>fewer than 50,000</strong>, plus all special district governments (library
+          districts, transit authorities, water districts, etc.) regardless of size.
+        </li>
+      </ul>
+      <p>
+        If your district or municipality falls in the first group, you have until April 2026.
+        That is not a target date — it is a compliance deadline. After that date, a non-conforming
+        website is a federal civil rights violation.
+      </p>
+
+      <h2>Who this applies to</h2>
+      <img
+        src="/blog/title-ii-entities.png"
+        alt="Grid showing entities that must comply: school districts, cities, counties, libraries, transit districts, and special districts with their deadlines"
+        style={{ width: '100%', borderRadius: '12px', margin: '8px 0 24px' }}
+      />
+      <p>
+        If you receive any federal funding or are a unit of state or local government, Title II
+        covers you. That includes:
+      </p>
+      <ul>
+        <li>K-12 school districts (public)</li>
+        <li>Cities and towns</li>
+        <li>Counties</li>
+        <li>Public libraries and library districts</li>
+        <li>Special districts (water, transit, fire, parks)</li>
+        <li>State agencies</li>
+        <li>Public universities and community colleges</li>
+      </ul>
+      <p>
+        The rule covers your primary website, subdomains, any web applications you provide to the
+        public (online bill pay, permit applications, school enrollment portals), and mobile apps.
+        Third-party content you embed or link to from your site can also create liability if it is
+        integral to accessing your services.
+      </p>
+
+      <h2>What enforcement actually looks like</h2>
+      <p>
+        Enforcement comes from three directions: DOJ investigations, Office for Civil Rights (OCR)
+        complaints, and private lawsuits. All three are active and increasing.
+      </p>
+      <p>
+        <strong>DOJ settlement agreements.</strong> The DOJ has been enforcing web accessibility for
+        years, and the pace is accelerating. Recent examples:
+      </p>
+      <ul>
+        <li>
+          In June 2024, the DOJ secured{' '}
+          <a href="https://www.ada.gov/cases/" target="_blank" rel="noopener noreferrer">
+            settlement agreements with four Texas counties
+          </a>{' '}
+          (Colorado, Runnels, Smith, and Upton) for maintaining inaccessible election websites.
+          The counties agreed to audit and remediate all online election content, hire independent
+          accessibility auditors, designate ADA coordinators, and train staff.
+        </li>
+        <li>
+          In January 2024, the DOJ settled with Service Oklahoma over an inaccessible state agency
+          mobile app.
+        </li>
+        <li>
+          In June 2024, the DOJ issued formal findings that Alaska violated Title II through
+          inaccessible election websites and polling place information.
+        </li>
+      </ul>
+      <p>
+        <strong>OCR complaints against school districts.</strong> Between 2016 and 2018, a single
+        disability rights advocate filed roughly 2,400 OCR complaints against K-12 school systems
+        with inaccessible websites. That wave resulted in{' '}
+        <strong>over 1,000 school districts signing resolution agreements</strong> with the
+        federal government. A joint May 2023 Dear Colleague letter from DOJ and OCR confirmed
+        that OCR had resolved and monitored more than 1,000 digital accessibility cases. These
+        resolution agreements typically require the district to audit their website, remediate all
+        issues, adopt an accessibility policy, and submit to ongoing monitoring.
+      </p>
+      <img
+        src="/blog/title-ii-lawsuits.png"
+        alt="Bar chart showing federal ADA website accessibility lawsuits rising from 2,200 in 2019 to 5,000+ in 2025, a 37% surge"
+        style={{ width: '100%', borderRadius: '12px', margin: '8px 0 24px' }}
+      />
+      <p>
+        <strong>Private lawsuits.</strong> ADA website accessibility lawsuits surged 37% in the
+        first half of 2025 alone, with over 5,000 federal cases filed that year. While most
+        target private businesses under Title III, the new Title II rule gives plaintiffs&apos;
+        attorneys clear grounds to sue government entities after the compliance deadlines pass.
+        There is no ambiguity left — the standard is defined, the deadline is published, and
+        non-compliance is straightforward to prove with automated scanning tools.
+      </p>
+
+      <h2>What settlements cost</h2>
+      <p>
+        The financial exposure depends on how the complaint is resolved:
+      </p>
+      <ul>
+        <li>
+          <strong>Demand letter settlements</strong> — $5,000 to $25,000. An attorney sends a
+          letter identifying violations and demanding payment. This is the most common scenario
+          and the least expensive to resolve.
+        </li>
+        <li>
+          <strong>Out-of-court settlements</strong> — $25,000 to $100,000+. When a formal
+          complaint is filed and the parties negotiate before trial.
+        </li>
+        <li>
+          <strong>Court judgments</strong> — $75,000+ average. If the case goes to judgment, costs
+          escalate significantly.
+        </li>
+        <li>
+          <strong>Class action settlements</strong> — $1 million to $6 million+. When multiple
+          plaintiffs or advocacy organizations bring claims on behalf of a class.
+        </li>
+      </ul>
+      <p>
+        These figures do not include the cost of remediation itself, ongoing monitoring, attorney
+        fees (yours and theirs), or the staff time consumed by an extended legal process. For a
+        school district or small town, even a $25,000 demand letter settlement is a meaningful
+        budget hit — especially when the cost of proactive compliance is a fraction of that.
+      </p>
+
+      <h2>Beyond the money: what a complaint really costs</h2>
+      <p>
+        The settlement check is often the smallest part. A DOJ or OCR investigation typically
+        requires:
+      </p>
+      <ul>
+        <li>
+          <strong>A comprehensive accessibility audit</strong> of your entire website, often
+          conducted by a third-party firm at your expense.
+        </li>
+        <li>
+          <strong>Full remediation</strong> of all identified issues, with documented evidence of
+          fixes.
+        </li>
+        <li>
+          <strong>Policy development</strong> — a formal digital accessibility policy, grievance
+          procedure, and designated ADA coordinator.
+        </li>
+        <li>
+          <strong>Staff training</strong> on creating and maintaining accessible content.
+        </li>
+        <li>
+          <strong>Ongoing monitoring</strong> — typically 2 to 3 years of periodic audits and
+          progress reports submitted to the federal government.
+        </li>
+      </ul>
+      <p>
+        That monitoring period is the part that consumes the most staff time. Your team will be
+        producing compliance reports, tracking remediation progress, and responding to federal
+        inquiries for years. The organizations that handle this most efficiently are the ones
+        that already have monitoring tools in place before the complaint arrives.
+      </p>
+
+      <h2>The 8 steps to protect your organization</h2>
+      <p>
+        Compliance is not a one-time project. It is an ongoing process. Here is a practical
+        checklist:
+      </p>
+      <ul>
+        <li>
+          <strong>1. Run a baseline scan.</strong> Before you can fix anything, you need to know
+          where you stand. Use an automated accessibility scanner to crawl your full website and
+          identify every WCAG 2.1 AA violation. This gives you a letter grade, a prioritized
+          issue list, and a starting point for remediation. You can{' '}
+          <a href="/">run a free scan with AccessEval</a> to get your baseline in under two
+          minutes.
+        </li>
+        <li>
+          <strong>2. Designate an ADA coordinator.</strong> The DOJ{' '}
+          <a href="https://www.ada.gov/resources/web-rule-first-steps/" target="_blank" rel="noopener noreferrer">
+            recommends this as a first step
+          </a>
+          . This person does not need to be a technical expert — they need to be the single point
+          of accountability for your organization&apos;s digital accessibility efforts.
+        </li>
+        <li>
+          <strong>3. Fix critical issues first.</strong> Not all accessibility issues are equal.
+          Start with the ones that completely block access: missing alt text on essential images,
+          forms without labels, keyboard traps, and missing page language declarations. These are
+          the issues most likely to generate complaints.
+        </li>
+        <li>
+          <strong>4. Address color contrast and navigation.</strong> Low contrast text and
+          confusing navigation are the two most common issues we find on school and government
+          websites. They affect the largest number of users and are straightforward to fix.
+        </li>
+        <li>
+          <strong>5. Adopt an accessibility policy.</strong> Publish a digital accessibility
+          statement on your website that describes your commitment to accessibility, the standard
+          you are working toward (WCAG 2.1 AA), and how users can report issues. This
+          demonstrates good faith and is required under most settlement agreements.
+        </li>
+        <li>
+          <strong>6. Train content creators.</strong> Your website is only as accessible as the
+          content people add to it. Make sure everyone who publishes web content — communications
+          staff, teachers uploading documents, department heads updating pages — knows the basics:
+          add alt text to images, use heading structure, write descriptive link text, and check
+          contrast.
+        </li>
+        <li>
+          <strong>7. Set up ongoing monitoring.</strong> Accessibility is not a one-time fix. New
+          content is added constantly, CMS updates can introduce issues, and third-party widgets
+          change without notice. Automated weekly or monthly scanning catches regressions before
+          they become complaints.
+        </li>
+        <li>
+          <strong>8. Document everything.</strong> If a complaint does arrive, the strongest
+          defense is documented good faith effort — scan results showing improvement over time,
+          a published accessibility statement, training records, and a remediation plan. The DOJ
+          has consistently treated proactive organizations more favorably than those caught
+          doing nothing.
+        </li>
+      </ul>
+
+      <h2>What &ldquo;good enough&rdquo; looks like</h2>
+      <p>
+        No website is 100% WCAG conformant at all times. Content changes daily, third-party
+        tools introduce issues, and some WCAG criteria require manual judgment calls that
+        reasonable people can disagree on. The DOJ recognizes this.
+      </p>
+      <p>
+        What the DOJ looks for is a{' '}
+        <strong>systematic, good faith effort</strong> to achieve and maintain conformance. That
+        means:
+      </p>
+      <ul>
+        <li>You have identified your issues (baseline scan).</li>
+        <li>You are actively remediating them (documented fixes).</li>
+        <li>You are monitoring for new issues (ongoing scanning).</li>
+        <li>You have a process for handling accessibility complaints (published policy).</li>
+        <li>Your team knows how to create accessible content (training).</li>
+      </ul>
+      <p>
+        An organization with a score of 75/100 and a clear upward trend, documented remediation
+        efforts, and a published accessibility statement is in a fundamentally different legal
+        position than one with a score of 75/100 and no evidence of any effort. The score matters
+        less than the trajectory and the documentation.
+      </p>
+
+      <img
+        src="/blog/title-ii-costs.png"
+        alt="Horizontal bar chart comparing proactive compliance ($99-$599/yr) to lawsuit costs ranging from $5K demand letters to $6M+ class actions"
+        style={{ width: '100%', borderRadius: '12px', margin: '8px 0 24px' }}
+      />
+
+      <h2>The cost of compliance vs. the cost of a lawsuit</h2>
+      <p>
+        Proactive compliance for a typical school district or small municipality costs between
+        $99 and $599 per year for scanning and monitoring tools, plus staff time for remediation.
+        Most organizations can reach a passing grade within 30 to 90 days of focused effort.
+      </p>
+      <p>
+        A single demand letter settlement starts at $5,000. An OCR resolution agreement consumes
+        hundreds of hours of staff time over 2 to 3 years. A federal lawsuit can cost $75,000 or
+        more before you even consider remediation.
+      </p>
+      <p>
+        The math is not complicated. The organizations that act before the deadline are spending
+        hundreds of dollars. The ones that wait for a complaint are spending tens of thousands —
+        and doing the same remediation work anyway, just under federal supervision.
+      </p>
+
+      <img
+        src="/blog/title-ii-checklist.png"
+        alt="Infographic showing 8 steps to protect your organization: baseline scan, ADA coordinator, fix critical issues, address contrast, publish policy, train creators, monitoring, document everything"
+        style={{ width: '100%', borderRadius: '12px', margin: '8px 0 24px' }}
+      />
+
+      <h2>What to do right now</h2>
+      <p>
+        If you have not started, start today. The single most valuable thing you can do is run a
+        scan and see where you stand. It takes two minutes, costs nothing, and gives you the
+        information you need to have an informed conversation with your leadership about next steps.
+      </p>
+      <p>
+        <a href="/">Run a free accessibility scan</a> — no account required. You will get a
+        letter grade, issue count by severity, and a list of your top accessibility violations
+        with plain-English descriptions.
+      </p>
+      <p>
+        The deadline is coming whether you are ready or not. The only question is whether you
+        address it on your terms or on someone else&apos;s.
+      </p>
+    </>
+  ),
   'accesseval-vs-wave-school-government-websites': (
     <>
       <p>
