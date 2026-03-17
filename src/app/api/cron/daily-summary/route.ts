@@ -1,129 +1,18 @@
-import { prisma } from '../src/lib/db';
-import { scanQueue } from '../src/lib/queue';
-import { sendEmail, sendTemplateEmail } from '../src/lib/email';
-import WeeklyDigestEmail from '../emails/weekly-digest';
-import { canUseFeature } from '../src/lib/plan-limits';
-import type { PlanName } from '../src/lib/plan-limits';
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
 
-export async function runScheduledScans(): Promise<void> {
-  console.log('[scheduler] Running scheduled scans...');
+const CRON_SECRET = process.env.CRON_SECRET;
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || 'rob@schoolbolts.com')
+  .split(',')
+  .map((e) => e.trim());
 
-  const sites = await prisma.site.findMany({
-    include: { organization: true },
-  });
-
-  for (const site of sites) {
-    if (site.organization.planStatus !== 'active') continue;
-
-    const shouldScan = await shouldRunScan(site);
-    if (!shouldScan) continue;
-
-    const activeScan = await prisma.scan.findFirst({
-      where: { siteId: site.id, status: { in: ['queued', 'crawling', 'scanning'] } },
-    });
-    if (activeScan) continue;
-
-    const scan = await prisma.scan.create({
-      data: { siteId: site.id, triggeredBy: 'scheduled' },
-    });
-
-    await scanQueue.add('scan', {
-      scanId: scan.id,
-      siteId: site.id,
-    });
-
-    console.log(`[scheduler] Queued scan for ${site.url}`);
+export async function GET(req: Request) {
+  // Protect with a secret token
+  const { searchParams } = new URL(req.url);
+  if (CRON_SECRET && searchParams.get('secret') !== CRON_SECRET) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-}
-
-async function shouldRunScan(site: { id: string; scanFrequency: string }): Promise<boolean> {
-  const lastScan = await prisma.scan.findFirst({
-    where: { siteId: site.id, status: { in: ['completed', 'partial'] } },
-    orderBy: { completedAt: 'desc' },
-    select: { completedAt: true },
-  });
-
-  if (!lastScan?.completedAt) return true;
-
-  const elapsed = Date.now() - lastScan.completedAt.getTime();
-  const DAY = 24 * 60 * 60 * 1000;
-
-  if (site.scanFrequency === 'weekly') return elapsed >= 7 * DAY;
-  if (site.scanFrequency === 'monthly') return elapsed >= 30 * DAY;
-  return false;
-}
-
-export async function sendWeeklyDigests(): Promise<void> {
-  console.log('[scheduler] Sending weekly digests...');
-  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
-
-  const orgs = await prisma.organization.findMany({
-    where: { planStatus: 'active' },
-    include: { sites: true, users: true },
-  });
-
-  for (const org of orgs) {
-    if (!canUseFeature(org.plan as PlanName, 'weeklyDigest')) continue;
-    if (org.sites.length === 0) continue;
-
-    // Send digest for each site
-    for (const site of org.sites) {
-      const latestScan = await prisma.scan.findFirst({
-        where: { siteId: site.id, status: { in: ['completed', 'partial'] } },
-        orderBy: { completedAt: 'desc' },
-      });
-      if (!latestScan) continue;
-
-      const previousScan = await prisma.scan.findFirst({
-        where: { siteId: site.id, status: { in: ['completed', 'partial'] }, id: { not: latestScan.id } },
-        orderBy: { completedAt: 'desc' },
-      });
-
-      const scoreChange = previousScan?.score != null
-        ? (latestScan.score || 0) - previousScan.score
-        : 0;
-
-      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      const issuesFixed = await prisma.siteIssue.count({
-        where: { siteId: site.id, status: 'fixed', statusChangedAt: { gte: weekAgo } },
-      });
-
-      const topIssues = await prisma.issue.findMany({
-        where: { scanId: latestScan.id },
-        orderBy: [{ severity: 'asc' }],
-        take: 3,
-        select: { description: true, severity: true },
-      });
-
-      for (const user of org.users) {
-        try {
-          await sendTemplateEmail({
-            to: user.email,
-            subject: `AccessEval Weekly: ${org.name} — Grade ${latestScan.grade}`,
-            component: WeeklyDigestEmail({
-              orgName: org.name,
-              grade: latestScan.grade || 'N/A',
-              score: latestScan.score || 0,
-              scoreChange,
-              issuesFixed,
-              topIssues: topIssues.map((i) => ({ title: i.description, severity: i.severity })),
-              dashboardUrl: `${baseUrl}/dashboard`,
-            }),
-          });
-        } catch (error) {
-          console.error(`[scheduler] Digest failed for ${user.email}:`, error);
-        }
-      }
-    }
-  }
-}
-
-export async function sendDailyAdminSummary(): Promise<void> {
-  console.log('[scheduler] Sending daily admin summary...');
-
-  const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || 'rob@schoolbolts.com')
-    .split(',')
-    .map((e) => e.trim());
 
   const now = new Date();
   const todayStart = new Date(now);
@@ -163,6 +52,7 @@ export async function sendDailyAdminSummary(): Promise<void> {
     prisma.freeScan.count(),
   ]);
 
+  // Aggregate funnel events
   const funnelCounts: Record<string, number> = {};
   for (const e of todayFunnelEvents) {
     funnelCounts[e.event] = (funnelCounts[e.event] || 0) + 1;
@@ -177,7 +67,7 @@ export async function sendDailyAdminSummary(): Promise<void> {
     timeZone: 'America/Chicago',
   });
 
-  const html = buildDailySummaryHtml({
+  const html = buildEmailHtml({
     dateStr,
     todayFreeScans,
     freeScansWithEmail,
@@ -196,10 +86,15 @@ export async function sendDailyAdminSummary(): Promise<void> {
     });
   }
 
-  console.log(`[scheduler] Daily summary sent to ${ADMIN_EMAILS.join(', ')}`);
+  return NextResponse.json({
+    ok: true,
+    sent: ADMIN_EMAILS.length,
+    freeScans: todayFreeScans.length,
+    signups: todaySignups.length,
+  });
 }
 
-function buildDailySummaryHtml(data: {
+function buildEmailHtml(data: {
   dateStr: string;
   todayFreeScans: { url: string; email: string | null; grade: string | null; score: number | null; createdAt: Date }[];
   freeScansWithEmail: number;
@@ -210,7 +105,6 @@ function buildDailySummaryHtml(data: {
   totalFreeScans: number;
 }) {
   const { dateStr, todayFreeScans, freeScansWithEmail, funnelCounts, todaySignups, todayScans, totalOrgs, totalFreeScans } = data;
-  const baseUrl = process.env.BASE_URL || 'https://accesseval.com';
 
   const freeScansRows = todayFreeScans.length > 0
     ? todayFreeScans.map((s) => `
@@ -250,7 +144,9 @@ function buildDailySummaryHtml(data: {
       <h1 style="margin:0;font-size:20px;font-weight:600;">AccessEval Daily Summary</h1>
       <p style="margin:4px 0 0;font-size:14px;opacity:0.9;">${dateStr}</p>
     </div>
+
     <div style="background:white;padding:24px;border-radius:0 0 8px 8px;">
+      <!-- Quick stats -->
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
         <tr>
           <td style="text-align:center;padding:12px;">
@@ -271,7 +167,11 @@ function buildDailySummaryHtml(data: {
           </td>
         </tr>
       </table>
-      <p style="font-size:12px;color:#9ca3af;text-align:center;margin:0 0 24px;">All-time: ${totalOrgs} orgs &middot; ${totalFreeScans} free scans</p>
+
+      <!-- Totals -->
+      <p style="font-size:12px;color:#9ca3af;text-align:center;margin:0 0 24px;">All-time: ${totalOrgs} orgs · ${totalFreeScans} free scans</p>
+
+      <!-- Free Scans -->
       <h2 style="font-size:15px;font-weight:600;color:#111827;margin:0 0 8px;border-bottom:2px solid #059669;padding-bottom:6px;">Free Scans (${todayFreeScans.length})</h2>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
         <thead>
@@ -284,6 +184,8 @@ function buildDailySummaryHtml(data: {
         </thead>
         <tbody>${freeScansRows}</tbody>
       </table>
+
+      <!-- Funnel Activity -->
       <h2 style="font-size:15px;font-weight:600;color:#111827;margin:0 0 8px;border-bottom:2px solid #059669;padding-bottom:6px;">Funnel Activity</h2>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
         <thead>
@@ -294,6 +196,8 @@ function buildDailySummaryHtml(data: {
         </thead>
         <tbody>${funnelRows}</tbody>
       </table>
+
+      <!-- Signups -->
       <h2 style="font-size:15px;font-weight:600;color:#111827;margin:0 0 8px;border-bottom:2px solid #059669;padding-bottom:6px;">New Signups (${todaySignups.length})</h2>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
         <thead>
@@ -306,20 +210,12 @@ function buildDailySummaryHtml(data: {
         </thead>
         <tbody>${signupRows}</tbody>
       </table>
+
       <p style="font-size:11px;color:#9ca3af;text-align:center;margin:16px 0 0;">
-        Sent from AccessEval &middot; <a href="${baseUrl}/admin" style="color:#059669;">View Dashboard</a>
+        Sent from AccessEval · <a href="${process.env.BASE_URL || 'https://accesseval.com'}/admin" style="color:#059669;">View Dashboard</a>
       </p>
     </div>
   </div>
 </body>
 </html>`;
-}
-
-export async function cleanupFreescans(): Promise<void> {
-  const deleted = await prisma.freeScan.deleteMany({
-    where: { expiresAt: { lt: new Date() } },
-  });
-  if (deleted.count > 0) {
-    console.log(`[scheduler] Cleaned up ${deleted.count} expired free scans`);
-  }
 }

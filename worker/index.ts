@@ -3,7 +3,7 @@ import { createWorker, scanQueue } from '../src/lib/queue';
 import { processFullScan, type ScanJobData } from './jobs/full-scan';
 import { processFreeScan, type FreeScanJobData } from './jobs/free-scan';
 import { processAiEnrichment, type AiEnrichmentJobData } from './jobs/ai-fix-suggestions';
-import { runScheduledScans, sendWeeklyDigests, cleanupFreescans } from './scheduler';
+import { runScheduledScans, sendWeeklyDigests, sendDailyAdminSummary, cleanupFreescans } from './scheduler';
 import { Queue } from 'bullmq';
 
 // Use same connection options pattern as queue.ts
@@ -42,6 +42,11 @@ async function setupCronJobs() {
     jobId: 'weekly-digest',
   });
 
+  await cronQueue.add('daily-admin-summary', {}, {
+    repeat: { pattern: '0 20 * * *', tz: 'America/Chicago' },  // 8pm Central
+    jobId: 'daily-admin-summary',
+  });
+
   await cronQueue.add('cleanup-freescans', {}, {
     repeat: { pattern: '0 3 * * *' },
     jobId: 'cleanup-freescans',
@@ -52,6 +57,7 @@ const cronWorker = createWorker('cron', async (job) => {
   switch (job.name) {
     case 'scheduled-scans': await runScheduledScans(); break;
     case 'weekly-digest': await sendWeeklyDigests(); break;
+    case 'daily-admin-summary': await sendDailyAdminSummary(); break;
     case 'cleanup-freescans': await cleanupFreescans(); break;
   }
 }, 1);
